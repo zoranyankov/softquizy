@@ -1,0 +1,35 @@
+.nav-header .navbar {
+    display: inline-block;
+    width: 100%;
+    background-color: skyblue;
+    color: red;
+}
+
+.nav-header .nav-logo {
+    height: 10vmin;
+    pointer-events: none;
+    color: blue;
+}
+
+.nav-header .navbar-nav {
+    display: inline;
+    float: right;
+}
+
+.nav-header .nav-item {
+    display: inline;
+    position: relative;
+    margin-left: 0em;
+    padding: 1rem;
+}
+
+.nav-header .navbar-brand {
+    display: inline;
+    text-decoration: none;
+    float: left;
+    padding: 1rem;
+}
+
+.nav-header .nav-link {
+    text-decoration: none;
+}

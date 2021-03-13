@@ -1,0 +1,24 @@
+.auth-container .containter {
+    display: inline-block;
+    text-align: center;
+}
+
+.auth-container .form-container {
+    position: relative;
+    text-align: center;
+    width: 300px;
+}
+
+.auth-container .form-control {
+    width: 300px;
+}
+
+.auth-container .form-group {
+    position: relative;
+    margin-left: 30rem;
+}
+
+.auth-container .btn {
+    position: relative;
+    margin-left: 37rem;
+}
