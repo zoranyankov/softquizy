@@ -50,8 +50,8 @@ router.post('/register', (req, res, next) => {
     const { username, password } = req.body;
     let newUser = username.toLowerCase();
     // const errors = req.errors;
-    console.log(username);
-    console.log(password);
+    // console.log(username);
+    // console.log(password);
 
     // if (errors && errors.errors.length > 0) {
     //     res.status(422).render('auth/register', {...errors, title: 'Register page', username });

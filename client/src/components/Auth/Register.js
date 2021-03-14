@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import authService from '../../sevices/authServices';
 
 class Register extends Component {
@@ -8,7 +9,8 @@ class Register extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirectToLogin: false
         };
     }
 
@@ -19,14 +21,17 @@ class Register extends Component {
     handleSubmit(event) {
         event.preventDefault();
         authService.register(this.state)
-            .then(result => {
-                console.log(result);
-                alert('A name was submitted (registered): ' + result.username + ' with Id: ' + result._id);
+            .then(() => {
+                this.setState({ redirectToLogin: true });
             })
             .catch(err => console.log(err))
     }
 
     render() {
+        const redirectToLogin = this.state.redirectToLogin;
+        if (redirectToLogin) {
+            return <Redirect to="/auth/login" />
+        }
         return (
             <div className="auth-container">
                 <h1>Register page</h1>

@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
         minlength: [5, 'Username is to short'],
         requred: true,
         validate: [ENGLISH_ALFANUMERIC_PATT, props => `${props.value} is not a valid username!`],
-        // unique: true,
+        unique: true,
         // validate: {
         //     validator: function (v) {
         //         return ENGLISH_ALFANUMERIC_PATT.test(v);

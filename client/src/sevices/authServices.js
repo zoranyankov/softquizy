@@ -23,7 +23,7 @@ async function request(url, method, body) {
     }
 }
 
-// //LOCAL USER SERVICES
+//LOCAL USER SERVICES
 // const localUser = {
 //     saveUser(userInfo) {
 //         localStorage.setItem('userInfo', JSON.stringify(userInfo));
