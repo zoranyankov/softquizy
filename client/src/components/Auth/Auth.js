@@ -13,7 +13,6 @@ import './Auth.css';
 
 const Auth = (props) => {
     let match = useRouteMatch();
-    console.log(match);
 
     return (
         // <div className="auth-containter">
