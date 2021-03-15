@@ -13,6 +13,8 @@ async function request(url, method, body) {
         })
     }
     try {
+        // console.log(url);
+        // console.log(obj);
         let response = await fetch(url, obj);
         let resultData = await response.json();
         return resultData;
@@ -38,11 +40,16 @@ async function request(url, method, body) {
 // }
 
 const register = (data) => {
-    return request(api.register, "POST", data)
+    return request(api.register, "POST", data);
+}
+
+const login = (data) => {
+    return request(api.login, "POST", data);
 }
 
 const authService = {
     register,
+    login,
 };
 
 export default authService;

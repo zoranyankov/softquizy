@@ -1,4 +1,6 @@
 import { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import authService from '../../sevices/authServices';
 
 // import './Auth';
 
@@ -9,23 +11,32 @@ class Login extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.state = {
             username: '',
-            password: ''
+            password: '',
+            redirectToHome: false
         };
     }
 
     handleChange(event) {
-        this.setState({ 
-            username: event.target.username,
-            password: event.target.password
-        });
+        this.setState({ [event.target.name]: event.target.value });
     }
 
     handleSubmit(event) {
-        alert('A name was submitted: ' + this.state.username);
         event.preventDefault();
+        authService.login(this.state)
+            .then(({user, token}) => {
+                console.log(user);
+                console.log(token);
+                localStorage.setItem('sid', JSON.stringify({user, token}));
+                // this.setState({ redirectToHome: true });
+            })
+            .catch(err => console.log(err))
     }
 
     render() {
+        const redirectToHome = this.state.redirectToHome;
+        if (redirectToHome) {
+            return <Redirect to="/" />
+        }
         return (
             <div className="auth-container">
                 <h1>Login page</h1>

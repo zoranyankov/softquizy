@@ -2,6 +2,7 @@ import './App.css';
 
 import Header from './components/Header';
 import Home from './components/Home';
+import Profile from './components/Profile';
 import Auth from './components/Auth';
 
 import {
@@ -26,6 +27,9 @@ function App() {
                     </Route>
                     <Route path="/auth">
                         <Auth />
+                    </Route>
+                    <Route path="/profile">
+                        <Profile />
                     </Route>
                 </Switch>
 

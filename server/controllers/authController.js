@@ -6,24 +6,25 @@ const { isAuthorized, isLogged } = require('../middlewares/guards');
 const checkAuthInput = require('./helpers/checkAuthInput');
 
 
-router.get('/login', isAuthorized, (req, res) => {
-    res.render('auth/login', { title: 'Login Page' });
-    return;
-});
+// router.get('/login', isAuthorized, (req, res) => {
+//     res.render('auth/login', { title: 'Login Page' });
+//     return;
+// });
 
 router.post('/login', isAuthorized, checkAuthInput, (req, res) => {
     const { username, password } = req.body;
-    const errors = req.errors;
-    if (errors && errors.errors.length > 0) {
-        res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
-        // next(errors);
-        return;
-    }
+    // const errors = req.errors;
+    // if (errors && errors.errors.length > 0) {
+    //     res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
+    //     // next(errors);
+    //     return;
+    // }
+
     authSevice.login(username, password)
-        .then((token) => {
-            // console.log(token);
-            res.cookie(TOKEN_COOKIE_NAME, token, { httpOnly: true });
-            res.redirect('/quizes');
+        .then(({user, token}) => {
+            // res.cookie(TOKEN_COOKIE_NAME, token, { httpOnly: true });
+            res.json({user, token});
+            // res.redirect('/quizes');
             return;
         })
         .catch(err => {
@@ -33,7 +34,8 @@ router.post('/login', isAuthorized, checkAuthInput, (req, res) => {
             } else {
                 errors = { errors: { message: err.message } };
             }
-            res.status(422).render('auth/login', { errors, title: 'Login Page' })
+            res.status(422).json({ errors, title: 'Login Page' });
+            // res.status(422).render('auth/login', { errors, title: 'Login Page' });
             // next(err);
             return;
         });

@@ -5,16 +5,20 @@ const jwt = require('jsonwebtoken');
 
 async function login(user, pass) {
     user = user.toLowerCase(); // first option
+    console.log(user);
     // user = new RegExp(user, 'ig'); // second option
     return User.findOne({ username: user })
         .then((userFound) => {
-            if (!userFound) throw { message: 'Wrong User or Password!' };
+            if (!userFound) {
+                return { errors: [{ message: 'Wrong User or Password!' }] };
+            }
             return bcrypt.compare(pass, userFound.password)
-                .then((isIdentical) => {
+            .then((isIdentical) => {
                     if (!isIdentical) {
                         throw new Error('Wrong User ot PASSword!');
                     }
-                    return token = jwt.sign({ _id: userFound._id, name: userFound.username }, TOKEN_SECRET)
+                    let token = jwt.sign({ _id: userFound._id, name: userFound.username }, TOKEN_SECRET);
+                    return { user: userFound, token };
                 })
         })
 }
