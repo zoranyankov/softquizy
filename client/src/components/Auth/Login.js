@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import authService from '../../sevices/authServices';
+import authService from '../../sevices/auth/authServices';
 
 // import './Auth';
 
@@ -24,8 +24,8 @@ class Login extends Component {
         event.preventDefault();
         authService.login(this.state)
             .then(({user, token}) => {
-                console.log(user);
-                console.log(token);
+                // console.log(user);
+                // console.log(token);
                 localStorage.setItem('sid', JSON.stringify({user, token}));
                 // this.setState({ redirectToHome: true });
             })

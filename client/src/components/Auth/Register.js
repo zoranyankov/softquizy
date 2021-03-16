@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import authService from '../../sevices/authServices';
+import authService from '../../sevices/auth/authServices';
 
 class Register extends Component {
     constructor(props) {
