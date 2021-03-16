@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import authService from '../../sevices/auth/authServices';
+import AppContext from '../AppContext';
+
 
 // import './Auth';
 
@@ -16,6 +18,12 @@ class Login extends Component {
         };
     }
 
+    static contextType = AppContext;
+
+    // componentDidMount() {
+    //     let isAuth = this.context;
+    // }
+
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
     }
@@ -23,20 +31,22 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
         authService.login(this.state)
-            .then(({user, token}) => {
+            .then(({ user, token }) => {
                 // console.log(user);
                 // console.log(token);
-                localStorage.setItem('sid', JSON.stringify({user, token}));
-                // this.setState({ redirectToHome: true });
+                this.context.updateIsAuth('auth');
+                localStorage.setItem('sid', JSON.stringify({ user, token }));
+                this.setState({ redirectToHome: true });
             })
             .catch(err => console.log(err))
     }
 
     render() {
         const redirectToHome = this.state.redirectToHome;
-        if (redirectToHome) {
+        if (redirectToHome || this.isAuth) {
             return <Redirect to="/" />
         }
+        console.log(this.context);
         return (
             <div className="auth-container">
                 <h1>Login page</h1>
@@ -47,11 +57,11 @@ class Login extends Component {
                     </div> */}
                     <div className="form-group">
                         <label htmlFor="username">Username</label>
-                        <input type="username" className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange}/>
+                        <input type="username" className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
                         <label htmlFor="password">Password</label>
-                        <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange}/>
+                        <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} />
                     </div>
                     <br></br>
                     <button type="submit" className="btn btn-primary">Login</button>

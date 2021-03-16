@@ -20,7 +20,7 @@ const Auth = (props) => {
             <Switch>
                 <Route path={`${match.url}/login`} component={Login} />
                 <Route path={`${match.url}/register`} component={Register} />
-                <Route path={`${match.url}/logout`} render={Logout} />
+                <Route path={`${match.url}/logout`} component={Logout} />
             </Switch>
         // </div>
 
