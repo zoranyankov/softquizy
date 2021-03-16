@@ -7,8 +7,8 @@ import Auth from './components/Auth';
 
 import {
     BrowserRouter as Router,
-      Switch,
-      Route,
+    Switch,
+    Route,
     // Redirect,
     // Link,
     // useRouteMatch,
@@ -22,15 +22,9 @@ function App() {
                 <Header />
 
                 <Switch>
-                    <Route exact path="/">
-                        <Home />
-                    </Route>
-                    <Route path="/auth">
-                        <Auth />
-                    </Route>
-                    <Route path="/profile">
-                        <Profile />
-                    </Route>
+                    <Route exact path="/" component={Home} />
+                    <Route path="/auth" component={Auth} />
+                    <Route path="/profile" component={Profile} />
                 </Switch>
 
             </div>

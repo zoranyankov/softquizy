@@ -8,6 +8,7 @@ import {
 
 import Login from './Login';
 import Register from './Register';
+import Logout from './Logout';
 
 import './Auth.css';
 
@@ -17,13 +18,9 @@ const Auth = (props) => {
     return (
         // <div className="auth-containter">
             <Switch>
-                <Route path={`${match.url}/login`}>
-                    <Login />
-                </Route>
-                <Route path={`${match.url}/register`}>
-                    <Register />
-                </Route>
-                <Route to={`${match.url}/logout`}></Route>
+                <Route path={`${match.url}/login`} component={Login} />
+                <Route path={`${match.url}/register`} component={Register} />
+                <Route path={`${match.url}/logout`} render={Logout} />
             </Switch>
         // </div>
 
