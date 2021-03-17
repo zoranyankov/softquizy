@@ -56,11 +56,11 @@ class Login extends Component {
                         <input type="email" className="form-control" placeholder="Email" name="email" value="" />
                     </div> */}
                     <div className="form-group">
-                        <label htmlFor="username">Username</label>
+                        <label className="form-label" htmlFor="username">Username</label>
                         <input type="username" className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange} />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password">Password</label>
+                        <label className="form-label" htmlFor="password">Password</label>
                         <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} />
                     </div>
                     <br></br>
