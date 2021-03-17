@@ -36,6 +36,8 @@ class Login extends Component {
                 // console.log(token);
                 this.context.updateIsAuth('auth');
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
+                console.log(this.context.setIsAuth(JSON.parse(localStorage.getItem('sid')).user.username));
+                // this.contextType.setIsAuth(user.username);
                 this.setState({ redirectToHome: true });
             })
             .catch(err => console.log(err))
@@ -46,7 +48,6 @@ class Login extends Component {
         if (redirectToHome || this.isAuth) {
             return <Redirect to="/" />
         }
-        console.log(this.context);
         return (
             <div className="auth-container">
                 <h1>Login page</h1>
@@ -70,5 +71,6 @@ class Login extends Component {
         );
     }
 }
+Login.contextType = AppContext;
 
 export default Login;

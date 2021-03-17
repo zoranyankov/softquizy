@@ -8,9 +8,10 @@ import {
     // useRouteMatch,
     // useParams
 } from "react-router-dom";
-import AppContext from './components/AppContext';
 
 import './App.css';
+
+import AppContext from './components/AppContext';
 
 import Header from './components/Header';
 import Home from './components/Home';
@@ -20,9 +21,10 @@ import Footer from './components/Footer';
 
 
 function App() {
-    const [isAuth, setIsAuth] = React.useState(JSON.parse(localStorage.getItem('sid'))?.user.username);
+    const getUserName = JSON.parse(localStorage.getItem('sid'))?.user.username;
+    const [isAuth, setIsAuth] = React.useState(getUserName);
     const updateIsAuth = (switching) => {
-        (switching === 'auth') ? setIsAuth(true) : setIsAuth(false);
+        (switching === 'auth') ? setIsAuth(getUserName) : setIsAuth(false);
     };
     const userSettings = {
         isAuthName: isAuth,
@@ -43,7 +45,7 @@ function App() {
                     </Switch>
 
                 </div >
-                    <Footer />
+                <Footer />
             </AppContext.Provider>
         </Router >
     );
