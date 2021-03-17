@@ -16,6 +16,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Profile from './components/Profile';
 import Auth from './components/Auth';
+import Footer from './components/Footer';
 
 
 function App() {
@@ -40,7 +41,9 @@ function App() {
                         <Route path="/auth" component={Auth} />
                         <Route path="/profile" component={Profile} />
                     </Switch>
+
                 </div >
+                    <Footer />
             </AppContext.Provider>
         </Router >
     );

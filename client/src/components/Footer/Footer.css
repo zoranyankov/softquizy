@@ -1,0 +1,7 @@
+.footer {
+    display: inline-block;
+    width: 100%;
+    background-color: skyblue;
+    color: blue;
+    text-align: center;
+}
