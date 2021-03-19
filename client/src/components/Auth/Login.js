@@ -1,10 +1,8 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+
 import authService from '../../sevices/auth/authServices';
 import AppContext from '../AppContext';
-
-
-// import './Auth';
 
 class Login extends Component {
     constructor(props) {
@@ -36,8 +34,7 @@ class Login extends Component {
                 // console.log(token);
                 this.context.updateIsAuth('auth');
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
-                console.log(this.context.setIsAuth(JSON.parse(localStorage.getItem('sid')).user.username));
-                // this.contextType.setIsAuth(user.username);
+                this.context.setIsAuth(JSON.parse(localStorage.getItem('sid')).user.username);
                 this.setState({ redirectToHome: true });
             })
             .catch(err => console.log(err))

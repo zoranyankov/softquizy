@@ -1,13 +1,34 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import AppContext from '../AppContext';
+import authService from '../../sevices/auth/authServices';
 
 import './Home.css'
 
 const Home = (props) => {
+    const hasToken = JSON.parse(localStorage.getItem('sid'));
+    const context = useContext(AppContext);
+    let isAuth = !hasToken ? false : context.isAuthName;
 
-    const isAuth = useContext(AppContext).isAuthName;
+    useEffect(() => {
+        if (hasToken) {
+            const { token, user } = hasToken;
+            authService.verify({ username: user.username, token })
+                .then(res => {
+                    console.log(res.result);
+                    if (!res.result) {
+                        localStorage.removeItem('sid');
+                        context.setIsAuth(false);
+                    }
+                })
+                .catch(err => console.log(err))
+            // return () => {
+            //     cleanup
+            // }
+        }
+    });
+    console.log(isAuth);
 
     return (
         <div className="home-container">
