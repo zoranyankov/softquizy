@@ -22,7 +22,8 @@ import Footer from './components/Footer';
 
 
 function App() {
-    const getUserName = JSON.parse(localStorage.getItem('sid'))?.user.username;
+    let parsedToken = JSON.parse(localStorage.getItem('sid'));
+    const getUserName = (parsedToken && parsedToken.user) ? parsedToken.user.username : false;
     const [isAuth, setIsAuth] = React.useState(getUserName);
     const updateIsAuth = (switching) => {
         (switching === 'auth') ? setIsAuth(getUserName) : setIsAuth(false);
