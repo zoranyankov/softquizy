@@ -13,7 +13,7 @@ const NavList = () => {
     return (isAuth ?
         <Fragment>
             <NavListItem to="/profile" content={` Welcome, ${isAuth} `} />
-            <NavListItem to="/quizes/create-quiz" content="Create Quiz" />
+            <NavListItem to="/quizes/create-question" content="Create Question" />
             <NavListItem to="/quizes/choose-ext-quiz" content="Choose external Quiz" />
             <NavListItem to="/auth/logout" content="Logout" />
             </Fragment> :

@@ -7,7 +7,7 @@ import {
 } from "react-router-dom";
 
 import Quiz from '../Quiz';
-import Createquiz from '../Createquiz';
+import Createquestion from '../Createquestion';
 import Choosequiz from '../Choosequiz';
 
 
@@ -25,7 +25,7 @@ const Quizes = (props) => {
         <Switch>
             {/* <Route path="/quizes/local/:quizName" component={Quiz} /> */}
             <Route path={`${match.url}/local/:quizName`} component={Quiz} />
-            <Route path={`${match.url}/create-quiz`} component={Createquiz} />
+            <Route path={`${match.url}/create-question`} component={Createquestion} />
             <Route path={`${match.url}/choose-ext-quiz`} component={Choosequiz} />
         </Switch>
         // </div>

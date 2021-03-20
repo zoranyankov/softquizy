@@ -8,7 +8,7 @@ const Choosequiz = (props) => {
     return (
         <div>
             <form action="" method="post" className="form-api">
-                <h2 className="form-signin-heading">Choose form external API</h2>
+                <h2 className="form-signin-heading">Choose form Trivia API</h2>
 
                 {/* <label htmlFor="trivia_amount">Number of Questions:</label>
                 <input type="number" name="trivia_amount" id="trivia_amount" className="form-control" min="1" max="50" value="10" />
@@ -37,7 +37,7 @@ const Choosequiz = (props) => {
                 <br />
                 <br />
 
-                <label htmlFor="trivia_type">Select Type: </label>
+                {/* <label htmlFor="trivia_type">Select Type: </label>
                 <br />
                 <select name="trivia_type" className="form-control">
                     <option value="any">Any Type</option>
@@ -46,7 +46,7 @@ const Choosequiz = (props) => {
                 </select>
 
                 <br />
-                <br />
+                <br /> */}
 
                 {/*<label htmlFor="trivia_encode">Select Encoding: </label>
                 <br />
@@ -61,7 +61,7 @@ const Choosequiz = (props) => {
 
                 <br /> */}
 
-                <button className="btn btn-lg btn-primary btn-block" type="submit">Generate API URL</button>
+                <button className="btn create-btn" type="submit">Get Quiz from Trivia</button>
             </form>
         </div>
     );
