@@ -3,7 +3,7 @@ const router = Router();
 
 const homeController = require('./controllers/homeController');
 const authController = require('./controllers/authController');
-// const quizController = require('./controllers/quizController');
+// const questionController = require('./controllers/questionController');
 // const { isLogged } = require('./middlewares/guards');
 
 const auth = require('./middlewares/auth');
@@ -12,7 +12,7 @@ router.use(auth());
 
 router.use('/', homeController);
 router.use('/auth', authController);
-// router.use('/quizes', quizController);
+// router.use('/questions', questionController);
 router.get('*', (req, res, next) => {
 
     // res.render('404', {title: 'Page Not Found'});

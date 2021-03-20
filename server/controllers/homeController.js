@@ -3,7 +3,7 @@ const router = Router();
 
 router.get('/', (req, res) => {
     res.render('home/home');
-    // res.redirect('quizes');
+    // res.redirect('questions');
     return;
 });
 router.get('/about', (req, res) => {

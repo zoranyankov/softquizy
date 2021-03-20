@@ -24,7 +24,7 @@ router.post('/login', isAuthorized, checkAuthInput, (req, res) => {
         .then(({user, token}) => {
             // res.cookie(TOKEN_COOKIE_NAME, token, { httpOnly: true });
             res.json({user, token});
-            // res.redirect('/quizes');
+            // res.redirect('/questions');
             return;
         })
         .catch(err => {
@@ -124,7 +124,7 @@ router.post('/register', (req, res, next) => {
 
 router.get('/logout', isLogged, (req, res) => {
     res.clearCookie(TOKEN_COOKIE_NAME);
-    res.redirect('/quizes');
+    res.redirect('/questions');
     return;
 });
 

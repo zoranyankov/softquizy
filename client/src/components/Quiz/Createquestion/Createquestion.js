@@ -45,7 +45,7 @@ const Createquestion = (props) => {
                 <br />
                 <label htmlFor="correct_answer">Write the correct answer: </label>
                 <br />
-                <input type="text" className="form-control" placeholder="Correct answer is..." name="correctAnswer"  />
+                <input type="text" className="form-control" placeholder="Correct answer is..." name="correct_answer"  />
                 {/* value={this.state.password} onChange={this.handleChange} /> */}
 
                 <br />
@@ -53,7 +53,7 @@ const Createquestion = (props) => {
                 <br />
                 <label htmlFor="scorrect_answers">Write the wrong answers: </label>
                 <br />
-                <input type="text" className="form-control" placeholder="Some wrong answer 1 / Some wrong answer 2 / Some wrong answer 3..." name="wrongAnswers"  />
+                <input type="text" className="form-control" placeholder="Some wrong answer 1 / Some wrong answer 2 / Some wrong answer 3..." name="incorrect_answers"  />
                 {/* value={this.state.password} onChange={this.handleChange} /> */}
 
                 <br />

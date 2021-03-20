@@ -17,7 +17,7 @@
         "nodemon": "2.0.7"
     },
     "scripts": {
-        "start": "SET NODE_ENV=development && SET DB_PATH=mongodb://localhost:27017/SoftquizyDB && SET PORT=5000&& nodemon ./index.js",
+        "start": "SET NODE_ENV=development && SET DB_PATH=mongodb://localhost:27017/SoftquestionyDB && SET PORT=5000&& nodemon ./index.js",
         "prod": "SET NODE_ENV=production && nodemon ./index.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },

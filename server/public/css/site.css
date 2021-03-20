@@ -16,7 +16,7 @@ img {
     width: auto;
 }
 
-img.quiz {
+img.question {
     display: inline-block;
     border: 1px solid #2b415433;
     /* margin: 0 auto; */
@@ -75,7 +75,7 @@ h1 {
     text-transform: uppercase;
 }
 
-div.quiz {
+div.question {
     display: inline-block;
     text-align: center;
     border: 1px solid #2b415433;
@@ -87,7 +87,7 @@ div.quiz {
     vertical-align: top;
 }
 
-div.quiz:hover p.name {
+div.question:hover p.name {
     background: #607588;
     color: white;
 }
@@ -220,7 +220,7 @@ a.delete:hover {
     background-color: red;
 }
 
-#clearQuizs,
+#clearQuestions,
 #clearAccessories {
     background-color: red;
     border: none;
