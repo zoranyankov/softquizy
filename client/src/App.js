@@ -39,16 +39,17 @@ function App() {
             <AppContext.Provider value={userSettings}>
                 <div className="App">
                     <Header />
+                    <div className="main">
+                        <Switch>
+                            <Route exact path="/" component={Home} />
+                            <Route path="/auth" component={Auth} />
+                            <Route path="/profile" component={Profile} />
+                            <Route path="/quizes/:quizName" component={Quiz} />
+                        </Switch>
+                    </div>
 
-                    <Switch>
-                        <Route exact path="/" component={Home} />
-                        <Route path="/auth" component={Auth} />
-                        <Route path="/profile" component={Profile} />
-                        <Route path="/quizes/:quizName" component={Quiz} />
-                    </Switch>
-
+                    <Footer />
                 </div >
-                <Footer />
             </AppContext.Provider>
         </Router >
     );

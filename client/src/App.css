@@ -8,6 +8,10 @@
     color: white;
 }
 
+.main {
+    min-height: 87vh;
+}
+
 a {
     text-decoration: none;
 }
