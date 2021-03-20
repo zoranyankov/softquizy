@@ -17,7 +17,7 @@ import Header from './components/Header';
 import Home from './components/Home';
 import Auth from './components/Auth';
 import Profile from './components/Profile';
-import Quiz from './components/Quiz';
+import Quizes from './components/Quiz/Quizes';
 import Footer from './components/Footer';
 
 
@@ -44,7 +44,7 @@ function App() {
                             <Route exact path="/" component={Home} />
                             <Route path="/auth" component={Auth} />
                             <Route path="/profile" component={Profile} />
-                            <Route path="/quizes/:quizName" component={Quiz} />
+                            <Route path="/quizes" component={Quizes} />
                         </Switch>
                     </div>
 

@@ -3,7 +3,13 @@
     display: inline-block;
     width: 100%;
     background-color: skyblue;
-    color: red;
+    /* color: red; */
+}
+
+.nav-header .navbar .nav-content {
+    color: rgb(16, 16, 148);
+    font-weight: 500;
+    /* font-size: larger; */
 }
 
 .nav-header .nav-logo {
