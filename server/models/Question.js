@@ -3,18 +3,15 @@ const mongoose = require('mongoose');
 const questionSchema = new mongoose.Schema({
     category: {
         type: String,
-        required: [true, 'Name is required!'],
-        maxlength: 15,
+        required: [true, 'Category is required!'],
     },
     difficulty: {
-        type: Number,
+        type: String,
         required: [true, 'DificultyLevel is required!'],
-        min: 1,
-        max: 6,
     },
     question: {
         type: String,
-        required: [true, 'Description is required!'],
+        required: [true, 'Question is required!'],
         maxlength: 100,
     },
     // imageUrl: {
@@ -28,14 +25,12 @@ const questionSchema = new mongoose.Schema({
     //     },
     // },
     correct_answer: {
-        type: Date,
-        required: [true, 'need to specify Date'],
-        default: new Date(),
+        type: String,
+        required: [true, 'need to specify correct answer'],
     },
     incorrect_answers: {
-        type: Date,
-        required: [true, 'need to specify Date'],
-        default: new Date(),
+        type: String,
+        required: [true, 'need to specify at lease one wrong answer'],
     },
     creatorId: {
         type: String,

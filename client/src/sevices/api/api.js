@@ -1,7 +1,7 @@
-const { SERVER_AUTH_URL } = '../../config/config.js';
+import { SERVER_API_URL } from '../../config/config';
 
 const api = {
-    questions: `${SERVER_AUTH_URL}/api/questions`,
+    create: `${SERVER_API_URL}/create`,
 }
 
 export default api;

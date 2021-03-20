@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../models/User');
 const authSevice = require('../services/authService');
-const { TOKEN_COOKIE_NAME, ENGLISH_ALFANUMERIC_PATT } = require('../config/config');
+const { TOKEN_NAME, ENGLISH_ALFANUMERIC_PATT } = require('../config/config');
 const { isAuthorized, isLogged } = require('../middlewares/guards');
 const checkAuthInput = require('./helpers/checkAuthInput');
 
@@ -22,12 +22,13 @@ router.post('/login', isAuthorized, checkAuthInput, (req, res) => {
 
     authSevice.login(username, password)
         .then(({user, token}) => {
-            // res.cookie(TOKEN_COOKIE_NAME, token, { httpOnly: true });
+            // res.cookie(TOKEN_NAME, token, { httpOnly: true });
             res.json({user, token});
             // res.redirect('/questions');
             return;
         })
         .catch(err => {
+            console.log('inLoginError');
             let errors;
             if (err.errors) {
                 errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
@@ -102,8 +103,8 @@ router.post('/register', (req, res, next) => {
             }
             return authSevice.register(newUser, password)
                 .then((user) => {
-                    console.log('userCreated');
-                    return res.json(user);
+                    console.log('User created');
+                    return res.status(201).json(user);
                     // res.redirect('/auth/login');
                 })
                 .catch(err => {
@@ -123,7 +124,7 @@ router.post('/register', (req, res, next) => {
 });
 
 router.get('/logout', isLogged, (req, res) => {
-    res.clearCookie(TOKEN_COOKIE_NAME);
+    res.clearCookie(TOKEN_NAME);
     res.redirect('/questions');
     return;
 });

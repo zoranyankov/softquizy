@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
+
+import apiServises from '../../../sevices/api/apiServises';
+
 import './Createquestion.css';
 
-const Createquestion = (props) => {
+const Createquestion = ({ history }) => {
 
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: '' });
     const handleInputChange = (event, oldState) => {
@@ -17,7 +20,12 @@ const Createquestion = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(fields);
+        apiServises.create(fields)
+            .then(res => {
+                console.log(res);
+                history.push('/');
+            })
+            .catch(err => console.log(err))
     }
 
     return (

@@ -16,7 +16,7 @@ const Home = (props) => {
             const { token, user } = hasToken;
             authService.verify({ username: user.username, token })
                 .then(res => {
-                    console.log(res.result);
+                    // console.log(res.result);
                     if (!res.result) {
                         localStorage.removeItem('sid');
                         context.setIsAuth(false);
@@ -28,7 +28,7 @@ const Home = (props) => {
             // }
         }
     });
-    console.log(isAuth);
+    // console.log(isAuth);
 
     return (
         <div className="home-container">

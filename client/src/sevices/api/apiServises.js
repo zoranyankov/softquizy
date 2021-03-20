@@ -1,7 +1,15 @@
 import api from './api';
-import { request } from '../../config/config';
+import request, { getToken } from '../../config/config';
+
+const token = getToken();
+// console.log(token);
+
+const create = (data) => {
+    return request(api.create, "POST", data, { 'x-access-token': token })
+}
 
 const getAll = () => {
+
     // return request...
 }
 
@@ -18,6 +26,7 @@ const deleteOne = () => {
 }
 
 const apiServises = {
+    create,
     getAll,
     getOne,
     editOne,
