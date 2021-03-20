@@ -8,7 +8,7 @@ const NavList = () => {
     
     const isAuth = useContext(AppContext).isAuthName;
     // const isAuth = JSON.parse(localStorage.getItem('sid')).user.username;
-    console.log(isAuth);
+    // console.log(isAuth);
 
     return (isAuth ?
         <Fragment>

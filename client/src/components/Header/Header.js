@@ -7,7 +7,7 @@ import NavList from './NavList';
 import './Header.css';
 
 const Header = (props) => {
-    // let [isAuth, setAuth] = React.useState('false')
+    // let [isAuth, setAuth] = React.useState('false');
     // setAuth = (localStorage.getItem('sid'));
     // const isAuth = JSON.parse(localStorage.getItem('sid')).user.username;
     // console.log(isAuth);

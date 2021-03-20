@@ -12,7 +12,7 @@ router.use(auth());
 
 router.use('/', homeController);
 router.use('/auth', authController);
-// router.use('/questions', questionController);
+// router.use('/api/questions', questionController);
 router.get('*', (req, res, next) => {
 
     // res.render('404', {title: 'Page Not Found'});
