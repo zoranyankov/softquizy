@@ -8,14 +8,16 @@ const verifyToken = require('../middlewares/verifyToken');
 
 const router = Router();
 
-router.get('/', (req, res, next) => {
+router.get('/', verifyToken, (req, res, next) => {
     const _id = req.user ? req.user._id : null;
     // console.log(_id);
     questionService.getAll(req.query)
         .then(questions => {
             questions.forEach(c => c.isCreator = c.creatorId == _id);
-            res.render('home/home', questions);
-            return;
+            // console.log(questions);
+            res.status(200).json(questions);
+            // res.render('home/home', questions);
+            // return;
         })
         .catch(next);
 });

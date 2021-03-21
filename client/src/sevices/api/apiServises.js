@@ -9,7 +9,7 @@ const create = (data) => {
 }
 
 const getAll = () => {
-
+    return request(api.getAll, "GET", '', { 'x-access-token': token } );
     // return request...
 }
 

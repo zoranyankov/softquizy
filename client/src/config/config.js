@@ -26,9 +26,9 @@ const localUser = {
 }
 
 //REQUEST FUNCTION TEMPLATE
-async function request(url, method, body, headers) {
+async function request(url, method, body, headers ) {
     let obj = { method };
-    if (body) {
+    if (body && body !== '') {
         obj = Object.assign(obj, {
             mode: 'cors',
             headers: {
@@ -38,6 +38,9 @@ async function request(url, method, body, headers) {
         })
     }
     if (headers) {
+        if(!obj.hasOwnProperty(headers)) {
+            obj.headers = {"Content-Type": "application/json"};
+        }
         obj.headers = Object.assign(obj.headers, { ...headers });
     }
     try {
