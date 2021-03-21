@@ -1,9 +1,9 @@
 import './Qitem.css';
 
-const Qitem = ({ answers }) => {
+const Qitem = ({ answers, onClick }) => {
     return (
         answers.map(a => (
-            <li className="question-answer">{a}</li>
+            <li className="question-answer" onClick={onClick(a)}>{a}</li>
         ))
     );
 }

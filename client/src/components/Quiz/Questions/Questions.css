@@ -73,9 +73,13 @@
 
 .question {
     display: none;
-    animation: slide-in .4s ease;
+    /* animation: slide-in .4s ease; */
 }
 
 .question:first-child {
     display: block;
+}
+
+.quiz-content .reload {
+    cursor: pointer;
 }

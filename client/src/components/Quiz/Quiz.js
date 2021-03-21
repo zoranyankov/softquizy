@@ -6,8 +6,8 @@ const Quiz = (props) => {
     const category = props.match.params.category;
     return (
         <div className="quiz-content">
-            <Quizheader quizName={quizName}/>
-            <Questions category={category} />
+            <Quizheader quizName={quizName} />
+            <Questions category={category} props={props} />
         </div>
     );
 }

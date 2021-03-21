@@ -92,6 +92,14 @@ async function request(url, method, body, headers) {
     }
 }
 
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 export {
     request as default,
     SERVER_AUTH_URL,
@@ -100,4 +108,5 @@ export {
     CATEGORY_IMAGES,
     localUser,
     getToken,
+    shuffleArray,
 }
