@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import AppContext from '../AppContext';
 import authService from '../../sevices/auth/authServices';
 import apiServises from '../../sevices/api/apiServises';
-import { CATEGORY_NAMES } from '../../config/config';
+import { CATEGORY_NAMES, CATEGORY_IMAGES } from '../../config/config';
 
 import './Home.css';
 
@@ -46,7 +46,18 @@ const Home = (props) => {
             apiServises.getCategories()
                 .then(qss => {
                     // console.log(qss);
-                    qss = qss.map(x => ({ ...x, categoryName: CATEGORY_NAMES[x.category], }));
+                    qss = qss.reduce((a, x) => {                            //TODO: find better way
+                        if (a.find(y => y.category === x.category)) {
+                            return a;
+                        }
+                        x = {
+                            ...x,
+                            categoryName: CATEGORY_NAMES[x.category],
+                            logoImgUrl: CATEGORY_IMAGES[x.category],
+                        }
+                        a.push(x);
+                        return a;
+                    }, []);
                     console.log(qss);
                     setQuestions(qss);
                 })
@@ -63,24 +74,25 @@ const Home = (props) => {
 
                 {questions
                     ? <Fragment>
-                        {questions.map(({ category, categoryName, _id }) => (
+                        {questions.map(({ category, categoryName, _id, logoImgUrl }) => (
                             <Quizcard
-                                to={`/quizes/local/${category}`}
+                                to={`/quizes/local/${category}/${categoryName}`}
                                 categoryName={categoryName}
-                                logoImgUrl="https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg"
+                                logoImgUrl={logoImgUrl}
                                 alt={`quiz-${category}-pic`}
                                 key={_id}
                             />
                         ))}
                     </Fragment>
-                    : <h1>No Questions Yet</h1>}
+                    : <h1>No Questions Yet</h1>
+                }
 
                 {/* <Quizcard to="/quizes/local/math" logoImgUrl="https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg" alt={`quiz-{category}-pic`} /> */}
 
                 {/* <Link className="quiz-link" to={isAuth ? "/quizes/local/math" : "/auth/login"}>
                     <img className="quiz-img" src="https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg" alt="quiz-math-pic" />
-                </Link> */}
-                {/* <Link className="quiz-link" to={isAuth ? "/quizes/local/goegraphy" : "/auth/login"}>
+                </Link>
+                <Link className="quiz-link" to={isAuth ? "/quizes/local/goegraphy" : "/auth/login"}>
                     <img className="quiz-img" src="https://thumbs.dreamstime.com/b/set-geography-symbols-equipments-web-banners-vintage-outline-sketch-web-banners-doodle-style-education-concept-back-to-136641038.jpg" alt="quiz-georaphy-pic" />
                 </Link>
                 <Link className="quiz-link" to={isAuth ? "/quizes/local/history" : "/auth/login"}>

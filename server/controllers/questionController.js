@@ -39,6 +39,23 @@ router.get('/categories', verifyToken, (req, res, next) => {
         .catch(next);
 });
 
+router.get('/category/:cat', verifyToken, (req, res, next) => {
+    const _id = req.user ? req.user._id : null;
+    // console.log(_id);
+    questionService.getCategory(req.params.cat)
+        .then(questions => {
+            console.log(_id);
+            console.log(questions);
+            console.log(questions[0].creatorId);
+            questions.forEach(c => c.isCreator = c.creatorId == _id);
+            // console.log(questions);
+            res.status(200).json(questions);
+            // res.render('home/home', questions);
+            // return;
+        })
+        .catch(next);
+});
+
 router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, checkQuestionInput,
 
     const errors = req.errors;

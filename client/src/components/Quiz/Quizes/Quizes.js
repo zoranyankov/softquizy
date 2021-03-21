@@ -24,7 +24,7 @@ const Quizes = (props) => {
         // <div className="auth-containter">
         <Switch>
             {/* <Route path="/quizes/local/:quizName" component={Quiz} /> */}
-            <Route path={`${match.url}/local/:quizName`} component={Quiz} />
+            <Route path={`${match.url}/local/:category/:quizName`} component={Quiz} />
             <Route path={`${match.url}/create-question`} component={Createquestion} />
             <Route path={`${match.url}/choose-ext-quiz`} component={Choosequiz} />
         </Switch>

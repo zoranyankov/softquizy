@@ -18,6 +18,11 @@ const getCategories = () => {
     // return request...
 }
 
+const getCategory = (category) => {
+    return request(`${api.getCategory}/${category}`, "GET", '', { 'x-access-token': token } );
+    // return request...
+}
+
 const getOne = () => {
     // return request...
 }
@@ -37,6 +42,7 @@ const apiServises = {
     editOne,
     deleteOne,
     getCategories,
+    getCategory,
 }
 
 export default apiServises;

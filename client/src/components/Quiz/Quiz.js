@@ -3,10 +3,11 @@ import Questions from './Questions';
 
 const Quiz = (props) => {
     const quizName = props.match.params.quizName.toUpperCase();
+    const category = props.match.params.category;
     return (
         <div className="quiz-content">
             <Quizheader quizName={quizName}/>
-            <Questions />
+            <Questions category={category} />
         </div>
     );
 }

@@ -1,99 +1,31 @@
+import { useEffect, useState } from 'react';
+
+import apiServises from '../../../sevices/api/apiServises';
+
+import Qlist from '../Qlist';
+
 import './Questions.css'
 
-const Questions = (props) => {
+const Questions = ({ category }) => {
+    let [catQuestions, setCatQuestions] = useState([]);
+    category = category.toLowerCase();
+    
+    useEffect(() => {
+        apiServises.getCategory(category)
+        .then(questions => {
+            console.log(questions)
+            setCatQuestions(questions)
+        })
+        .catch(err => console.log(err));
+    }, [category]);
+
+    console.log(catQuestions);
     return (
         <div className="questions">
             <ul className="question-list">
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer">Lorem ipsum dolor sit amet consectetur adipisicing.lorem Lorem ipsum dolor, sit amet consectetur adipisicing.</li>
-                        <li className="question-answer">Lorem ipsum dolor sit amet consectetur adipisicing.lorem Lorem ipsum dolor, sit amet consectetur adipisicing.</li>
-                        <li className="question-answer">Lorem ipsum dolor sit amet consectetur adipisicing.lorem Lorem ipsum dolor, sit amet consectetur adipisicing.</li>
-                        <li className="question-answer">Lorem ipsum dolor sit amet consectetur adipisicing.lorem Lorem ipsum dolor, sit amet consectetur adipisicing.</li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
-                <li className="question">
-                    <h2 className="question-title">Question number: 1</h2>
-                    <ul className="question-answers">
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                        <li className="question-answer"></li>
-                    </ul>
-                </li>
+                {catQuestions.map(q => (
+                    <Qlist key={q._id} question={q.question} incAnswers={q.incorrect_answers} answer={q.correct_answer} />
+                ))}
             </ul>
         </div>
     );

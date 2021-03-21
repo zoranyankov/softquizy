@@ -26,6 +26,12 @@ async function getCategories(query) {
     return (founded);
 }
 
+async function getCategory(cat) {
+    console.log(cat);
+    let founded = Question.find({category: cat}).lean();
+    return (founded);
+}
+
 function getOne(_id) {
     return Question.findById(_id).lean();
 }
@@ -70,4 +76,5 @@ module.exports = {
     update,
     getOneDetailed,
     getCategories,
+    getCategory,
 };
