@@ -1,13 +1,51 @@
+import React, { useState, useContext } from 'react';
+
+import AppContext from '../../AppContext';
+
+import triviaServises from '../../../sevices/trivia/triviaServices';
 import './Choosequiz.css';
 
 // {trivia_category
 //     trivia_difficulty
 //     trivia_type}
 
-const Choosequiz = (props) => {
+const Choosequiz = ({ history }) => {
+
+    const appContext = useContext(AppContext);
+    // console.log(appContext);
+
+    let [fields, setFields] = useState({ trivia_category: 'any', trivia_difficulty: 'any' });
+    const handleInputChange = (event, oldState) => {
+        const target = event.target;
+        // console.log(target.value);
+
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+
+        setFields({
+            ...oldState,
+            [name]: value
+        });
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        console.log('hanleSubmit');
+        console.log(event);
+        console.log(fields);
+
+        triviaServises.getAll(fields)
+            .then(res => {
+                appContext.setTrivia(res.results);
+                history.push(`/quizes/external/${fields.trivia_category}/${res.results[0].category}`);
+            })
+            .catch(err => console.log(err))
+    }
+
+
     return (
         <div>
-            <form action="" method="post" className="form-api">
+            <form onSubmit={handleSubmit} className="form-api">
                 <h2 className="form-signin-heading">Choose form Trivia API</h2>
 
                 {/* <label htmlFor="trivia_amount">Number of Questions:</label>
@@ -18,7 +56,12 @@ const Choosequiz = (props) => {
 
                 <label htmlFor="trivia_category">Select Category: </label>
                 <br />
-                <select name="trivia_category" className="form-control">
+                <select
+                    name="trivia_category"
+                    className="form-control"
+                    value={fields.trivia_category}
+                    onChange={(e) => handleInputChange(e, fields)}
+                >
                     <option value="any">Any Category</option>
                     <option value="9">General Knowledge</option><option value="10">Entertainment: Books</option><option value="11">Entertainment: Film</option><option value="12">Entertainment: Music</option><option value="13">Entertainment: Musicals &amp; Theatres</option><option value="14">Entertainment: Television</option><option value="15">Entertainment: Video Games</option><option value="16">Entertainment: Board Games</option><option value="17">Science &amp; Nature</option><option value="18">Science: Computers</option><option value="19">Science: Mathematics</option><option value="20">Mythology</option><option value="21">Sports</option><option value="22">Geography</option><option value="23">History</option><option value="24">Politics</option><option value="25">Art</option><option value="26">Celebrities</option><option value="27">Animals</option><option value="28">Vehicles</option><option value="29">Entertainment: Comics</option><option value="30">Science: Gadgets</option><option value="31">Entertainment: Japanese Anime &amp; Manga</option><option value="32">Entertainment: Cartoon &amp; Animations</option>		</select>
 
@@ -27,7 +70,12 @@ const Choosequiz = (props) => {
 
                 <label htmlFor="trivia_difficulty">Select Difficulty: </label>
                 <br />
-                <select name="trivia_difficulty" className="form-control">
+                <select
+                    name="trivia_difficulty"
+                    className="form-control"
+                    value={fields.trivia_difficulty}
+                    onChange={(e) => handleInputChange(e, fields)}
+                >
                     <option value="any">Any Difficulty</option>
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
@@ -56,7 +104,7 @@ const Choosequiz = (props) => {
                     <option value="url3986">URL Encoding (RFC 3986)</option>
                     <option value="base64">Base64 Encoding</option>
                 </select> */}
-{/* 
+                {/* 
                 <input type="hidden" name="token" value="67235e41e438b551ab682c633cd1a439a3f8d55a6cd854a02e044a0c3a05ba3a" />
 
                 <br /> */}

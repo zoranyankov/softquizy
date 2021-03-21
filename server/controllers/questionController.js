@@ -59,13 +59,16 @@ router.get('/category/:cat', verifyToken, (req, res, next) => {
 router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, checkQuestionInput,
 
     const errors = req.errors;
+    const newQuestion = req.body;
+
+    newQuestion.incorrect_answers = newQuestion.incorrect_answers.split(' / ')
 
     // if (errors && errors.errors.length > 0) {
     //     res.status(422).render('questions/createQuestion', {...errors, ...req.body });
     //     // next(errors);
     //     return;
     // }
-    questionService.create({ ...req.body, creatorId: req.user._id, creatorName: req.user.name })
+    questionService.create({ ...newQuestion, creatorId: req.user._id, creatorName: req.user.name })
         .then(data => {
             console.log('Question created');
             // console.log(data);

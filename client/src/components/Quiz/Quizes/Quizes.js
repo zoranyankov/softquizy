@@ -25,6 +25,7 @@ const Quizes = (props) => {
         <Switch>
             {/* <Route path="/quizes/local/:quizName" component={Quiz} /> */}
             <Route path={`${match.url}/local/:category/:quizName`} component={Quiz} />
+            <Route path={`${match.url}/external/:category/:quizName`} component={Quiz} />
             <Route path={`${match.url}/create-question`} component={Createquestion} />
             <Route path={`${match.url}/choose-ext-quiz`} component={Choosequiz} />
         </Switch>

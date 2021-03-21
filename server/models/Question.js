@@ -28,10 +28,10 @@ const questionSchema = new mongoose.Schema({
         type: String,
         required: [true, 'need to specify correct answer'],
     },
-    incorrect_answers: {
+    incorrect_answers: [{
         type: String,
         required: [true, 'need to specify at lease one wrong answer'],
-    },
+    }],
     creatorId: {
         type: String,
         required: [true, 'CreatorId is required!'],

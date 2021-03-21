@@ -1,23 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 
 import apiServises from '../../../sevices/api/apiServises';
+// import triviaServices from '../../../sevices/trivia/triviaServices';
+import AppContext from '../../AppContext';
 
 import Qlist from '../Qlist';
 
 import './Questions.css'
 
-const Questions = ({ category }) => {
+const Questions = ({props, category }) => {
+
+    const appContext = useContext(AppContext);
+    const url = props.location.pathname;
+    const inLocal = !url.includes('external');
     let [catQuestions, setCatQuestions] = useState([]);
     let [score, setScore] = useState(0);
     category = category.toLowerCase();
 
     useEffect(() => {
-        apiServises.getCategory(category)
+        if(inLocal) {
+            apiServises.getCategory(category)
             .then(questions => {
-                setCatQuestions(questions)
+                setCatQuestions(questions);
             })
             .catch(err => console.log(err));
-    }, [category]);
+        } else {
+            setCatQuestions(appContext.trivia);
+        }
+    }, [category, url, appContext.trivia]);
 
     const handleItemClick = (event, question, correctAnswer, selected) => {
         event.preventDefault();
@@ -28,14 +38,14 @@ const Questions = ({ category }) => {
         setCatQuestions((oldQuestions) => oldQuestions.slice(1));
 
     }
-    console.log(score);
-    console.log(catQuestions);
+    // console.log(score);
+    // console.log(catQuestions);
 
     if (catQuestions.length === 0) {
         return (
             <>
                 <h1>Your score is: {score}</h1>
-                <h3 className="reload" onClick={() => window.location.reload()}>Try again?</h3>
+                {inLocal ? <h3 className="reload" onClick={() => window.location.reload()}>Try again?</h3> : ''}
             </>
         )
     }

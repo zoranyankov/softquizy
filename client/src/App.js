@@ -25,6 +25,7 @@ function App() {
     let parsedToken = JSON.parse(localStorage.getItem('sid'));
     const getUserName = (parsedToken && parsedToken.user) ? parsedToken.user.username : false;
     const [isAuth, setIsAuth] = React.useState(getUserName);
+    const [trivia, setTrivia] = React.useState([]);
     const updateIsAuth = (switching) => {
         (switching === 'auth') ? setIsAuth(getUserName) : setIsAuth(false);
     };
@@ -32,6 +33,8 @@ function App() {
         isAuthName: isAuth,
         setIsAuth,
         updateIsAuth,
+        trivia,
+        setTrivia
     };
 
     return (

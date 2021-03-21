@@ -16,7 +16,7 @@ const Qlist = ({
     let [answers, setAnswers] = useState([]);
 
     useEffect(() => {
-        let answers = [answer, ...incAnswers.split(' / ')];
+        let answers = [answer, ...incAnswers];
         answers = answers.map(a => ({ id: _uniqueId(), a }));
         // console.log(answers);
         answers = shuffleArray(answers);

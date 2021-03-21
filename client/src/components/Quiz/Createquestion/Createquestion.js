@@ -13,6 +13,8 @@ const Createquestion = ({ history }) => {
         // console.log('timer');
 
         const target = event.target;
+                
+        //Auto resize the textareas
         if (target.nodeName === 'TEXTAREA') {
             target.style.height = 'auto';
             target.style.height = (target.scrollHeight) + 'px';

@@ -1,5 +1,6 @@
 const SERVER_AUTH_URL = 'http://localhost:5000/auth';
 const SERVER_API_URL = 'http://localhost:5000/api/questions';
+const TRIVIA_API_URL = 'https://opentdb.com/api.php';
 
 const CATEGORY_IMAGES = {
     6: "https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg",
@@ -104,6 +105,7 @@ export {
     request as default,
     SERVER_AUTH_URL,
     SERVER_API_URL,
+    TRIVIA_API_URL,
     CATEGORY_NAMES,
     CATEGORY_IMAGES,
     localUser,
