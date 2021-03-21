@@ -21,10 +21,24 @@ router.get('/', verifyToken, (req, res, next) => {
         })
         .catch(next);
 });
-// router.get('/create', isLogged, (req, res, next) => {
-//     res.render('questions/createQuestion');
-//     return;
-// });
+
+router.get('/categories', verifyToken, (req, res, next) => {
+    const _id = req.user ? req.user._id : null;
+    // console.log(_id);
+    questionService.getCategories(req.query)
+        .then(questions => {
+            console.log(_id);
+            console.log(questions);
+            console.log(questions[0].creatorId);
+            questions.forEach(c => c.isCreator = c.creatorId == _id);
+            // console.log(questions);
+            res.status(200).json(questions);
+            // res.render('home/home', questions);
+            // return;
+        })
+        .catch(next);
+});
+
 router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, checkQuestionInput,
 
     const errors = req.errors;
@@ -47,6 +61,7 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, chec
             return err;
         });
 });
+
 router.get('/details/:prod_id', isLogged, (req, res, next) => {
     const _id = req.user ? req.user._id : null;
     questionService.getOnePopulated(req.params.prod_id)
@@ -57,6 +72,7 @@ router.get('/details/:prod_id', isLogged, (req, res, next) => {
         })
         .catch(next);
 });
+
 router.get('/edit/:prod_id', isLogged, isCreator, (req, res, next) => {
     questionService.getOnePopulated(req.params.prod_id)
         .then((data) => {
@@ -65,6 +81,7 @@ router.get('/edit/:prod_id', isLogged, isCreator, (req, res, next) => {
         })
         .catch(next);
 });
+
 router.post('/edit/:prod_id', isLogged, isCreator, checkQuestionInput, (req, res, next) => {
     const errors = req.errors;
 

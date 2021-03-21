@@ -21,6 +21,11 @@ async function getAll(query) {
     return Question.find({}).lean();
 }
 
+async function getCategories(query) {
+    let founded = Question.find({}).select('category creatorId').lean();
+    return (founded);
+}
+
 function getOne(_id) {
     return Question.findById(_id).lean();
 }
@@ -64,4 +69,5 @@ module.exports = {
     removeOne,
     update,
     getOneDetailed,
+    getCategories,
 };

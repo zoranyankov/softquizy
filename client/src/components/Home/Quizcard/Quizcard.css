@@ -1,0 +1,11 @@
+.quiz-link .quiz-logo {
+    margin: 5rem;
+    width: 20rem;
+    height: 15rem;
+    background-color: olivedrab;
+    text-align: center;
+}
+
+.quiz-link .quiz-logo .logo-name {
+    padding: 5rem 3rem;
+}

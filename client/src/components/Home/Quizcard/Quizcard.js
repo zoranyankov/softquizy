@@ -1,16 +1,19 @@
+import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 const Quizcard = ({
     to,
     logoImgUrl,
     category,
+    categoryName,
 }) => {
     return (
-        <div>
-            <Link className="quiz-link" to={to}>
+        <Fragment>
+            <Link to={to} className="quiz-link">
                 <img className="quiz-img" src={logoImgUrl} alt={category} />
+                <h3>{categoryName}</h3>
             </Link>
-        </div>
+        </Fragment>
     );
 }
 

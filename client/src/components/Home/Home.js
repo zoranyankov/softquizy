@@ -1,9 +1,10 @@
-import { useContext, useEffect, useState } from 'react';
+import { Fragment, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 import AppContext from '../AppContext';
 import authService from '../../sevices/auth/authServices';
 import apiServises from '../../sevices/api/apiServises';
+import { CATEGORY_NAMES } from '../../config/config';
 
 import './Home.css';
 
@@ -31,11 +32,21 @@ const Home = (props) => {
             //     cleanup
             // }
         }
+        // if (questions === '') {
+        //     apiServises.getAll()
+        //         .then(qss => {
+        //             console.log(qss);
+        //             qss = qss.map(x => ({ category: x.category, id: x._id }));
+        //             console.log(qss);
+        //             setQuestions(qss);
+        //         })
+        //         .catch(err => console.log("Home Error:" + err));
+        // }
         if (questions === '') {
-            apiServises.getAll()
+            apiServises.getCategories()
                 .then(qss => {
-                    console.log(qss);
-                    qss = qss.map(x => ({ category: x.category, id: x._id }));
+                    // console.log(qss);
+                    qss = qss.map(x => ({ ...x, categoryName: CATEGORY_NAMES[x.category], }));
                     console.log(qss);
                     setQuestions(qss);
                 })
@@ -50,9 +61,21 @@ const Home = (props) => {
                 {isAuth ? <h1>SCHOOSE FROM LOCAL QUIZES</h1> : <h1>SCHOOSE YOUR QUIZ</h1>}
                 {/* <link rel="stylesheet" href=""/> */}
 
-                {/* {questions ? <h1>{questions.map(q => JSON.stringify(q))}</h1> : <h1>No Questions Yet</h1>} */}
+                {questions
+                    ? <Fragment>
+                        {questions.map(({ category, categoryName, _id }) => (
+                            <Quizcard
+                                to={`/quizes/local/${category}`}
+                                categoryName={categoryName}
+                                logoImgUrl="https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg"
+                                alt={`quiz-${category}-pic`}
+                                key={_id}
+                            />
+                        ))}
+                    </Fragment>
+                    : <h1>No Questions Yet</h1>}
 
-                <Quizcard to="/quizes/local/math" logoImgUrl="https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg" alt={`quiz-{category}-pic`} />
+                {/* <Quizcard to="/quizes/local/math" logoImgUrl="https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg" alt={`quiz-{category}-pic`} /> */}
 
                 {/* <Link className="quiz-link" to={isAuth ? "/quizes/local/math" : "/auth/login"}>
                     <img className="quiz-img" src="https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg" alt="quiz-math-pic" />
