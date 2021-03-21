@@ -4,11 +4,23 @@ import apiServises from '../../../sevices/api/apiServises';
 
 import './Createquestion.css';
 
+// let timer = null;
 const Createquestion = ({ history }) => {
 
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: '' });
     const handleInputChange = (event, oldState) => {
+        // clearInterval(timer);
+        // console.log('timer');
+        
         const target = event.target;
+        if (target.nodeName === 'TEXTAREA') {
+            target.style.height = 'auto';
+            target.style.height = (target.scrollHeight) + 'px';
+        }
+
+        // target.className += " text-content";
+        // timer = setTimeout(() => {target.className="form-control text"}, 2500);
+
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
@@ -18,8 +30,8 @@ const Createquestion = ({ history }) => {
         });
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (event) => {
+        event.preventDefault();
         apiServises.create(fields)
             .then(res => {
                 console.log(res);
@@ -27,6 +39,16 @@ const Createquestion = ({ history }) => {
             })
             .catch(err => console.log(err))
     }
+
+    // const changeSize = (event) => {
+    //     event.preventDefault();
+    //     event.target.className += " text-content";
+    // }
+
+    // const reduceSize = (event) => {
+    //     event.preventDefault();
+    //     event.target.className = "form-control";
+    // }
 
     return (
         <div>
@@ -74,13 +96,15 @@ const Createquestion = ({ history }) => {
                 <br />
                 <label htmlFor="question">Write the question: </label>
                 <br />
-                <input
+                <textarea
                     type="text"
-                    className="form-control"
+                    className="form-control text"
                     placeholder="Who (Where / What) is the...?"
                     name="question"
                     value={fields.question}
                     onChange={(e) => handleInputChange(e, fields)}
+                // onFocus={(e) => changeSize(e)}
+                // onMouseLeave={(e) => reduceSize(e)}
                 />
                 {/* value={this.state.password} onChange={this.handleChange} /> */}
 
@@ -89,9 +113,9 @@ const Createquestion = ({ history }) => {
                 <br />
                 <label htmlFor="correct_answer">Write the correct answer: </label>
                 <br />
-                <input
+                <textarea
                     type="text"
-                    className="form-control"
+                    className="form-control text"
                     placeholder="Correct answer is..."
                     name="correct_answer"
                     value={fields.correct_answer}
@@ -104,9 +128,9 @@ const Createquestion = ({ history }) => {
                 <br />
                 <label htmlFor="incorrect_answers">Write the wrong answers: </label>
                 <br />
-                <input
+                <textarea
                     type="text"
-                    className="form-control"
+                    className="form-control text"
                     placeholder="Some wrong answer 1 / Some wrong answer 2 / Some wrong answer 3..."
                     name="incorrect_answers"
                     value={fields.incorrect_answers}

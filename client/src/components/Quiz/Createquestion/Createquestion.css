@@ -2,6 +2,18 @@
     width: 300px;
 }
 
+.create-form .text {
+    width: 300px;
+    height: 50px;
+    resize: vertical;
+}
+
+
+/* .create-form .text-content {
+    width: 300px;
+    height: 200px;
+} */
+
 .create-form .create-btn {
     display: inline-block;
     padding: 0 1rem;
