@@ -3,7 +3,6 @@ import NavListItem from './NavListItem';
 import AppContext from '../AppContext';
 
 
-
 const NavList = () => {
     
     const isAuth = useContext(AppContext).isAuthName;

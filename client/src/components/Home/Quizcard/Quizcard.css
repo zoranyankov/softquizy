@@ -9,3 +9,7 @@
 .quiz-link .quiz-logo .logo-name {
     padding: 5rem 3rem;
 }
+
+.quiz-link .card-title {
+    color: white;
+}
