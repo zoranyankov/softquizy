@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import apiServises from '../../../sevices/api/apiServises';
 // import triviaServices from '../../../sevices/trivia/triviaServices';
 import AppContext from '../../AppContext';
+import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
 
 import Qlist from '../Qlist';
 
@@ -50,6 +51,10 @@ const Questions = ({props, category }) => {
         )
     }
     const q = catQuestions[0];
+    q.question = htmlDecode(q.question);
+    q.answer = htmlDecode(q.answer);
+    q.incorrect_answers = q.incorrect_answers.map(htmlDecode);
+    
     return (
         <div className="questions">
             <ul className="question-list">

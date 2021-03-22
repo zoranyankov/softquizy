@@ -6,7 +6,7 @@ import request from '../../config/config';
 
 const getAll = ({trivia_category, trivia_difficulty}) => {
     console.log(trivia_category, trivia_difficulty);
-    return request(`${triviaApi.getAll}?amount=10&category=${trivia_category}&difficulty=${trivia_difficulty}`, "GET");
+    return request(`${triviaApi.getAll}?amount=10&category=${trivia_category}&difficulty=${trivia_difficulty}&type=multiple`, "GET");
 }
 
 const getCategories = () => {
