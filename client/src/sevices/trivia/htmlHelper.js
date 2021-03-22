@@ -13,7 +13,11 @@ function resetCharacterEntities() {
         '&gt;': '>',
         '&lt;': '<',
         '&quot;': '"',
-        '&#39;': "'"
+        '&#39;': "'",
+        '&#039;': "'",
+        "&ecirc;" : "ê",
+        "&eacute;" : "é",
+        "&ntilde;" : "Ñ",
     });
 }
 
@@ -28,8 +32,11 @@ function addCharacterEntities(newEntities) {
         charKeys.push(echar);
         entityKeys.push(key);
     }
-    charToEntityRegex = new RegExp('(' + charKeys.join('|') + ')', 'g');
-    entityToCharRegex = new RegExp('(' + entityKeys.join('|') + '|&#[0-9]{1,5};' + ')', 'g');
+    const add1 = entityKeys.join('|');
+    const add2 = charKeys.join('|');
+    const add3 = '|&#[0-9]{1,5};';
+    charToEntityRegex = new RegExp('(' + add2 + ')', 'g');
+    entityToCharRegex = new RegExp('(' + add1 + add3 + ')', 'g');
 }
 function htmlEncode(value) {
     var htmlEncodeReplaceFn = function (match, capture) {

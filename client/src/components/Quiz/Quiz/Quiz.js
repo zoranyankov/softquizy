@@ -1,5 +1,5 @@
-import Quizheader from './Quizheader';
-import Questions from './Questions';
+import Quizheader from '../Quizheader';
+import Questions from '../Questions';
 
 const Quiz = (props) => {
     const quizName = props.match.params.quizName.toUpperCase();

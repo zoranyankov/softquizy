@@ -28,7 +28,7 @@ const Questions = ({props, category }) => {
         } else {
             setCatQuestions(appContext.trivia);
         }
-    }, [category, url, appContext.trivia]);
+    }, [category, url, appContext.trivia, inLocal]);
 
     const handleItemClick = (event, question, correctAnswer, selected) => {
         event.preventDefault();

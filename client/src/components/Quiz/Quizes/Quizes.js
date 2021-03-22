@@ -6,7 +6,7 @@ import {
     // useParams
 } from "react-router-dom";
 
-import Quiz from '../Quiz';
+import Quiz from '../Quiz/Quiz';
 import Createquestion from '../Createquestion';
 import Choosequiz from '../Choosequiz';
 
