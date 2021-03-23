@@ -88,6 +88,8 @@ const Userpage = (props) => {
             <div className="quizes">
                 <h1>CHOOSE FROM LOCAL QUIZES</h1>
                 {questions
+
+                // LOAD LOCAL QUIZES
                     ? <Fragment>
                         {questions.map(({ category, categoryName, _id, logoImgUrl }) => (
                             <Quizcard
@@ -116,6 +118,8 @@ const Userpage = (props) => {
 
             </div>
             <div className={classes.root} >
+
+                {/* LOCAL QUESTIONS BUTTON */}
                 <Button
                     size='large'
                     className={classes.button}
@@ -126,6 +130,8 @@ const Userpage = (props) => {
                 >
                     Create own Question
                 </Button>
+
+                {/* REMOTE QUIZ BUTTON */}
                 <Button
                     size='large'
                     className={classes.button}

@@ -19,7 +19,7 @@ const Header = (props) => {
     return (
         <header className="nav-header">
             <nav className="navbar">
-                <Link to="/" className='navbar-brand'><span className="nav-content"><HomeIcon fontSize='small' color='primary' />Quizes</span></Link>
+                <Link to="/" className='navbar-brand'><span className="nav-content nav-link" ><HomeIcon fontSize='small' color='primary' className='matIcon' /> Quizes</span></Link>
                 {/* <a className='navbar-brand' href="home">Books</a> */}
 
                 <ul className='navbar-nav'>

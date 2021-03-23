@@ -21,6 +21,7 @@
 .nav-header .navbar-nav {
     display: inline;
     float: right;
+    margin-top: 1.3rem
 }
 
 .nav-header .nav-item {
@@ -40,4 +41,17 @@
 .nav-header .nav-link {
     color: darkblue;
     text-decoration: none;
+    margin-left: 0.3rem;
+}
+
+.nav-header .matIcon {
+    vertical-align: bottom;
+}
+
+.nav-header .matIcon-middle {
+    vertical-align: top;
+}
+
+.nav-header .matIcon .external{
+    margin-left: 0.1rem;
 }

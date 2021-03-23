@@ -18,14 +18,14 @@ const NavList = () => {
 
     return (isAuth ?
         <Fragment>
-            <NavListItem icon={<PersonIcon fontSize='small'color='primary'/>} to="/profile" content={` Welcome, ${isAuth} `} />
-            <NavListItem icon={<CreateIcon fontSize='small'color='primary'/>} to="/quizes/create-question" content="Create Question" />
-            <NavListItem icon={<ImportContactsIcon fontSize='small' color='primary' />} to="/quizes/choose-ext-quiz" content="Choose external Quiz" />
-            <NavListItem icon={<ExitToAppIcon fontSize='small' color='primary' />} to="/auth/logout" content="Logout" />
+            <NavListItem icon={<PersonIcon fontSize='small'color='primary' className='matIcon'/> } to="/profile" content={` Welcome, ${isAuth} `} />
+            <NavListItem icon={<CreateIcon fontSize='small'color='primary' className='matIcon'/>} to="/quizes/create-question" content="Create Question" />
+            <NavListItem icon={<ImportContactsIcon fontSize='small' color='primary' className='matIcon external' />} to="/quizes/choose-ext-quiz" content="Choose external Quiz" />
+            <NavListItem icon={<ExitToAppIcon fontSize='small' color='primary' className='matIcon' />} to="/auth/logout" content="Logout" />
             </Fragment> :
         <Fragment>
-            <NavListItem icon={<VpnKeyIcon fontSize='small' color='primary' />} to="/auth/login" content="Login" />
-            <NavListItem icon={<CreateIcon fontSize='small' color='primary' />} to="/auth/register" content="Register" />
+            <NavListItem icon={<VpnKeyIcon fontSize='small' color='primary' className='matIcon' />} to="/auth/login" content="Login" />
+            <NavListItem icon={<CreateIcon fontSize='small' color='primary' className='matIcon' />} to="/auth/register" content="Register" />
         </Fragment>
     )
 }
