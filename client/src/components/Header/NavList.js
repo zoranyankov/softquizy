@@ -1,4 +1,11 @@
 import { Fragment, useContext } from 'react';
+import CreateIcon from '@material-ui/icons/Create';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import PersonIcon from '@material-ui/icons/Person';
+
+
 import NavListItem from './NavListItem';
 import AppContext from '../AppContext';
 
@@ -11,14 +18,14 @@ const NavList = () => {
 
     return (isAuth ?
         <Fragment>
-            <NavListItem to="/profile" content={` Welcome, ${isAuth} `} />
-            <NavListItem to="/quizes/create-question" content="Create Question" />
-            <NavListItem to="/quizes/choose-ext-quiz" content="Choose external Quiz" />
-            <NavListItem to="/auth/logout" content="Logout" />
+            <NavListItem icon={<PersonIcon fontSize='small'color='primary'/>} to="/profile" content={` Welcome, ${isAuth} `} />
+            <NavListItem icon={<CreateIcon fontSize='small'color='primary'/>} to="/quizes/create-question" content="Create Question" />
+            <NavListItem icon={<ImportContactsIcon fontSize='small' color='primary' />} to="/quizes/choose-ext-quiz" content="Choose external Quiz" />
+            <NavListItem icon={<ExitToAppIcon fontSize='small' color='primary' />} to="/auth/logout" content="Logout" />
             </Fragment> :
         <Fragment>
-            <NavListItem to="/auth/login" content="Login" />
-            <NavListItem to="/auth/register" content="Register" />
+            <NavListItem icon={<VpnKeyIcon fontSize='small' color='primary' />} to="/auth/login" content="Login" />
+            <NavListItem icon={<CreateIcon fontSize='small' color='primary' />} to="/auth/register" content="Register" />
         </Fragment>
     )
 }

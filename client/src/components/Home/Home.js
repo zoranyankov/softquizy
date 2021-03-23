@@ -53,7 +53,7 @@ const Home = (props) => {
             //     cleanup
             // }
         }
-      
+
         if (questions === '') {
             apiServises.getCategories()
                 .then(qss => {
@@ -101,21 +101,23 @@ const Home = (props) => {
             </div>
             {isAuth ? <div className={classes.root} >
                 <Button
+                    size='large'
                     className={classes.button}
                     variant="contained"
                     color="primary"
                     href="/quizes/create-question"
                     startIcon={<CreateIcon />}
-                    >
+                >
                     Create own Question
                 </Button>
                 <Button
+                    size='large'
                     className={classes.button}
                     variant="contained"
                     color="primary"
                     href="/quizes/choose-ext-quiz"
                     startIcon={<ImportContactsIcon />}
-                    >
+                >
                     Choose external Quiz
                 </Button>
             </div> : ''}
