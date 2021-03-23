@@ -1,25 +1,29 @@
 import api from './api';
 import request, { getToken } from '../../config/config';
 
-const token = getToken();
+// const token = getToken();
 // console.log(token);
 
 const create = (data) => {
+    const token = getToken();
     return request(api.create, "POST", data, { 'x-access-token': token })
 }
 
 const getAll = () => {
-    return request(api.getAll, "GET", '', { 'x-access-token': token } );
+    const token = getToken();
+    return request(api.getAll, "GET", '', { 'x-access-token': token });
     // return request...
 }
 
 const getCategories = () => {
-    return request(api.getCategories, "GET", '', { 'x-access-token': token } );
+    const token = getToken();
+    return request(api.getCategories, "GET", '', { 'x-access-token': token });
     // return request...
 }
 
 const getCategory = (category) => {
-    return request(`${api.getCategory}/${category}`, "GET", '', { 'x-access-token': token } );
+    const token = getToken();
+    return request(`${api.getCategory}/${category}`, "GET", '', { 'x-access-token': token });
     // return request...
 }
 

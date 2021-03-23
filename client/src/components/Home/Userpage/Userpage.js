@@ -40,10 +40,10 @@ const Userpage = (props) => {
     const classes = useStyles();
 
     let [questions, setQuestions] = useState('');
-    const hasToken = JSON.parse(localStorage.getItem('sid'));
     const context = useContext(AppContext);
-
+    
     useEffect(() => {
+        const hasToken = JSON.parse(localStorage.getItem('sid'));
         if (hasToken) {
             const { token, user } = hasToken;
             authService.verify({ username: user.username, token })
@@ -54,7 +54,7 @@ const Userpage = (props) => {
                         context.setIsAuth(false);
                     }
                 })
-                .catch(err => console.log(err))
+                .catch(err => console.log('Userpage Verify Error:' + err))
             // return () => {
             //     cleanup
             // }
@@ -77,19 +77,19 @@ const Userpage = (props) => {
                         return a;
                     }, []);
                     // console.log(qss);
-                    setQuestions(qss);
+                    qss ? setQuestions(qss) : setQuestions('');
                 })
-                .catch(err => console.log("Userpage Error:" + err));
+                .catch(err => console.log("Userpage Get Categories Error:" + err));
         }
-    }, [questions, context, hasToken]);
+    }, [questions, context]);
 
     return (
         <div className="home-container">
             <div className="quizes">
                 <h1>CHOOSE FROM LOCAL QUIZES</h1>
-                {questions
 
-                // LOAD LOCAL QUIZES
+                {/* LOAD LOCAL QUIZES */}
+                {questions
                     ? <Fragment>
                         {questions.map(({ category, categoryName, _id, logoImgUrl }) => (
                             <Quizcard
