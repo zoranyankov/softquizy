@@ -71,6 +71,12 @@
     }
 }
 
+.quiz-content .quiz-results {
+    /* width: 70rem; */
+    text-align: center;
+    padding: 7rem;
+}
+
 .question {
     display: none;
     /* animation: slide-in .4s ease; */

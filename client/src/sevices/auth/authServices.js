@@ -14,10 +14,16 @@ const verify = (data) => {
     return request(auth.verify, "POST", data);
 }
 
+const updateUserResults = (data) => {
+    console.log(data);
+    return request(auth.updateResults, "POST", data);
+}
+
 const authService = {
     register,
     login,
     verify,
+    updateUserResults
 };
 
 export default authService;

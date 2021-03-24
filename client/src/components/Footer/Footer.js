@@ -5,7 +5,7 @@ import './Footer.css';
 const Footer = (props) => {
     return (
         <footer className="footer">
-            <h5>&copy; Copyright Zoroboy's Softuni React Project April/2021</h5>
+            <h5> Zoroboy's Softuni React Project April/2021 - All rights reserved &copy;</h5>
         </footer >
     );
 }

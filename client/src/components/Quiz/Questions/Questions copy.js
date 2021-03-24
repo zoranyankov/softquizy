@@ -1,17 +1,15 @@
 import { useEffect, useState, useContext } from 'react';
 
 import apiServises from '../../../sevices/api/apiServises';
-import authServices from '../../../sevices/auth/authServices';
 // import triviaServices from '../../../sevices/trivia/triviaServices';
 import AppContext from '../../AppContext';
 import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
 
 import Qlist from '../Qlist';
-import BasicTable from '../Resulttable';
 
 import './Questions.css'
 
-const Questions = ({ props, category, quizName }) => {
+const Questions = ({ props, category }) => {
 
     const appContext = useContext(AppContext);
     const url = props.location.pathname;
@@ -51,15 +49,35 @@ const Questions = ({ props, category, quizName }) => {
 
     if (catQuestions.length === 0) {
         console.log(userAnswers);
-        // const userToUpdate = JSON.stringify(localStorage.getItem('sid')).user._id;
-        // console.log(userToUpdate);
-        authServices.updateUserResults(userAnswers);
         return (
             <div>
-                {/* <h1>Your score is: {score}</h1> */}
+                <h1>Your score is: {score}</h1>
+                {inLocal ? <h3 className="reload" onClick={() => window.location.reload()}>Try again?</h3> : ''}
                 <div className="quiz-results">
-                    <BasicTable rows={userAnswers} score={score} quizName={quizName} />
-                    {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}
+                    {userAnswers.map(({ question, selected, correctAnswer, isCorrect, status, id }, i) => (
+                        <div className="answer-result" key={id}>
+                            {/* <p>{question}</p> 
+                        <p>{selected}</p> 
+                        <p>{i}</p> 
+                        <p>{correctAnswer}</p> 
+                        <p>{status}</p>  */}
+                            <h3>Question {i + 1}: {question} : </h3>
+                            <h4>Your answer {selected} is {status} </h4>
+                            <h5>{status === 'correct' ? 'Well done!' : `correct answer is ${correctAnswer} ;(`}</h5>
+                            {status === 'correct'
+                                ? `you answered ${status} with "${selected}"`
+                                : `your answer ${selected} is ${status} - correct answer is ${correctAnswer}`}
+                            {/* // <div className="answer-result" key="id">
+                        // <h3>Question {i}: {question} : </h3>
+                        // <h4>Your answer {selected} is {status} </h2>
+                        // <h5>{status === 'correct' ? 'Well done!' : `correct answer is ${correctAnswer} ;(`}</h3>
+                        // </div>
+                        // {status === 'correct' 
+                        // ? `you answered ${status} with "${selected}"`
+                        // : `your answer ${selected} is ${wrong} - correct answer is ${correct answer}</h3> */}
+                            {/* ))} */}
+                        </div>
+                    ))}
                 </div>
             </div>
         )

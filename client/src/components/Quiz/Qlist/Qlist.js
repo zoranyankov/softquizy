@@ -12,6 +12,7 @@ const Qlist = ({
     answer,
     incAnswers,
     onClick,
+    id,
 }) => {
     let [answers, setAnswers] = useState([]);
 
@@ -35,7 +36,7 @@ const Qlist = ({
                     <li
                         className="question-answer"
                         key={a.id}
-                        onClick={(event) => onClick(event, question, answer, a.a)}
+                        onClick={(event) => onClick(event, question, answer, a.a, id)}
                     >
                         {a.a}
                     </li>

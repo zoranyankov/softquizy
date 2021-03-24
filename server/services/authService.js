@@ -47,8 +47,14 @@ async function verify(user, token) {
         })
 }
 
+async function updateResults(newResults) {
+    // console.log(newResults.userToUpdate);
+    console.log(newResults);
+}
+
 module.exports = {
     login,
     register,
     verify,
+    updateResults,
 }

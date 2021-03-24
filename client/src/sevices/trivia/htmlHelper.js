@@ -1,5 +1,5 @@
 // var htmlEnDeCode = (function () {
-var charToEntityRegex,
+    var charToEntityRegex,
     entityToCharRegex,
     charToEntity,
     entityToChar;
@@ -12,12 +12,14 @@ function resetCharacterEntities() {
         '&amp;': '&',
         '&gt;': '>',
         '&lt;': '<',
-        '&quot;': '"',
+        '.&quot;': '"',
         '&#39;': "'",
-        '&#039;': "'",
+        '&#039;t': "'",
         "&ecirc;" : "ê",
         "&eacute;" : "é",
         "&ntilde;" : "Ñ",
+        "&ldquo;" : "«",
+        "&rdquo;" : "»",
     });
 }
 

@@ -7,7 +7,7 @@ const Quiz = (props) => {
     return (
         <div className="quiz-content">
             <Quizheader quizName={quizName} />
-            <Questions category={category} props={props} />
+            <Questions category={category} props={props} quizName={quizName} />
         </div>
     );
 }
