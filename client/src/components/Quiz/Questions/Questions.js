@@ -53,7 +53,7 @@ const Questions = ({ props, category, quizName }) => {
         
         console.log(userAnswers);
         const userToUpdate = JSON.parse(localStorage.getItem('sid')).user._id;
-        apiResultServices.add({userToUpdate, [quizName]: userAnswers});
+        apiResultServices.add({userToUpdate, quizName, userAnswers});
         return (
             <div>
                 {/* <h1>Your score is: {score}</h1> */}

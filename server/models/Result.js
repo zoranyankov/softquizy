@@ -3,11 +3,11 @@ const mongoose = require('mongoose');
 const resultSchema = new mongoose.Schema({
     quizName: {
         type: String,
-        required: [true, 'quizName is required!'],
+        required: [true, 'Quiz Name is required!'],
     },
-    quizName: {
-        type: Object,
-        required: [true, 'Result object is required!'],
+    resultData: {
+        type: Array,
+        required: [true, 'Result data is required!'],
     },
     // difficulty: {
     //     type: String,
@@ -18,18 +18,18 @@ const resultSchema = new mongoose.Schema({
     //     required: [true, 'Question is required!'],
     //     maxlength: 100,
     // },
+    // creatorId: {
+    //     type: String,
+    //     required: [true, 'CreatorId is required!'],
+    // },
+    // creatorName: {
+    //     type: String,
+    //     required: [true, 'creatorName is required!'],
+    // },
     creatorId: {
-        type: String,
-        required: [true, 'CreatorId is required!'],
-    },
-    creatorName: {
-        type: String,
-        required: [true, 'creatorName is required!'],
-    },
-    userAnswers: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Accessory',
-    }]
+        ref: 'User',
+    }
 })
 
 module.exports = mongoose.model('Result', resultSchema);

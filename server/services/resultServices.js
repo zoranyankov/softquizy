@@ -5,9 +5,9 @@ function createResult(data) {
     return new Result(data).save();
 }
 
-function clear() {
-    return Result.deleteMany({});
-}
+// function clear() {
+//     return Result.deleteMany({});
+// }
 
 async function getAllResults(query) {
     // let { search, from, to } = query;

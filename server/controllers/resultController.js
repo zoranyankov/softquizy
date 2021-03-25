@@ -58,9 +58,11 @@ const router = Router();
 
 router.post('/add', verifyToken, (req, res, next) => { //TODO: isLogged, checkQuestionInput,
 
-    const {data, userId} = req.body;
+    const {userToUpdate, quizName, userAnswers} = req.body;
     console.log('idAddResult');
     console.log(req.body);
+    let newResult = { quizName, resultData: userAnswers, creatorId: userToUpdate};
+    console.log(newResult);
 
     // const errors = req.errors;
     // const newQuestion = req.body;
@@ -72,18 +74,18 @@ router.post('/add', verifyToken, (req, res, next) => { //TODO: isLogged, checkQu
     // //     // next(errors);
     // //     return;
     // // }
-    // questionService.create({ ...newQuestion, creatorId: req.user._id, creatorName: req.user.name })
-    //     .then(data => {
-    //         console.log('Question created');
-    //         // console.log(data);
-    //         res.status(201).json(data);
-    //         // res.redirect('/questions');
-    //         return;
-    //     })
-    //     .catch(err => {
-    //         console.log("CreateError" + err);
-    //         return err;
-    //     });
+    resultService.createResult(newResult)
+        .then(data => {
+            console.log('Question created');
+            console.log(data);
+            res.status(201).json(data);
+            // res.redirect('/questions');
+            return;
+        })
+        .catch(err => {
+            console.log("CreateError" + err);
+            return err;
+        });
 });
 
 // router.get('/details/:prod_id', isLogged, (req, res, next) => {
