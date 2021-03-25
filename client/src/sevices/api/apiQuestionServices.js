@@ -4,14 +4,14 @@ import request, { getToken } from '../../config/config';
 // const token = getToken();
 // console.log(token);
 
-const create = (data) => {
+const createQuestion = (data) => {
     const token = getToken();
-    return request(api.create, "POST", data, { 'x-access-token': token })
+    return request(api.createQuestion, "POST", data, { 'x-access-token': token })
 }
 
-const getAll = () => {
+const getAllQuestions = () => {
     const token = getToken();
-    return request(api.getAll, "GET", '', { 'x-access-token': token });
+    return request(api.getAllQuestions, "GET", '', { 'x-access-token': token });
     // return request...
 }
 
@@ -39,9 +39,9 @@ const deleteOne = () => {
     // return request...
 }
 
-const apiServises = {
-    create,
-    getAll,
+const apiQuestionServices = {
+    createQuestion,
+    getAllQuestions,
     getOne,
     editOne,
     deleteOne,
@@ -49,4 +49,4 @@ const apiServises = {
     getCategory,
 }
 
-export default apiServises;
+export default apiQuestionServices;

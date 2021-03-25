@@ -7,7 +7,7 @@ import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 import AppContext from '../../AppContext';
 import authService from '../../../sevices/auth/authServices';
-import apiServises from '../../../sevices/api/apiServises';
+import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 import { CATEGORY_NAMES, CATEGORY_IMAGES } from '../../../config/config';
 
 import '../Home.css';
@@ -61,7 +61,7 @@ const Userpage = (props) => {
         }
 
         if (questions === '') {
-            apiServises.getCategories()
+            apiQuestionServices.getCategories()
                 .then(qss => {
                     // console.log(qss);
                     qss = qss.reduce((a, x) => {                            //TODO: find better way

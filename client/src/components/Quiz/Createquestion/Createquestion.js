@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import apiServises from '../../../sevices/api/apiServises';
+import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
 import './Createquestion.css';
 
@@ -34,7 +34,7 @@ const Createquestion = ({ history }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        apiServises.create(fields)
+        apiQuestionServices.createQuestion(fields)
             .then(res => {
                 console.log(res);
                 history.push('/');

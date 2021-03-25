@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 
-import apiServises from '../../../sevices/api/apiServises';
+import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 import authServices from '../../../sevices/auth/authServices';
 // import triviaServices from '../../../sevices/trivia/triviaServices';
 import AppContext from '../../AppContext';
@@ -23,7 +23,7 @@ const Questions = ({ props, category, quizName }) => {
 
     useEffect(() => {
         if (inLocal) {
-            apiServises.getCategory(category)
+            apiQuestionServices.getCategory(category)
                 .then(questions => {
                     setCatQuestions(questions);
                 })

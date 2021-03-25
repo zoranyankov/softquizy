@@ -1,5 +1,5 @@
 const SERVER_AUTH_URL = 'http://localhost:5000/auth';
-const SERVER_API_URL = 'http://localhost:5000/api/questions';
+const API_QUESTION_URL = 'http://localhost:5000/api/questions';
 const TRIVIA_API_URL = 'https://opentdb.com/api.php';
 
 const CATEGORY_IMAGES = {
@@ -119,7 +119,7 @@ function HTMLEncode(str) {
 export {
     request as default,
     SERVER_AUTH_URL,
-    SERVER_API_URL,
+    API_QUESTION_URL,
     TRIVIA_API_URL,
     CATEGORY_NAMES,
     CATEGORY_IMAGES,
