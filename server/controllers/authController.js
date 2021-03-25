@@ -70,17 +70,18 @@ router.post('/verify', isAuthorized, checkAuthInput, (req, res) => {
 });
 
 router.post('/updateResults', isAuthorized, checkAuthInput, (req, res) => {
-    const newResults = req.body;
-    // console.log(newResults);
+    const {data, userId} = req.body;
+console.log('inUpdate');
     // const errors = req.errors;
     // if (errors && errors.errors.length > 0) {
     //     res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
     //     // next(errors);
     //     return;
     // }
-    authSevice.updateResults(newResults)
+
+    authSevice.updateResults(userId, data)
         .then((result) => {
-            res.json({result});
+            res.status(201).json({result});
             return ;
         })
         .catch(err => {
@@ -90,7 +91,7 @@ router.post('/updateResults', isAuthorized, checkAuthInput, (req, res) => {
             } else {
                 errors = { errors: { message: err.message } };
             }
-            res.status(422).json({ errors, title: 'Verify Page' });
+            res.status(422).json({ errors, title: 'Update Page' });
             // res.status(422).render('auth/login', { errors, title: 'Login Page' });
             // next(err);
             return;

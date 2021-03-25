@@ -14,9 +14,8 @@ const verify = (data) => {
     return request(auth.verify, "POST", data);
 }
 
-const updateUserResults = (data) => {
-    console.log(data);
-    return request(auth.updateResults, "POST", data);
+const updateUserResults = (userId, data) => {
+    return request(auth.updateResults, "POST", {userId, data});
 }
 
 const authService = {

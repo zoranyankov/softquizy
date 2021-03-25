@@ -47,9 +47,17 @@ async function verify(user, token) {
         })
 }
 
-async function updateResults(newResults) {
-    // console.log(newResults.userToUpdate);
-    console.log(newResults);
+async function updateResults(userId, newResults) {
+    User.findById(userId)
+    .then (user => {
+        console.log('execute');
+        user.results.push(newResults);
+        console.log(user);
+        // User.findByIdAndUpdate(userId, user)
+        // .then(response => console.log('response : ' + response))
+        // .catch(err => console.log('updatebyID Error: ' + err))
+    })
+    .catch(err => console.log('Update User Error : ' + err))
 }
 
 module.exports = {

@@ -50,10 +50,10 @@ const Questions = ({ props, category, quizName }) => {
     // console.log(catQuestions);
 
     if (catQuestions.length === 0) {
+        
         console.log(userAnswers);
-        // const userToUpdate = JSON.stringify(localStorage.getItem('sid')).user._id;
-        // console.log(userToUpdate);
-        authServices.updateUserResults(userAnswers);
+        const userToUpdate = JSON.parse(localStorage.getItem('sid')).user._id;
+        authServices.updateUserResults(userToUpdate, {[quizName]: userAnswers});
         return (
             <div>
                 {/* <h1>Your score is: {score}</h1> */}

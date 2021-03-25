@@ -27,9 +27,9 @@ router.get('/categories', verifyToken, (req, res, next) => {
     // console.log(_id);
     questionService.getCategories(req.query)
         .then(questions => {
-            console.log(_id);
-            console.log(questions);
-            console.log(questions[0].creatorId);
+            // console.log(_id);
+            // console.log(questions);
+            // console.log(questions[0].creatorId);
             questions.forEach(c => c.isCreator = c.creatorId == _id);
             // console.log(questions);
             res.status(200).json(questions);
@@ -44,9 +44,9 @@ router.get('/category/:cat', verifyToken, (req, res, next) => {
     // console.log(_id);
     questionService.getCategory(req.params.cat)
         .then(questions => {
-            console.log(_id);
-            console.log(questions);
-            console.log(questions[0].creatorId);
+            // console.log(_id);
+            // console.log(questions);
+            // console.log(questions[0].creatorId);
             questions.forEach(c => c.isCreator = c.creatorId == _id);
             // console.log(questions);
             res.status(200).json(questions);
