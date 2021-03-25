@@ -34,7 +34,7 @@ const Createquestion = ({ history }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        apiQuestionServices.createQuestion(fields)
+        apiQuestionServices.create(fields)
             .then(res => {
                 console.log(res);
                 history.push('/');

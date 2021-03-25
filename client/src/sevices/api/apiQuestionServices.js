@@ -4,7 +4,7 @@ import request, { getToken } from '../../config/config';
 // const token = getToken();
 // console.log(token);
 
-const createQuestion = (data) => {
+const create = (data) => {
     const token = getToken();
     return request(api.createQuestion, "POST", data, { 'x-access-token': token })
 }
@@ -40,7 +40,7 @@ const deleteOne = () => {
 }
 
 const apiQuestionServices = {
-    createQuestion,
+    create,
     getAllQuestions,
     getOne,
     editOne,

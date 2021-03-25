@@ -82,60 +82,60 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, chec
         });
 });
 
-router.get('/details/:prod_id', isLogged, (req, res, next) => {
-    const _id = req.user ? req.user._id : null;
-    questionService.getOnePopulated(req.params.prod_id)
-        .then((currentQuestion) => {
-            currentQuestion.isCreator = currentQuestion.creatorId == _id;
-            res.render('questions/details', { ...currentQuestion });
-            return;
-        })
-        .catch(next);
-});
+// router.get('/details/:prod_id', isLogged, (req, res, next) => {
+//     const _id = req.user ? req.user._id : null;
+//     questionService.getOnePopulated(req.params.prod_id)
+//         .then((currentQuestion) => {
+//             currentQuestion.isCreator = currentQuestion.creatorId == _id;
+//             res.render('questions/details', { ...currentQuestion });
+//             return;
+//         })
+//         .catch(next);
+// });
 
-router.get('/edit/:prod_id', isLogged, isCreator, (req, res, next) => {
-    questionService.getOnePopulated(req.params.prod_id)
-        .then((data) => {
-            res.render('questions/editQuestion', { ...data });
-            return;
-        })
-        .catch(next);
-});
+// router.get('/edit/:prod_id', isLogged, isCreator, (req, res, next) => {
+//     questionService.getOnePopulated(req.params.prod_id)
+//         .then((data) => {
+//             res.render('questions/editQuestion', { ...data });
+//             return;
+//         })
+//         .catch(next);
+// });
 
-router.post('/edit/:prod_id', isLogged, isCreator, checkQuestionInput, (req, res, next) => {
-    const errors = req.errors;
+// router.post('/edit/:prod_id', isLogged, isCreator, checkQuestionInput, (req, res, next) => {
+//     const errors = req.errors;
 
-    if (errors && errors.errors.length > 0) {
-        res.status(422).render('questions/editQuestion', { ...errors, _id: req.params.prod_id, ...req.body });
-        // next(errors);
-        return;
-    }
-    questionService.update(req.params.prod_id, { ...req.body })
-        .then(data => {
-            // console.log(data);
-            res.redirect(`/questions/details/${data._id}`);
-            return;
-        })
-        .catch(next);
-});
-router.get('/delete/:prod_id', isLogged, isCreator, (req, res, next) => {
-    questionService.getOnePopulated(req.params.prod_id)
-        .then((data) => {
-            res.render('questions/deleteQuestion', { ...data });
-            return;
-        })
-        .catch(next);
-});
-router.post('/delete/:prod_id', isLogged, isCreator, (req, res, next) => {
-    questionService.removeOne(req.params.prod_id)
-        .then((data) => res.redirect('/questions'))
-        .catch(next);
-});
-router.get('/clearDB', isLogged, (req, res, next) => {
-    questionService.clear()
-        .then((data) => res.redirect('/questions'))
-        .catch(next);
-});
+//     if (errors && errors.errors.length > 0) {
+//         res.status(422).render('questions/editQuestion', { ...errors, _id: req.params.prod_id, ...req.body });
+//         // next(errors);
+//         return;
+//     }
+//     questionService.update(req.params.prod_id, { ...req.body })
+//         .then(data => {
+//             // console.log(data);
+//             res.redirect(`/questions/details/${data._id}`);
+//             return;
+//         })
+//         .catch(next);
+// });
+// router.get('/delete/:prod_id', isLogged, isCreator, (req, res, next) => {
+//     questionService.getOnePopulated(req.params.prod_id)
+//         .then((data) => {
+//             res.render('questions/deleteQuestion', { ...data });
+//             return;
+//         })
+//         .catch(next);
+// });
+// router.post('/delete/:prod_id', isLogged, isCreator, (req, res, next) => {
+//     questionService.removeOne(req.params.prod_id)
+//         .then((data) => res.redirect('/questions'))
+//         .catch(next);
+// });
+// router.get('/clearDB', isLogged, (req, res, next) => {
+//     questionService.clear()
+//         .then((data) => res.redirect('/questions'))
+//         .catch(next);
+// });
 
 
 module.exports = router;

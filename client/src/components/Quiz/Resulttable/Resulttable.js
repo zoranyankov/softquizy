@@ -51,7 +51,7 @@ export default function BasicTable({ rows, score, quizName }) {
             <StyledTableCell>Question</StyledTableCell>
             <StyledTableCell align="right">Your Answer</StyledTableCell>
             <StyledTableCell align="right">Correct Answer</StyledTableCell>
-            <StyledTableCell align="right">Status</StyledTableCell>
+            <StyledTableCell align="right">Result</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>

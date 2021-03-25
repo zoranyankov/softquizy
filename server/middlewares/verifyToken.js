@@ -2,6 +2,8 @@ const { TOKEN_SECRET, TOKEN_NAME } = require('../config/config');
 const jwt = require('jsonwebtoken');
 
 const verifyToken = (req, res, next) => {
+    console.log('inVerifyToken');
+    console.log(req.body);
         let token = req.headers[TOKEN_NAME];
         // console.log('token');
         // console.log(token);

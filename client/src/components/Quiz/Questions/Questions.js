@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
-import authServices from '../../../sevices/auth/authServices';
+import apiResultServices from '../../../sevices/api/apiResultServices';
 // import triviaServices from '../../../sevices/trivia/triviaServices';
 import AppContext from '../../AppContext';
 import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
@@ -53,7 +53,7 @@ const Questions = ({ props, category, quizName }) => {
         
         console.log(userAnswers);
         const userToUpdate = JSON.parse(localStorage.getItem('sid')).user._id;
-        authServices.updateUserResults(userToUpdate, {[quizName]: userAnswers});
+        apiResultServices.add({userToUpdate, [quizName]: userAnswers});
         return (
             <div>
                 {/* <h1>Your score is: {score}</h1> */}
