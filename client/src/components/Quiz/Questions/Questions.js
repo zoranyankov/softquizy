@@ -100,10 +100,11 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     }
 
     return (
+        <>
+                {q && 
         <div className="questions">
             <ul className="question-list">
                 {/* {catQuestions.map(q => ( */}
-                {q && 
                     <Qlist
                         key={q._id}
                         id={q._id}
@@ -112,6 +113,9 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
                         answer={q.correct_answer}
                         onClick={handleItemClick}
                     />
+                {/*))}*/}
+            </ul>
+        </div>
                 }
                 {endOfQuiz &&
                     <div>
@@ -122,9 +126,8 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
                         </div>
                     </div>
                 }
-                {/*))}*/}
-            </ul>
-        </div>
+        </>
+
     );
 }
 
