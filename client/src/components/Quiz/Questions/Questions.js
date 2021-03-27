@@ -1,65 +1,51 @@
 import { useEffect, useState } from 'react';
 
-// import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
+//Import services
 import apiResultServices from '../../../sevices/api/apiResultServices';
-// import triviaServices from '../../../sevices/trivia/triviaServices';
-// import AppContext from '../../AppContext';
 import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
 
+//Import components
 import Qlist from '../Qlist';
-import BasicTable from '../Resulttable';
+import ResultsTable from '../ResultsTable';
 
-import './Questions.css'
+//Import local styles
+import './Questions.css';
 
 const Questions = ({ props, quizName, questions, inLocal }) => {
 
-
+    //Set local states
     let q = null;
-
-    // const appContext = useContext(AppContext);
-    // const url = props.location.pathname;
-    // const inLocal = !url.includes('external');
-    // let [catQuestions, setCatQuestions] = useState([]);
     let [currentQuestion, setCurrentQuestion] = useState(0);
     let [score, setScore] = useState(0);
-    let [userAnswers, setUserAnswers] = useState([]);
+    let [userResults, setUserResults] = useState([]);
     let [endOfQuiz, setEndOfQuiz] = useState(false);
 
     useEffect(() => {
-        console.log('userAnswers');
+        //If quiz is over - send results to Database
         if (endOfQuiz) {
-            console.log('End');
-            console.log(userAnswers);
-            const userToUpdate = JSON.parse(localStorage.getItem('sid')).user._id;
-            console.log(userAnswers)
-            apiResultServices.add({ userToUpdate, quizName, userAnswers });
-            // setEndOfQuiz(true);
-            // questions.length = 0;
-            // return (
-            // <div>
-            //     {/* <h1>Your score is: {score}</h1> */}
-            //     <div className="quiz-results">
-            //         <BasicTable rows={userAnswers} score={score} quizName={quizName} />
-            //         {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}
-            //     </div>
-            // </div>
-            // )
+            const creatorId = JSON.parse(localStorage.getItem('sid')).user._id;
+            apiResultServices.add({ creatorId, quizName, userResults, score });
         }
-    }, [userAnswers, questions, quizName, inLocal, score, endOfQuiz]);
+    }, [userResults, quizName, endOfQuiz, score]);
 
     const handleItemClick = (event, question, correctAnswer, selected, id) => {
         event.preventDefault();
-        console.log(currentQuestion);
+
+        //Check if answer is correct
         const isCorrect = selected === correctAnswer;
         const status = isCorrect ? 'correct' : 'wrong';
         const currResult = { question, selected, correctAnswer, isCorrect, status, id };
-        console.log(isCorrect);
-        console.log(currResult);
+
+        //Increase score by correct answer
         if (isCorrect) {
             setScore((oldState) => oldState + 1);
         }
-        setUserAnswers(oldResult => oldResult.concat(currResult));
-        // setCatQuestions((oldQuestions) => oldQuestions.slice(1));
+
+        //Add current result to all answers
+        setUserResults(oldResult => oldResult.concat(currResult));
+
+
+        // Set next question index or the end of quiz
         if (currentQuestion !== questions.length - 1) {
             setCurrentQuestion((previous => previous + 1));
         } else {
@@ -67,31 +53,13 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
             questions.length = 0;
         }
     }
-    console.log(score);
-    // console.log(catQuestions);
 
-    // if (catQuestions.length === 0) {
-
-    //     console.log(userAnswers);
-    //     const userToUpdate = JSON.parse(localStorage.getItem('sid')).user._id;
-    //     apiResultServices.add({userToUpdate, quizName, userAnswers});
-    //     return (
-    //         <div>
-    //             {/* <h1>Your score is: {score}</h1> */}
-    //             <div className="quiz-results">
-    //                 <BasicTable rows={userAnswers} score={score} quizName={quizName} />
-    //                 {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}
-    //             </div>
-    //         </div>
-    //     )
-    // }
-
+    //Initial render
     if (!endOfQuiz && (questions.length === 0)) {
-        return null;
+        return <h1>Still loading...</h1>;
     }
 
-    console.log(questions);
-    console.log('Questions render');
+    //Questions charachters decode
     if (questions.length !== 0) {
         if (questions.error) {
             console.log('Error :' + questions.error.name + ' - ' + questions.error.message);
@@ -125,7 +93,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
                 <div>
                     {/* <h1>Your score is: {score}</h1> */}
                     <div className="quiz-results">
-                        <BasicTable rows={userAnswers} score={score} quizName={quizName} />
+                        <ResultsTable rows={userResults} score={score} quizName={quizName} />
                         {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}
                     </div>
                 </div>

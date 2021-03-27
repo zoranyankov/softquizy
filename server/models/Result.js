@@ -5,9 +5,13 @@ const resultSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Quiz Name is required!'],
     },
-    resultData: {
+    userResults: {
         type: Array,
         required: [true, 'Result data is required!'],
+    },
+    score: {
+        type: String,
+        required: [true, 'Score is required!'],
     },
     // difficulty: {
     //     type: String,

@@ -1,8 +1,20 @@
 const Result = require('../models/Result');
 
-
 function createResult(data) {
     return new Result(data).save();
+}
+
+async function getOneByUserId(userId) {
+    // user = user.toLowerCase(); // first option
+    return Result.find({ creatorId: userId })
+        .then((results) => {
+            if (!results) {
+                // return { errors: [{ message: 'Wrong User or Password!' }] };
+                return { error : { message: 'Wrong User or Password!' }};
+                // return false;
+            }
+            return results;
+        })
 }
 
 // function clear() {
@@ -68,6 +80,7 @@ async function getAllResults(query) {
 module.exports = {
     createResult,
     getAllResults,
+    getOneByUserId,
     // getOne,
     // clear,
     // getOnePopulated,

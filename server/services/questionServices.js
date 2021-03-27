@@ -27,7 +27,6 @@ async function getCategories(query) {
 }
 
 async function getCategory(cat) {
-    console.log(cat);
     let founded = Question.find({category: cat}).lean();
     return (founded);
 }

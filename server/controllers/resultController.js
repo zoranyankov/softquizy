@@ -8,6 +8,35 @@ const verifyToken = require('../middlewares/verifyToken');
 
 const router = Router();
 
+router.get('/:userId', verifyToken, (req, res) => {
+    const userId = req.params.userId;
+    // const errors = req.errors;
+    // if (errors && errors.errors.length > 0) {
+    //     res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
+    //     // next(errors);
+    //     return;
+    // }
+    resultService.getOneByUserId(userId)
+        .then((results) => {
+            res.json(results);
+            return;
+        })
+        .catch(err => {
+            console.log('getOneByUserId error: ' + err);
+            let errors;
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: { message: err.message } };
+            }
+            res.status(422).json({ errors, title: 'Verify Page' });
+            // res.status(422).render('auth/login', { errors, title: 'Login Page' });
+            // next(err);
+            return;
+        });
+});
+
+
 // router.get('/', verifyToken, (req, res, next) => {
 //     const _id = req.user ? req.user._id : null;
 //     // console.log(_id);
@@ -58,11 +87,11 @@ const router = Router();
 
 router.post('/add', verifyToken, (req, res, next) => { //TODO: isLogged, checkQuestionInput,
 
-    const {userToUpdate, quizName, userAnswers} = req.body;
-    console.log('idAddResult');
-    console.log(req.body);
-    let newResult = { quizName, resultData: userAnswers, creatorId: userToUpdate};
-    console.log(newResult);
+    const {creatorId, quizName, userResults, score} = req.body;
+    // console.log('idAddResult');
+    // console.log(req.body);
+    let newResult = { quizName, userResults, score, creatorId };
+    // console.log(newResult);
 
     // const errors = req.errors;
     // const newQuestion = req.body;
@@ -76,8 +105,8 @@ router.post('/add', verifyToken, (req, res, next) => { //TODO: isLogged, checkQu
     // // }
     resultService.createResult(newResult)
         .then(data => {
-            console.log('Question created');
-            console.log(data);
+            console.log('Result created');
+            // console.log(data);
             res.status(201).json(data);
             // res.redirect('/questions');
             return;

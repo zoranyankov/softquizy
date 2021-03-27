@@ -41,9 +41,6 @@ const Choosequiz = ({ history }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log('hanleSubmit');
-        console.log(event);
-        console.log(fields);
 
         triviaServises.getAll(fields)
             .then(res => {

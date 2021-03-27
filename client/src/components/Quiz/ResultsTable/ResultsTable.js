@@ -39,7 +39,7 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-export default function BasicTable({ rows, score, quizName }) {
+export default function ResultsTable({ rows, score, quizName }) {
   const classes = useStyles();
 
   return (

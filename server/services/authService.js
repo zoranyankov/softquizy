@@ -47,6 +47,23 @@ async function verify(user, token) {
         })
 }
 
+// async function getOne(user, token) {
+//     user = user.toLowerCase(); // first option
+//     return User.findOne({ username: user })
+//         .then((userFound) => {
+//             if (!userFound) {
+//                 // return { errors: [{ message: 'Wrong User or Password!' }] };
+//                 return false;
+//             }
+//             let decoded = jwt.verify(token, TOKEN_SECRET);
+//             if (!decoded) {
+//                 return false;
+//             }
+//             let name = decoded.name;
+//             return Boolean(name == userFound.username);
+//         })
+// }
+
 async function updateResults(userId, newResults) {
     User.findById(userId)
     .then (user => {
@@ -65,4 +82,5 @@ module.exports = {
     register,
     verify,
     updateResults,
+    // getOne,
 }

@@ -7,6 +7,7 @@ const api = {
     getCategory: `${API_QUESTION_URL}/category`,
     addResult : `${API_RESULT_URL}/add`,
     getAllResults: `${API_RESULT_URL}/`,
+    getResults: `${API_RESULT_URL}`,
 }
 
 export default api;

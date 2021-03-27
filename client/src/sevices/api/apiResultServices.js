@@ -27,8 +27,9 @@ const getAll = () => {
 //     // return request...
 // }
 
-const getOne = () => {
-    // return request...
+const getByUserId = (userId) => {
+    const token = getToken();
+    return request(`${api.getResults}/${userId}`, "GET", '', { 'x-access-token': token });
 }
 
 const editOne = () => {
@@ -42,7 +43,7 @@ const deleteOne = () => {
 const apiQuestionServices = {
     add,
     getAll,
-    getOne,
+    getByUserId,
     editOne,
     deleteOne,
     // getCategories,

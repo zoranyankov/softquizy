@@ -8,7 +8,7 @@ const resultController = require('./controllers/resultController');
 
 // const { isLogged } = require('./middlewares/guards');
 
-const auth = require('./middlewares/auth');
+// const auth = require('./middlewares/auth');
 
 // router.use(auth());
 
