@@ -14,6 +14,10 @@ const verify = (data) => {
     return request(auth.verify, "POST", data);
 }
 
+const get = (userId) => {
+    return request(auth.get, "GET", userId);
+}
+
 const updateUserResults = (userId, data) => {
     return request(auth.updateResults, "POST", {userId, data});
 }
@@ -22,6 +26,7 @@ const authService = {
     register,
     login,
     verify,
+    get,
     updateUserResults
 };
 

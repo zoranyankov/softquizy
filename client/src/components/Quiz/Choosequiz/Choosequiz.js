@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 
 import AppContext from '../../AppContext';
 
@@ -11,10 +12,20 @@ import './Choosequiz.css';
 
 const Choosequiz = ({ history }) => {
 
-    const appContext = useContext(AppContext);
-    // console.log(appContext);
+    //Get actual state of Token if is authenticated
+    const hasToken = JSON.parse(localStorage.getItem('sid'));
+    const context = useContext(AppContext);
+    let isAuth = !hasToken ? false : context.isAuthName;
+
+    // console.log(context);
 
     let [fields, setFields] = useState({ trivia_category: 'any', trivia_difficulty: 'any' });
+
+    //Execute guard - redirect if is not authenticated
+    if (!isAuth) {
+        return <Redirect to="/auth/login" />;
+    }
+
     const handleInputChange = (event, oldState) => {
         const target = event.target;
         // console.log(target.value);
@@ -36,7 +47,7 @@ const Choosequiz = ({ history }) => {
 
         triviaServises.getAll(fields)
             .then(res => {
-                appContext.setTrivia(res.results);
+                context.setTrivia(res.results);
                 history.push(`/quizes/external/${fields.trivia_category}/${res.results[0].category}`);
             })
             .catch(err => console.log(err))

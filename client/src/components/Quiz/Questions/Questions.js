@@ -13,7 +13,7 @@ import './Questions.css'
 
 const Questions = ({ props, quizName, questions, inLocal }) => {
 
-    
+
     let q = null;
 
     // const appContext = useContext(AppContext);
@@ -45,7 +45,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
             // </div>
             // )
         }
-    }, [userAnswers, questions, quizName, userAnswers, inLocal, score]);
+    }, [userAnswers, questions, quizName, inLocal, score, endOfQuiz]);
 
     const handleItemClick = (event, question, correctAnswer, selected, id) => {
         event.preventDefault();
@@ -88,11 +88,15 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
 
     if (!endOfQuiz && (questions.length === 0)) {
         return null;
-    }   
+    }
 
     console.log(questions);
     console.log('Questions render');
     if (questions.length !== 0) {
+        if (questions.error) {
+            console.log('Error :' + questions.error.name + ' - ' + questions.error.message);
+            return <h1>There is authorisation problems!</h1>
+        }
         q = questions[currentQuestion];
         q.question = htmlDecode(q.question);
         q.answer = htmlDecode(q.answer);
@@ -101,31 +105,31 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
 
     return (
         <>
-                {q && 
-        <div className="questions">
-            <ul className="question-list">
-                {/* {catQuestions.map(q => ( */}
-                    <Qlist
-                        key={q._id}
-                        id={q._id}
-                        question={q.question}
-                        incAnswers={q.incorrect_answers}
-                        answer={q.correct_answer}
-                        onClick={handleItemClick}
-                    />
-                {/*))}*/}
-            </ul>
-        </div>
-                }
-                {endOfQuiz &&
-                    <div>
-                        {/* <h1>Your score is: {score}</h1> */}
-                        <div className="quiz-results">
-                            <BasicTable rows={userAnswers} score={score} quizName={quizName} />
-                            {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}
-                        </div>
+            {q &&
+                <div className="questions">
+                    <ul className="question-list">
+                        {/* {catQuestions.map(q => ( */}
+                        <Qlist
+                            key={q._id}
+                            id={q._id}
+                            question={q.question}
+                            incAnswers={q.incorrect_answers}
+                            answer={q.correct_answer}
+                            onClick={handleItemClick}
+                        />
+                        {/*))}*/}
+                    </ul>
+                </div>
+            }
+            {endOfQuiz &&
+                <div>
+                    {/* <h1>Your score is: {score}</h1> */}
+                    <div className="quiz-results">
+                        <BasicTable rows={userAnswers} score={score} quizName={quizName} />
+                        {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}
                     </div>
-                }
+                </div>
+            }
         </>
 
     );

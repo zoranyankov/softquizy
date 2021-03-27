@@ -1,12 +1,12 @@
-import { Fragment, useContext, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+
+//Import components from Material UI
 import Button from '@material-ui/core/Button';
 // import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { makeStyles } from '@material-ui/core/styles';
 import CreateIcon from '@material-ui/icons/Create';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
-import AppContext from '../../AppContext';
-import authService from '../../../sevices/auth/authServices';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 import { CATEGORY_NAMES, CATEGORY_IMAGES } from '../../../config/config';
 
@@ -15,7 +15,7 @@ import '../Home.css';
 // import NavListItem from '../../Header/NavListItem';
 import Quizcard from '../Quizcard';
 
-
+//Make custom styles for Material UI Button component
 const useStyles = makeStyles((theme) => ({
     root: {
         '& > *': {
@@ -40,30 +40,14 @@ const Userpage = (props) => {
     const classes = useStyles();
 
     let [questions, setQuestions] = useState('');
-    const context = useContext(AppContext);
     
     useEffect(() => {
-        const hasToken = JSON.parse(localStorage.getItem('sid'));
-        if (hasToken) {
-            const { token, user } = hasToken;
-            authService.verify({ username: user.username, token })
-                .then(res => {
-                    // console.log(res.result);
-                    if (!res.result) {
-                        localStorage.removeItem('sid');
-                        context.setIsAuth(false);
-                    }
-                })
-                .catch(err => console.log('Userpage Verify Error:' + err))
-            // return () => {
-            //     cleanup
-            // }
-        }
-
         if (questions === '') {
             apiQuestionServices.getCategories()
                 .then(qss => {
                     // console.log(qss);
+
+                    //Filter to unique categories with images - to show in Userpage
                     qss = qss.reduce((a, x) => {                            //TODO: find better way
                         if (a.find(y => y.category === x.category)) {
                             return a;
@@ -81,7 +65,7 @@ const Userpage = (props) => {
                 })
                 .catch(err => console.log("Userpage Get Categories Error:" + err));
         }
-    }, [questions, context]);
+    }, [questions]);
 
     return (
         <div className="home-container">

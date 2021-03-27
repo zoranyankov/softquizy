@@ -1,12 +1,14 @@
 import { useContext, useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
+
+//Import services
 import AppContext from '../AppContext';
 
 const Logout = () => {
-    const isAuth = useContext(AppContext);
+    const { setIsAuth } = useContext(AppContext);
     useEffect(() => {
         localStorage.removeItem('sid');
-        isAuth.updateIsAuth('out');       
+        setIsAuth(false);
     })
     return <Redirect to="/" />
 }

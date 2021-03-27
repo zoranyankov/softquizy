@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+//Import services
 import authService from '../../sevices/auth/authServices';
 import AppContext from '../AppContext';
 
@@ -18,9 +19,16 @@ class Login extends Component {
 
     static contextType = AppContext;
 
-    // componentDidMount() {
-    //     let isAuth = this.context;
-    // }
+    componentDidMount() {
+        //Get actual state (of Token) - if is authenticated
+        const hasToken = JSON.parse(localStorage.getItem('sid'));
+        let isAuth = !hasToken ? false : this.context.isAuthName;
+        
+        //Execute guard if already logged in
+        if (isAuth) {
+            this.setState({ redirectToHome: true });
+        }
+    }
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
@@ -30,11 +38,8 @@ class Login extends Component {
         event.preventDefault();
         authService.login(this.state)
             .then(({ user, token }) => {
-                // console.log(user);
-                // console.log(token);
-                this.context.updateIsAuth('auth');
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
-                this.context.setIsAuth(JSON.parse(localStorage.getItem('sid')).user.username);
+                this.context.setIsAuth(user.username);
                 this.setState({ redirectToHome: true });
             })
             .catch(err => console.log(err))
@@ -42,9 +47,12 @@ class Login extends Component {
 
     render() {
         const redirectToHome = this.state.redirectToHome;
-        if (redirectToHome || this.isAuth) {
+
+        //Redirect if login is successful
+        if (redirectToHome) {
             return <Redirect to="/" />
         }
+
         return (
             <div className="auth-container">
                 <h1>Login page</h1>

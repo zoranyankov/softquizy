@@ -8,11 +8,12 @@ import './Home.css';
 
 const Home = (props) => {
 
+    //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
     const context = useContext(AppContext);
     let isAuth = !hasToken ? false : context.isAuthName;
    
-    console.log(isAuth);
+    // console.log(isAuth);
 
     return (
         <Fragment>

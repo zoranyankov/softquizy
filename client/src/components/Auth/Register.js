@@ -1,6 +1,9 @@
 import { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+
+//Import services
 import authService from '../../sevices/auth/authServices';
+import AppContext from '../AppContext';
 
 class Register extends Component {
     constructor(props) {
@@ -13,6 +16,8 @@ class Register extends Component {
             redirectToLogin: false
         };
     }
+
+    static contextType = AppContext;
 
     handleChange(event) {
         this.setState({ [event.target.name]: event.target.value });
@@ -29,6 +34,13 @@ class Register extends Component {
 
     render() {
         const redirectToLogin = this.state.redirectToLogin;
+
+        //Execute guard if already logged in
+        if (this.context.isAuthName) {
+            return <Redirect to="/" />
+        }
+
+        //Redirect to login page if successfully registered
         if (redirectToLogin) {
             return <Redirect to="/auth/login" />
         }

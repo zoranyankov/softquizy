@@ -90,6 +90,7 @@ async function request(url, method, body, headers) {
     } catch (error) {
         console.log('error');
         console.log(error);
+        return error;
         // notificate('error', error.message);
     }
 }

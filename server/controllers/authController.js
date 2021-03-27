@@ -50,9 +50,10 @@ router.post('/verify', isAuthorized, checkAuthInput, (req, res) => {
     //     // next(errors);
     //     return;
     // }
+    console.log(req.body);
     authSevice.verify(username, token)
         .then((result) => {
-            console.log(result);
+            console.log('verify result' + result);
             res.json({result});
             return ;
         })
@@ -68,6 +69,37 @@ router.post('/verify', isAuthorized, checkAuthInput, (req, res) => {
             // next(err);
             return;
         });
+});
+
+router.get('/get', (req, res) => {
+    console.log('inGet');
+    console.log(req.body);
+    // const { username, token } = req.body;
+    // // const errors = req.errors;
+    // // if (errors && errors.errors.length > 0) {
+    // //     res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
+    // //     // next(errors);
+    // //     return;
+    // // }
+    // authSevice.verify(username, token)
+    //     .then((result) => {
+    //         console.log(result);
+    //         res.json({result});
+    //         return ;
+    //     })
+    //     .catch(err => {
+    //         let errors;
+    //         if (err.errors) {
+    //             errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+    //         } else {
+    //             errors = { errors: { message: err.message } };
+    //         }
+    //         res.status(422).json({ errors, title: 'Verify Page' });
+    //         // res.status(422).render('auth/login', { errors, title: 'Login Page' });
+    //         // next(err);
+    //         return;
+    //     });
+    res.json({user: req.body})
 });
 
 // router.post('/updateResults', isAuthorized, checkAuthInput, (req, res) => {

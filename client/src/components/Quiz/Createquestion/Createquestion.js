@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
 
+import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
 import './Createquestion.css';
@@ -7,7 +9,18 @@ import './Createquestion.css';
 // let timer = null;
 const Createquestion = ({ history }) => {
 
+    //Get actual state of Token if is authenticated
+    const hasToken = JSON.parse(localStorage.getItem('sid'));
+    const context = useContext(AppContext);
+    let isAuth = !hasToken ? false : context.isAuthName;
+
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: '' });
+    
+    //Execute guard - redirect if is not authenticated
+    if (!isAuth) {
+        return <Redirect to="/auth/login" />;
+    }
+
     const handleInputChange = (event, oldState) => {
         // clearInterval(timer);
         // console.log('timer');
