@@ -7,6 +7,10 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import ResultsTable from '../Quiz/ResultsTable';
+import QuestionsTable from '../Quiz/QuestionsTable';
+
+import { CATEGORY_NAMES } from '../../config/config';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -18,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function SimpleAccordion({ data }) {
+export default function SimpleAccordion({ data, type }) {
     const classes = useStyles();
 
     return (
@@ -32,12 +36,18 @@ export default function SimpleAccordion({ data }) {
                             id="panel1a-header"
                         >
                             <Typography className={classes.heading}>
-                                {table.quizName} with {table.score} Pts
-                                </Typography>
+                                {type === 'results'
+                                    ? `${table.quizName} with ${table.score} Pts`
+                                    : CATEGORY_NAMES[table.category]
+                                }
+                            </Typography>
                         </AccordionSummary>
                         <AccordionDetails>
                             {/* <Typography> */}
-                                <ResultsTable rows={table.userResults} score={table.score} quizName={table.quizName} />
+                            {type === 'results'
+                                ? <ResultsTable rows={table.userResults} score={table.score} quizName={table.quizName} />
+                                : <QuestionsTable question={table} />
+                            }
                             {/* </Typography> */}
                         </AccordionDetails>
                     </Accordion>

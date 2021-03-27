@@ -18,7 +18,7 @@ router.get('/:userId', verifyToken, (req, res) => {
     // }
     resultService.getOneByUserId(userId)
         .then((results) => {
-            res.json(results);
+            res.status(302).json(results);
             return;
         })
         .catch(err => {

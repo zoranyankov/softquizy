@@ -12,19 +12,22 @@ const create = (data) => {
 const getAllQuestions = () => {
     const token = getToken();
     return request(api.getAllQuestions, "GET", '', { 'x-access-token': token });
-    // return request...
 }
 
 const getCategories = () => {
     const token = getToken();
     return request(api.getCategories, "GET", '', { 'x-access-token': token });
-    // return request...
 }
 
 const getCategory = (category) => {
     const token = getToken();
     return request(`${api.getCategory}/${category}`, "GET", '', { 'x-access-token': token });
-    // return request...
+}
+
+const getByUserId = (userId) => {
+    console.log(userId);
+    const token = getToken();
+    return request(`${api.getQuestions}/${userId}`, "GET", '', { 'x-access-token': token });
 }
 
 const getOne = () => {
@@ -42,6 +45,7 @@ const deleteOne = () => {
 const apiQuestionServices = {
     create,
     getAllQuestions,
+    getByUserId,
     getOne,
     editOne,
     deleteOne,

@@ -82,6 +82,36 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, chec
         });
 });
 
+router.get('/:userId', verifyToken, (req, res) => {
+    const userId = req.params.userId;
+    // const errors = req.errors;
+    // if (errors && errors.errors.length > 0) {
+    //     res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
+    //     // next(errors);
+    //     return;
+    // }
+    console.log('inQuestion api route');
+    questionService.getOneByUserId(userId)
+        .then((questions) => {
+            console.log(questions);
+            res.status(302).json(questions);
+            return;
+        })
+        .catch(err => {
+            console.log('getOneByUserId error: ' + err);
+            let errors;
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: { message: err.message } };
+            }
+            res.status(422).json({ errors, title: 'Verify Page' });
+            // res.status(422).render('auth/login', { errors, title: 'Login Page' });
+            // next(err);
+            return;
+        });
+});
+
 // router.get('/details/:prod_id', isLogged, (req, res, next) => {
 //     const _id = req.user ? req.user._id : null;
 //     questionService.getOnePopulated(req.params.prod_id)

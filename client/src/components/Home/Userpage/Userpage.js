@@ -1,4 +1,5 @@
 import { Fragment, useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 
 //Import components from Material UI
 import Button from '@material-ui/core/Button';
@@ -36,7 +37,13 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Userpage = (props) => {
+
+const Userpage = ({ history }) => {
+    
+    const onButtonClick = (event, path) => {
+        event.preventDefault();
+        history.push(path);
+    }
     const classes = useStyles();
 
     let [questions, setQuestions] = useState('');
@@ -109,7 +116,8 @@ const Userpage = (props) => {
                     className={classes.button}
                     variant="contained"
                     color="primary"
-                    href="/quizes/create-question"
+                    // href="/quizes/create-question"
+                    onClick={(e) => onButtonClick(e, '/quizes/create-question')}
                     startIcon={<CreateIcon />}
                 >
                     Create own Question
@@ -121,7 +129,8 @@ const Userpage = (props) => {
                     className={classes.button}
                     variant="contained"
                     color="primary"
-                    href="/quizes/choose-ext-quiz"
+                    // href="/quizes/choose-ext-quiz"
+                    onClick={(e) => onButtonClick(e, '/quizes/choose-ext-quiz')}
                     startIcon={<ImportContactsIcon />}
                 >
                     Choose external Quiz
@@ -131,4 +140,4 @@ const Userpage = (props) => {
     );
 }
 
-export default Userpage;
+export default withRouter(Userpage);

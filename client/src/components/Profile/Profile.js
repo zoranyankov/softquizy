@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Redirect, Switch, Route, useRouteMatch, Link } from 'react-router-dom';
+import { Redirect, Switch, Route, useRouteMatch } from 'react-router-dom';
 
 //Import global context and services
 import AppContext from '../AppContext';
@@ -8,7 +8,7 @@ import AppContext from '../AppContext';
 import Button from '@material-ui/core/Button';
 // import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import { makeStyles } from '@material-ui/core/styles';
-import CreateIcon from '@material-ui/icons/Create';
+// import CreateIcon from '@material-ui/icons/Create';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
 //Import components
@@ -39,7 +39,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Profile = (props) => {
+const Profile = ({ history }) => {
+
+    const onButtonClick = (event, path) => {
+        event.preventDefault();
+        history.push(path);
+    }
 
     const classes = useStyles();
 
@@ -67,7 +72,8 @@ const Profile = (props) => {
                     className={classes.button}
                     variant="contained"
                     color="primary"
-                    href="/profile/results"
+                    // href="/profile/results"
+                    onClick={(e) => onButtonClick(e, '/profile/results')}
                     startIcon={<ImportContactsIcon />}
                 >
                     Profile Results
@@ -79,7 +85,8 @@ const Profile = (props) => {
                     className={classes.button}
                     variant="contained"
                     color="primary"
-                    href="/profile/questions"
+                    // href="/profile/questions"
+                    onClick={(e) => onButtonClick(e, '/profile/questions')}
                     startIcon={<ImportContactsIcon />}
                 >
                     Profile Questions
@@ -87,7 +94,7 @@ const Profile = (props) => {
 
                 <Switch>
                     <Route path={`${match.url}/results`} component={ProfileResults} />
-                    {/* <Route path={`${match.url}/questions`} component={ProfileQuestions} /> */}
+                    <Route path={`${match.url}/questions`} component={ProfileQuestions} />
                 </Switch>
 
                 {/* <Accordion data={userResults} /> */}

@@ -5,9 +5,22 @@ function create(data) {
     return new Question(data).save();
 }
 
-function clear() {
-    return Question.deleteMany({});
+async function getOneByUserId(userId) {
+    // user = user.toLowerCase(); // first option
+    return Question.find({ creatorId: userId })
+        .then((results) => {
+            if (!results) {
+                // return { errors: [{ message: 'Wrong User or Password!' }] };
+                return { error : { message: 'Wrong User or Password!' }};
+                // return false;
+            }
+            return results;
+        })
 }
+
+// function clear() {
+//     return Question.deleteMany({});
+// }
 
 async function getAll(query) {
     let { search, from, to } = query;
@@ -31,49 +44,50 @@ async function getCategory(cat) {
     return (founded);
 }
 
-function getOne(_id) {
-    return Question.findById(_id).lean();
-}
+// function getOne(_id) {
+//     return Question.findById(_id).lean();
+// }
 
-function getOneDetailed(questionId, userId) {
-    return Question
-        .findById(questionId)
-        .lean()
-        .then((currentQuestion) => {
-            currentQuestion.isCreator = currentQuestion.creatorId == userId;
-            currentQuestion.noSeats = Boolean(currentQuestion.seats <= 0);
-            currentQuestion.isJoined = Boolean(currentQuestion.buddies.some(x => x == userId));
-            currentQuestion.buddiesData = currentQuestion.buddiesData.length > 0 ? currentQuestion.buddiesData.join(', ') : '. . . . .';
-            return currentQuestion;
-        })
-}
+// function getOneDetailed(questionId, userId) {
+//     return Question
+//         .findById(questionId)
+//         .lean()
+//         .then((currentQuestion) => {
+//             currentQuestion.isCreator = currentQuestion.creatorId == userId;
+//             currentQuestion.noSeats = Boolean(currentQuestion.seats <= 0);
+//             currentQuestion.isJoined = Boolean(currentQuestion.buddies.some(x => x == userId));
+//             currentQuestion.buddiesData = currentQuestion.buddiesData.length > 0 ? currentQuestion.buddiesData.join(', ') : '. . . . .';
+//             return currentQuestion;
+//         })
+// }
 
-function getOnePopulated(_id) {
-    return Question.findById(_id).populate('accessories').lean();
-}
+// function getOnePopulated(_id) {
+//     return Question.findById(_id).populate('accessories').lean();
+// }
 
-function edit(_id) {
-    return Question.findById(_id).populate('accessories').lean();
-}
+// function edit(_id) {
+//     return Question.findById(_id).populate('accessories').lean();
+// }
 
-function update(_id, data) {
-    return Question.findByIdAndUpdate(_id, data).populate('accessories').lean();
-}
+// function update(_id, data) {
+//     return Question.findByIdAndUpdate(_id, data).populate('accessories').lean();
+// }
 
-function removeOne(_id) {
-    return Question.findByIdAndRemove(_id);
-}
+// function removeOne(_id) {
+//     return Question.findByIdAndRemove(_id);
+// }
 
 module.exports = {
     create,
     getAll,
-    getOne,
-    clear,
-    getOnePopulated,
-    edit,
-    removeOne,
-    update,
-    getOneDetailed,
+    getOneByUserId,
+    // getOne,
+    // clear,
+    // getOnePopulated,
+    // edit,
+    // removeOne,
+    // update,
+    // getOneDetailed,
     getCategories,
     getCategory,
 };

@@ -6,13 +6,12 @@ import AppContext from '../../AppContext';
 import apiResultServices from '../../../sevices/api/apiResultServices';
 
 //Import components
-// import ResultsTable from '../Quiz/ResultsTable';
 import Accordion from '../../Accordion';
 
 //Import local styles
 import './ProfileResults.css';
 
-const Profile = (props) => {
+const ProfileResults = (props) => {
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
@@ -28,7 +27,6 @@ const Profile = (props) => {
         console.log('inUseEffect of Profile comp');
         apiResultServices.getByUserId(userId)
             .then(results => {
-                console.log(results);
                 setUserResults(results)
             })
             .catch(err => console.log('Profile get Results error: ' + err))
@@ -46,9 +44,9 @@ const Profile = (props) => {
 
     return (
         <div className="quiz-content">
-            <h1>THE PROFILE PAGE</h1>
+                        <h3>RESULTS HISTORY</h3>
             <div className="profile-page">
-                <Accordion data={userResults} />
+                <Accordion data={userResults} type="results" />
                 {/* {userResults.map(result => (
                     <div className="quiz-results" key={result._id}>
                         <ResultsTable rows={result.userResults} score={result.score} quizName={result.quizName} />
@@ -62,4 +60,4 @@ const Profile = (props) => {
     );
 }
 
-export default Profile;
+export default ProfileResults;
