@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 //Import services
 import authService from '../../sevices/auth/authServices';
@@ -67,6 +67,10 @@ class Register extends Component {
                     </div>
                     <br></br>
                     <button type="submit" className="btn btn-primary" >Register</button>
+                    <div style={{ padding: '2rem' }}>
+                        Already have an account?
+                        <Link to="/auth/login"><span className="nav-link">   Login now</span> </Link>
+                    </div>
                 </form>
             </div>
         );
