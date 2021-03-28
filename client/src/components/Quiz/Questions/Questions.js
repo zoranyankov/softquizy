@@ -5,6 +5,7 @@ import apiResultServices from '../../../sevices/api/apiResultServices';
 import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
 
 //Import components
+import Quizheader from '../Quizheader';
 import Qlist from '../Qlist';
 import ResultsTable from '../ResultsTable';
 
@@ -73,6 +74,8 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
 
     return (
         <>
+
+            <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score}/>
             {q &&
                 <div className="questions">
                     <ul className="question-list">

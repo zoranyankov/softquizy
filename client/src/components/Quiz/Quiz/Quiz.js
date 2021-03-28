@@ -3,7 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
-import Quizheader from '../Quizheader';
+// import Quizheader from '../Quizheader';
 import Questions from '../Questions';
 
 
@@ -35,7 +35,7 @@ console.log('render Quiz component');
 
     return (
         <div className="quiz-content">
-            <Quizheader quizName={quizName} />
+            {/* <Quizheader quizName={quizName} currentQuestion={} /> */}
             {questions && <Questions props={props} quizName={quizName} questions={questions} inLocal={inLocal}/>}
         </div>
     );

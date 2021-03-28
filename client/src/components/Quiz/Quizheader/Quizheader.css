@@ -1,0 +1,29 @@
+.question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 20px;
+}
+
+.question-header .score-container,
+.question-header .question-count {
+    width: 250px;
+    text-align: center;
+}
+
+.question-header .score-container h2,
+.question-header .question-count h2 {
+    margin-bottom: 0;
+    font-size: 2em;
+    font-weight: 400;
+}
+
+.question-header .score,
+.question-header .question-number {
+    font-size: 4em;
+    font-weight: 100;
+}
+
+.question-header .description {
+    font-size: 1.5em;
+}

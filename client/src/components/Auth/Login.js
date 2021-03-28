@@ -38,6 +38,7 @@ class Login extends Component {
         event.preventDefault();
         authService.login(this.state)
             .then(({ user, token }) => {
+                console.log(user);
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
                 this.setState({ redirectToHome: true });
