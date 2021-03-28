@@ -75,7 +75,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     return (
         <>
 
-            <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score}/>
+            {q && <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score}/>}
             {q &&
                 <div className="questions">
                     <ul className="question-list">
@@ -94,7 +94,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
             }
             {endOfQuiz &&
                 <div>
-                    {/* <h1>Your score is: {score}</h1> */}
+                    <h1 className="quiz-results-header">Your result from {quizName} is: {score}</h1>
                     <div className="quiz-results">
                         <ResultsTable rows={userResults} score={score} quizName={quizName} />
                         {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}

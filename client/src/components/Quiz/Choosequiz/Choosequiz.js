@@ -4,39 +4,14 @@ import { Redirect } from 'react-router-dom';
 import AppContext from '../../AppContext';
 
 //Import components from Material UI
-import Button from '@material-ui/core/Button';
-// import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { makeStyles } from '@material-ui/core/styles';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
+import ButtonLink from '../../Shared/ButtonLink';
 
 import triviaServises from '../../../sevices/trivia/triviaServices';
 import './Choosequiz.css';
 
-// {trivia_category
-//     trivia_difficulty
-//     trivia_type}
-
-//Make custom styles for Material UI Button component
-const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
-    button: {
-        backgroundColor: 'skyblue',
-        color: 'darkBlue',
-        margin: theme.spacing(5),
-        marginTop: '7rem',
-        // margin: '3rem 5rem',
-    }
-}));
-
 const Choosequiz = ({ history }) => {
-
-    //Apply materials custom styles
-    const classes = useStyles();
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
@@ -139,19 +114,9 @@ const Choosequiz = ({ history }) => {
                 <input type="hidden" name="token" value="67235e41e438b551ab682c633cd1a439a3f8d55a6cd854a02e044a0c3a05ba3a" />
 
                 <br /> */}
-
-                <Button
-                    type="submit"
-                    size='large'
-                    className={classes.button}
-                    variant="contained"
-                    color="primary"
-                    // href="/quizes/create-question"
-                    // onClick={(e) => onButtonClick(e, '/quizes/create-question')}
-                    startIcon={<ImportContactsIcon />}
-                >
+                <ButtonLink component={<ImportContactsIcon />} type="submit">
                     Get Quiz from Trivia
-                </Button>
+                </ButtonLink>
 
                 {/* <button className="btn create-btn" type="submit">Get Quiz from Trivia</button> */}
             </form>

@@ -78,7 +78,13 @@
 .quiz-content .quiz-results {
     /* width: 70rem; */
     text-align: center;
-    padding: 7rem;
+    padding: 3rem 7rem 7rem 7rem;
+}
+
+.quiz-content .quiz-results-header {
+    /* width: 70rem; */
+    text-align: center;
+    padding: 3rem 0 0 0;
 }
 
 .question {
