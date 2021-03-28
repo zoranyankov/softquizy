@@ -6,7 +6,12 @@ import AppContext from '../AppContext';
 import authService from '../../sevices/auth/authServices';
 import testInput from '../../sevices/test/authTestServices';
 
+//Import components from Material UI
+import VpnKeyIcon from '@material-ui/icons/VpnKey';
+
 import Notificate from '../Shared/Notificate';
+import ButtonLink from '../Shared/ButtonLink';
+
 
 class Login extends Component {
     constructor(props) {
@@ -39,9 +44,9 @@ class Login extends Component {
         const [inputName, inputValue] = [event.target.name, event.target.value];
         const err = testInput[inputName](inputValue);
         if (err) {
-            this.setState((oldState => ({ ...oldState, errors: {...oldState.errors, [inputName]: err } })))
+            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
         } else {
-            this.setState((oldState => ({ ...oldState, errors: {...oldState.errors, [inputName]: null } })))
+            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
         }
         this.setState({ [inputName]: inputValue });
     }
@@ -100,9 +105,11 @@ class Login extends Component {
                         <Notificate type="error">{this.state.errors.password}</Notificate>
                     </div>
                     <br></br>
-                    <button type="submit" className="btn btn-primary">Login</button>
+                    <ButtonLink component={<VpnKeyIcon />} type="submit">
+                        Login
+                    </ButtonLink>
                 </form>
-                <div style={{ padding: '2rem' }}>
+                <div style={{ padding: '0rem 2rem 2rem 2rem' }}>
                     Don't have an account?
                 <Link to="/auth/register"><span className="nav-link">   Register now</span> </Link>
                 </div>

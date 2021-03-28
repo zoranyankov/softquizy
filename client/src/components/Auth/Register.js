@@ -5,6 +5,13 @@ import { Redirect, Link } from 'react-router-dom';
 import authService from '../../sevices/auth/authServices';
 import AppContext from '../AppContext';
 
+//Import components from Material UI
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+
+// import Notificate from '../Shared/Notificate';
+import ButtonLink from '../Shared/ButtonLink';
+
+
 class Register extends Component {
     constructor(props) {
         super(props);
@@ -66,8 +73,10 @@ class Register extends Component {
                         <input type="password" className="form-control" placeholder="Repeat-Password" name="repeatPassword" onChange={this.handleChange} />
                     </div>
                     <br></br>
-                    <button type="submit" className="btn btn-primary" >Register</button>
-                    <div style={{ padding: '2rem' }}>
+                    <ButtonLink component={<ExitToAppIcon />} type="submit">
+                        Register
+                    </ButtonLink>
+                    <div style={{ padding: '0rem 2rem 2rem 2rem' }}>
                         Already have an account?
                         <Link to="/auth/login"><span className="nav-link">   Login now</span> </Link>
                     </div>
