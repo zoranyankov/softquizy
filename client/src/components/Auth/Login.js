@@ -2,8 +2,11 @@ import { Component } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 
 //Import services
-import authService from '../../sevices/auth/authServices';
 import AppContext from '../AppContext';
+import authService from '../../sevices/auth/authServices';
+import testInput from '../../sevices/test/authTestServices';
+
+import Notificate from '../Shared/Notificate';
 
 class Login extends Component {
     constructor(props) {
@@ -13,7 +16,8 @@ class Login extends Component {
         this.state = {
             username: '',
             password: '',
-            redirectToHome: false
+            redirectToHome: false,
+            errors: ''
         };
     }
 
@@ -23,15 +27,23 @@ class Login extends Component {
         //Get actual state (of Token) - if is authenticated
         const hasToken = JSON.parse(localStorage.getItem('sid'));
         let isAuth = !hasToken ? false : this.context.isAuthName;
-        
+
         //Execute guard if already logged in
         if (isAuth) {
             this.setState({ redirectToHome: true });
         }
     }
 
+    //Error handling and control inputs
     handleChange(event) {
-        this.setState({ [event.target.name]: event.target.value });
+        const [inputName, inputValue] = [event.target.name, event.target.value];
+        const err = testInput[inputName](inputValue);
+        if (err) {
+            this.setState((oldState => ({ ...oldState, errors: {...oldState.errors, [inputName]: err } })))
+        } else {
+            this.setState((oldState => ({ ...oldState, errors: {...oldState.errors, [inputName]: null } })))
+        }
+        this.setState({ [inputName]: inputValue });
     }
 
     handleSubmit(event) {
@@ -64,17 +76,34 @@ class Login extends Component {
                     </div> */}
                     <div className="form-group">
                         <label className="form-label" htmlFor="username">Username</label>
-                        <input type="username" className="form-control" placeholder="Username" name="username" value={this.state.username} onChange={this.handleChange} />
+                        <input
+                            type="username"
+                            className="form-control"
+                            placeholder="Username"
+                            name="username"
+                            // value={this.state.username}
+                            // onChange={this.handleChange}
+                            onBlur={this.handleChange}
+                        />
+                        <Notificate type="error">{this.state.errors.username}</Notificate>
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="password">Password</label>
-                        <input type="password" className="form-control" placeholder="Password" name="password" value={this.state.password} onChange={this.handleChange} />
+                        <input
+                            type="password"
+                            className="form-control"
+                            placeholder="Password"
+                            name="password"
+                            // value={this.state.password}
+                            onBlur={this.handleChange}
+                        />
+                        <Notificate type="error">{this.state.errors.password}</Notificate>
                     </div>
                     <br></br>
                     <button type="submit" className="btn btn-primary">Login</button>
                 </form>
-                <div style={{padding:'2rem'}}>
-                Don't have an account?
+                <div style={{ padding: '2rem' }}>
+                    Don't have an account?
                 <Link to="/auth/register"><span className="nav-link">   Register now</span> </Link>
                 </div>
             </div>

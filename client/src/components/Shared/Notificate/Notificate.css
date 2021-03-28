@@ -1,0 +1,14 @@
+.notification .error {
+    color: rgb(145, 31, 3);
+    font-weight: bold;
+}
+
+.notification .message {
+    color: green;
+    font-weight: bold;
+}
+
+.notification .notify {
+    color: lightblue;
+    font-weight: bold;
+}
