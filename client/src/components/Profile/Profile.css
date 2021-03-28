@@ -1,3 +1,13 @@
+.quiz-content .logo {
+    /* background-image: url("https://steamuserimages-a.akamaihd.net/ugc/43115205925272849/10F90CAD36A6D14E8E729F9F3538E4213518816E/"); */
+    background-image: url("http://vignette1.wikia.nocookie.net/austinally/images/1/14/Welcome_to_my_profile_scraps_comment_13.gif/revision/latest?cb=20120416025054");
+    /* background-image: url("https://ravish.my1.ru/Profail.gif"); */
+    background-repeat: no-repeat;
+    display: block;
+    min-height: 7rem;
+    margin: 0 23rem;
+}
+
 .quiz-content .profile-page .quiz-results {
     /* width: 70rem; */
     text-align: center;

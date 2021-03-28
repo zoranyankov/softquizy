@@ -92,6 +92,9 @@ const Choosequiz = ({ history }) => {
 
                 <br />
                 <br />
+                <br />
+                <br />
+                <br />
 
                 {/* <label htmlFor="trivia_type">Select Type: </label>
                 <br />

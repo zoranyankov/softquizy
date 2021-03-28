@@ -1,3 +1,9 @@
+.create-form {
+    /* background-image: url("https://i.gifer.com/Ea7y.gif"); */
+    background-image: url("https://i.gifer.com/origin/45/456b64482119932b74a491c69a14e057.gif");
+    background-repeat: no-repeat;
+}
+
 .create-form .form-control {
     width: 300px;
 }

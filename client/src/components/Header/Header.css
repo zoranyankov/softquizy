@@ -2,7 +2,8 @@
     /* background-image: url(''); */
     display: inline-block;
     width: 100%;
-    background-color: skyblue;
+    /* background-color: skyblue; */
+    background-color: rgb(182, 226, 243);
     /* color: red; */
 }
 
@@ -52,6 +53,6 @@
     vertical-align: top;
 }
 
-.nav-header .matIcon .external{
+.nav-header .matIcon .external {
     margin-left: 0.1rem;
 }

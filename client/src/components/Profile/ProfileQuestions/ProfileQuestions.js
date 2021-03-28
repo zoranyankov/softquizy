@@ -43,20 +43,18 @@ const ProfileQuestions = (props) => {
     }
 
     return (
-        <div className="quiz-content">
+        <>
             <h3>CEATED QUESTIONS</h3>
-            <div className="profile-page">
-                <Accordion data={userQuestions} />
-                {/* {userQuestions.map(result => (
+            <Accordion data={userQuestions} />
+            {/* {userQuestions.map(result => (
                     <div className="quiz-questions" key={result._id}>
                         <QuestionTable rows={result.userQuestions} score={result.score} quizName={result.quizName} />
                     </div>
                 ))} */}
-            </div>
             <br />
             <br />
             <br />
-        </div>
+        </>
     );
 }
 

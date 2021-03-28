@@ -63,7 +63,8 @@ const Profile = ({ history }) => {
 
     return (
         <div className="quiz-content">
-            <h1>THE PROFILE PAGE</h1>
+            <div className="logo" />
+            {/* <h1>THE PROFILE PAGE</h1> */}
             <div className="profile-page">
 
                 {/* PROFILE RESULTS BUTTON */}

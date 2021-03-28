@@ -43,20 +43,18 @@ const ProfileResults = (props) => {
     }
 
     return (
-        <div className="quiz-content">
-                        <h3>RESULTS HISTORY</h3>
-            <div className="profile-page">
-                <Accordion data={userResults} type="results" />
-                {/* {userResults.map(result => (
+        <>
+            <h3>RESULTS HISTORY</h3>
+            <Accordion data={userResults} type="results" />
+            {/* {userResults.map(result => (
                     <div className="quiz-results" key={result._id}>
                         <ResultsTable rows={result.userResults} score={result.score} quizName={result.quizName} />
                     </div>
                 ))} */}
-            </div>
             <br />
             <br />
             <br />
-        </div>
+        </>
     );
 }
 
