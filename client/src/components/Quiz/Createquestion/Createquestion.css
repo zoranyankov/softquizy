@@ -5,15 +5,23 @@
 }
 
 .create-form .form-control {
-    width: 300px;
+    width: 20rem;
     border-radius: 0.3rem;
     padding: 0.3rem;
 }
 
 .create-form .text {
-    width: 300px;
+    width: 20rem;
     height: 40px;
-    resize: vertical;
+    padding: 0.3rem;
+    margin-left: 0.5rem;
+}
+
+.create-form .incorrect-answer {
+    width: 17rem;
+    height: 40px;
+    padding: 0.3rem;
+    margin-left: 0.5rem;
 }
 
 
@@ -21,6 +29,11 @@
     width: 300px;
     height: 200px;
 } */
+
+.create-form .remove-btn {
+    vertical-align: top;
+    margin-left: 0.5rem;
+}
 
 .create-form .create-btn {
     display: inline-block;

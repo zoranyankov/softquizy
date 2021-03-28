@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'skyblue',
         color: 'darkBlue',
         margin: theme.spacing(5),
+        marginTop: '7rem',
         // margin: '3rem 5rem',
     }
 }));
@@ -113,13 +114,7 @@ const Choosequiz = ({ history }) => {
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
-                </select>
-
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
+                </select><br />
 
                 {/* <label htmlFor="trivia_type">Select Type: </label>
                 <br />
@@ -146,6 +141,7 @@ const Choosequiz = ({ history }) => {
                 <br /> */}
 
                 <Button
+                    type="submit"
                     size='large'
                     className={classes.button}
                     variant="contained"

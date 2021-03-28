@@ -61,7 +61,7 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, chec
     const errors = req.errors;
     const newQuestion = req.body;
 
-    newQuestion.incorrect_answers = newQuestion.incorrect_answers.split(' / ')
+    // newQuestion.incorrect_answers = newQuestion.incorrect_answers.split(' / ')
 
     // if (errors && errors.errors.length > 0) {
     //     res.status(422).render('questions/createQuestion', {...errors, ...req.body });
