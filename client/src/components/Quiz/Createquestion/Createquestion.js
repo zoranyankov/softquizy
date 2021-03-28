@@ -1,13 +1,36 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
+//Import components from Material UI
+import Button from '@material-ui/core/Button';
+// import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { makeStyles } from '@material-ui/core/styles';
+import CreateIcon from '@material-ui/icons/Create';
+
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
 import './Createquestion.css';
 
+//Make custom styles for Material UI Button component
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+    button: {
+        backgroundColor: 'skyblue',
+        color: 'darkBlue',
+        margin: theme.spacing(5),
+        // margin: '3rem 5rem',
+    }
+}));
 // let timer = null;
 const Createquestion = ({ history }) => {
+
+    //Apply materials custom styles
+    const classes = useStyles();
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
@@ -15,7 +38,7 @@ const Createquestion = ({ history }) => {
     let isAuth = !hasToken ? false : context.isAuthName;
 
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: '' });
-    
+
     //Execute guard - redirect if is not authenticated
     if (!isAuth) {
         return <Redirect to="/auth/login" />;
@@ -26,7 +49,7 @@ const Createquestion = ({ history }) => {
         // console.log('timer');
 
         const target = event.target;
-                
+
         //Auto resize the textareas
         if (target.nodeName === 'TEXTAREA') {
             target.style.height = 'auto';
@@ -183,8 +206,18 @@ const Createquestion = ({ history }) => {
 
                 <br />
                 <br />
-
-                <button className="btn create-btn" type="submit">Create Question</button>
+                <Button
+                    size='large'
+                    className={classes.button}
+                    variant="contained"
+                    color="primary"
+                    // href="/quizes/create-question"
+                    // onClick={(e) => onButtonClick(e, '/quizes/create-question')}
+                    startIcon={<CreateIcon />}
+                >
+                    Create Question
+                </Button>
+                {/* <button className="btn create-btn" type="submit">Create Question</button> */}
                 {/* <button className="btn btn-lg btn-primary btn-block create-btn" type="submit">Create Question</button> */}
             </form>
         </div>

@@ -44,6 +44,8 @@ const Userpage = ({ history }) => {
         event.preventDefault();
         history.push(path);
     }
+    
+    //Apply materials custom styles
     const classes = useStyles();
 
     let [questions, setQuestions] = useState('');

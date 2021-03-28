@@ -3,6 +3,13 @@ import { Redirect } from 'react-router-dom';
 
 import AppContext from '../../AppContext';
 
+//Import components from Material UI
+import Button from '@material-ui/core/Button';
+// import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { makeStyles } from '@material-ui/core/styles';
+import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+
+
 import triviaServises from '../../../sevices/trivia/triviaServices';
 import './Choosequiz.css';
 
@@ -10,7 +17,25 @@ import './Choosequiz.css';
 //     trivia_difficulty
 //     trivia_type}
 
+//Make custom styles for Material UI Button component
+const useStyles = makeStyles((theme) => ({
+    root: {
+        '& > *': {
+            margin: theme.spacing(1),
+        },
+    },
+    button: {
+        backgroundColor: 'skyblue',
+        color: 'darkBlue',
+        margin: theme.spacing(5),
+        // margin: '3rem 5rem',
+    }
+}));
+
 const Choosequiz = ({ history }) => {
+
+    //Apply materials custom styles
+    const classes = useStyles();
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
@@ -120,7 +145,19 @@ const Choosequiz = ({ history }) => {
 
                 <br /> */}
 
-                <button className="btn create-btn" type="submit">Get Quiz from Trivia</button>
+                <Button
+                    size='large'
+                    className={classes.button}
+                    variant="contained"
+                    color="primary"
+                    // href="/quizes/create-question"
+                    // onClick={(e) => onButtonClick(e, '/quizes/create-question')}
+                    startIcon={<ImportContactsIcon />}
+                >
+                    Get Quiz from Trivia
+                </Button>
+
+                {/* <button className="btn create-btn" type="submit">Get Quiz from Trivia</button> */}
             </form>
         </div>
     );

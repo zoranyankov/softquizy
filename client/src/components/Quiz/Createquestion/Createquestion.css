@@ -6,11 +6,13 @@
 
 .create-form .form-control {
     width: 300px;
+    border-radius: 0.3rem;
+    padding: 0.3rem;
 }
 
 .create-form .text {
     width: 300px;
-    height: 34px;
+    height: 40px;
     resize: vertical;
 }
 
@@ -22,9 +24,11 @@
 
 .create-form .create-btn {
     display: inline-block;
-    padding: 0 1rem;
+    padding: 0.5 1.5rem;
+    /* padding: 0.3rem; */
     margin: 2rem 3rem;
     border: olivedrab 1px solid;
+    border-radius: 0.3rem;
     background-color: paleturquoise;
     font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 15px;
