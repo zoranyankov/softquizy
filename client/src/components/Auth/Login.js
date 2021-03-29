@@ -12,6 +12,8 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Notificate from '../Shared/Notificate';
 import ButtonLink from '../Shared/ButtonLink';
 
+import errorIcon from '../../../src/assets/error.svg';
+
 
 class Login extends Component {
     constructor(props) {
@@ -54,13 +56,43 @@ class Login extends Component {
     handleSubmit(event) {
         event.preventDefault();
         authService.login(this.state)
-            .then(({ user, token }) => {
-                console.log(user);
+            .then((response) => {
+                if (!response || response.errors) {
+                    const errorsList = response.errors.map((err, i) => {
+                        return (
+                            {
+                                id: i + err.message,
+                                title: 'Login Error',
+                                description: err.message,
+                                backgroundColor: '#d9534f',
+                                icon: errorIcon
+                            }
+                        );
+                    });
+                    this.context.setTestList(errorsList);
+                    return;
+                }
+                const { user, token } = response;
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
                 this.setState({ redirectToHome: true });
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                const errorsList = err.errors.map((err, i) => {
+                    return (
+                        {
+                            id: i + err.message,
+                            title: 'Login Error',
+                            description: err.message,
+                            backgroundColor: '#d9534f',
+                            icon: errorIcon
+                        }
+                    );
+                });
+                this.context.setTestList(errorsList);
+                console.log('inlLoginFeError')
+                console.log(err)
+            })
     }
 
     render() {

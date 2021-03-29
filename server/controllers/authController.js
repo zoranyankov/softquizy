@@ -179,7 +179,7 @@ router.post('/register', (req, res, next) => {
                     } else {
                         errors = { errors: { message: err.message } };
                     }
-                    res.json({ errors, title: 'Register Page' });
+                    res.status(422).json({ errors, title: 'Register Page' });
                     // res.render('auth/register', { errors, title: 'Register Page' })
                     // next(err);
                     return;

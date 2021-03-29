@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -25,15 +25,24 @@ import Quizes from './components/Quiz/Quizes';
 import Footer from './components/Footer';
 
 
+// import checkIcon from './assets/check.svg';
+// import errorIcon from './assets/error.svg';
+// import infoIcon from './assets/info.svg';
+// import warningIcon from './assets/warning.svg';
+import Toast from './components/Shared/Toast';
+
+
 function App() {
+
     //Get actual state of Token if is authenticated
     let parsedToken = JSON.parse(localStorage.getItem('sid'));
     const getUserName = (parsedToken && parsedToken.user) ? parsedToken.user.username : false;
     const userId = (parsedToken && parsedToken.user) ? parsedToken.user._id : false;
 
     //Define global states
-    const [isAuth, setIsAuth] = React.useState(getUserName);
-    const [trivia, setTrivia] = React.useState([]);
+    const [isAuth, setIsAuth] = useState(getUserName);
+    const [trivia, setTrivia] = useState([]);
+    const [testList, setTestList] = useState([]);
 
     //Global App context object
     const userSettings = {
@@ -41,7 +50,9 @@ function App() {
         isAuthName: isAuth,
         setIsAuth,
         trivia,
-        setTrivia
+        setTrivia,
+        testList,
+        setTestList
     };
 
     useEffect(() => {
@@ -61,7 +72,7 @@ function App() {
                     console.log('Userpage Verify Error:' + err)
                 })
         }
-    }, [parsedToken, isAuth])
+    }, [parsedToken, isAuth, testList])
 
     return (
         <Router>
@@ -76,7 +87,10 @@ function App() {
                             <Route path="/quizes" component={Quizes} />
                         </Switch>
                     </div>
-
+                    {testList && <Toast
+                        toastList={testList}
+                        position="bottom-right"
+                    />}
                     <Footer />
                 </div >
             </AppContext.Provider>
