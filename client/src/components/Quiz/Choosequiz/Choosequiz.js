@@ -1,15 +1,22 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
+//import global AppContext
 import AppContext from '../../AppContext';
 
 //Import components from Material UI
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
+//Import services
+import triviaServises from '../../../sevices/trivia/triviaServices';
+
+//Import shared components
+import Notificate from '../../Shared/Notificate';
 import ButtonLink from '../../Shared/ButtonLink';
 
-import triviaServises from '../../../sevices/trivia/triviaServices';
 import './Choosequiz.css';
+
+
 
 const Choosequiz = ({ history }) => {
 
@@ -20,7 +27,7 @@ const Choosequiz = ({ history }) => {
 
     // console.log(context);
 
-    let [fields, setFields] = useState({ trivia_category: 'any', trivia_difficulty: 'any' });
+    let [fields, setFields] = useState({ trivia_category: 'any', trivia_difficulty: 'any', errors: '', errorTimeout: '' });
 
     //Execute guard - redirect if is not authenticated
     if (!isAuth) {
@@ -33,22 +40,60 @@ const Choosequiz = ({ history }) => {
 
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
-
         setFields({
             ...oldState,
             [name]: value
         });
+        clearInterval(fields.errorTimeout[name]);
+
+        const err = (value === 'any') ? `Field ${name.replace('trivia_', '')} is required` : null;
+        // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
+
+        if (err) {
+            setFields(oldState => ({ ...oldState,
+            errorTimeout :{[name] : setTimeout(() => {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
+            }, 3000)}}));
+        } else {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })))
+        }
+
+        // if (value === 'any') {
+        //     setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: `Field ${name.replace('trivia_', '')} is required` } })));
+        // }
+
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        if (fields.trivia_category === 'any') {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_category: `Field Category is required` } })));
+        } else {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_category: null } })));
+        }
+        if (fields.trivia_difficulty === 'any') {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_difficulty: `Field Difficulty is required` } })));
+        } else {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_difficulty: null } })));
+        }
+
         triviaServises.getAll(fields)
             .then(res => {
+                if (res.results.length === 0) {
+                    context.setTestList([{id: 'Not Found', title:'Error', description: `Still don't have this quiz :(`}]);
+                }
                 context.setTrivia(res.results);
                 history.push(`/quizes/external/${fields.trivia_category}/${res.results[0].category}`);
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log('trivia error');
+                console.log(err);
+                // const errorsList = err.errors.map((err, i) => {
+                //     return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
+                // });
+                // context.setTestList(errorsList);
+            })
     }
 
 
@@ -72,8 +117,9 @@ const Choosequiz = ({ history }) => {
                     onChange={(e) => handleInputChange(e, fields)}
                 >
                     <option value="any">Any Category</option>
-                    <option value="9">General Knowledge</option><option value="10">Entertainment: Books</option><option value="11">Entertainment: Film</option><option value="12">Entertainment: Music</option><option value="13">Entertainment: Musicals &amp; Theatres</option><option value="14">Entertainment: Television</option><option value="15">Entertainment: Video Games</option><option value="16">Entertainment: Board Games</option><option value="17">Science &amp; Nature</option><option value="18">Science: Computers</option><option value="19">Science: Mathematics</option><option value="20">Mythology</option><option value="21">Sports</option><option value="22">Geography</option><option value="23">History</option><option value="24">Politics</option><option value="25">Art</option><option value="26">Celebrities</option><option value="27">Animals</option><option value="28">Vehicles</option><option value="29">Entertainment: Comics</option><option value="30">Science: Gadgets</option><option value="31">Entertainment: Japanese Anime &amp; Manga</option><option value="32">Entertainment: Cartoon &amp; Animations</option>		</select>
-
+                    <option value="9">General Knowledge</option><option value="10">Entertainment: Books</option><option value="11">Entertainment: Film</option><option value="12">Entertainment: Music</option><option value="13">Entertainment: Musicals &amp; Theatres</option><option value="14">Entertainment: Television</option><option value="15">Entertainment: Video Games</option><option value="16">Entertainment: Board Games</option><option value="17">Science &amp; Nature</option><option value="18">Science: Computers</option><option value="19">Science: Mathematics</option><option value="20">Mythology</option><option value="21">Sports</option><option value="22">Geography</option><option value="23">History</option><option value="24">Politics</option><option value="25">Art</option><option value="26">Celebrities</option><option value="27">Animals</option><option value="28">Vehicles</option><option value="29">Entertainment: Comics</option><option value="30">Science: Gadgets</option><option value="31">Entertainment: Japanese Anime &amp; Manga</option><option value="32">Entertainment: Cartoon &amp; Animations</option>
+                </select>
+                <Notificate type="error">{fields.errors.trivia_category}</Notificate>
                 <br />
                 <br />
 
@@ -90,6 +136,7 @@ const Choosequiz = ({ history }) => {
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select><br />
+                <Notificate type="error">{fields.errors.trivia_difficulty}</Notificate>
 
                 {/* <label htmlFor="trivia_type">Select Type: </label>
                 <br />

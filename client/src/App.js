@@ -89,7 +89,8 @@ function App() {
                     </div>
                     {testList && <Toast
                         toastList={testList}
-                        position="bottom-right"
+                        // position="bottom-right"
+                        position="top-left"
                     />}
                     <Footer />
                 </div >

@@ -4,6 +4,13 @@
     position: fixed;
 }
 
+.toaster-containter .middle {
+    top: 40%;
+    right: 28%;
+    transition: transform .6s ease-in-out;
+    animation: toast-in-right .7s;
+}
+
 .toaster-containter .top-right {
     top: 12px;
     right: 12px;

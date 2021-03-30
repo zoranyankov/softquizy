@@ -64,7 +64,7 @@ class Login extends Component {
             .then((response) => {
                 if (!response || response.errors) {
                     const errorsList = response.errors.map((err, i) => {
-                        return ( { id: i + err.message, title: 'Error', description: err.message } );
+                        return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
                     });
                     this.context.setTestList(errorsList);
                     return;
@@ -72,12 +72,12 @@ class Login extends Component {
                 const { user, token } = response;
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
-                this.context.setTestList([{ id: 'Login successful', title: 'Success', description: 'Login successful',}])
+                this.context.setTestList([{ id: 'Login successful', title: 'Success', description: 'Login successful', position:'middle' }])
                 this.setState({ redirectToHome: true });
             })
             .catch(err => {
                 const errorsList = err.errors.map((err, i) => {
-                    return ( { id: i + err.message, title: 'Error', description: err.message } );
+                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
                 });
                 this.context.setTestList(errorsList);
             })
