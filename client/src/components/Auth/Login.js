@@ -14,6 +14,7 @@ import Notificate from '../Shared/Notificate';
 import ButtonLink from '../Shared/ButtonLink';
 
 import errorIcon from '../../../src/assets/error.svg';
+import info from '../../../src/assets/info.svg';
 
 
 class Login extends Component {
@@ -63,7 +64,7 @@ class Login extends Component {
                         return (
                             {
                                 id: i + err.message,
-                                title: 'Login Error',
+                                title: 'Error',
                                 description: err.message,
                                 backgroundColor: '#d9534f',
                                 icon: errorIcon
@@ -76,6 +77,13 @@ class Login extends Component {
                 const { user, token } = response;
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
+                this.context.setTestList([{
+                    id: 'Login successful',
+                    title: 'Success',
+                    description: 'Login successful',
+                    backgroundColor: '#5cb85c',
+                    icon: info
+                }])
                 this.setState({ redirectToHome: true });
             })
             .catch(err => {
@@ -83,7 +91,7 @@ class Login extends Component {
                     return (
                         {
                             id: i + err.message,
-                            title: 'Login Error',
+                            title: 'Error',
                             description: err.message,
                             backgroundColor: '#d9534f',
                             icon: errorIcon

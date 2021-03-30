@@ -13,6 +13,7 @@ import Notificate from '../Shared/Notificate';
 import ButtonLink from '../Shared/ButtonLink';
 
 import errorIcon from '../../../src/assets/error.svg';
+import info from '../../../src/assets/info.svg';
 
 
 class Register extends Component {
@@ -50,7 +51,7 @@ class Register extends Component {
         if (this.state.rePassword !== this.state.password) {
             this.context.setTestList([{
                 id: 'Both passwords must match',
-                title: 'Register Error',
+                title: 'Error',
                 description: 'Both passwords must match',
                 backgroundColor: '#d9534f',
                 icon: errorIcon
@@ -64,7 +65,7 @@ class Register extends Component {
                         return (
                             {
                                 id: i + err.message,
-                                title: 'Register Error',
+                                title: 'Error',
                                 description: err.message,
                                 backgroundColor: '#d9534f',
                                 icon: errorIcon
@@ -74,6 +75,13 @@ class Register extends Component {
                     this.context.setTestList(errorsList);
                     return;
                 }
+                this.context.setTestList([{
+                    id: 'Register successful',
+                    title: 'Success',
+                    description: 'Register successful',
+                    backgroundColor: '#5cb85c',
+                    icon: info
+                }])
                 this.setState({ redirectToLogin: true });
             })
             .catch(err => {
@@ -81,7 +89,7 @@ class Register extends Component {
                     return (
                         {
                             id: i + err.message,
-                            title: 'Register Error',
+                            title: 'Error',
                             description: err.message,
                             backgroundColor: '#d9534f',
                             icon: errorIcon
