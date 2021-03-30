@@ -18,6 +18,6 @@ const rePassword = (rePassToTest) => {
     }
 }
 
-const testInput =  {username, password, rePassword};
+const testAuthInput =  {username, password, rePassword};
 
-export default testInput;
+export default testAuthInput;

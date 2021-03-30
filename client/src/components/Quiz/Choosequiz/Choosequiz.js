@@ -69,11 +69,13 @@ const Choosequiz = ({ history }) => {
 
         if (fields.trivia_category === 'any') {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_category: `Field Category is required` } })));
+            return;
         } else {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_category: null } })));
         }
         if (fields.trivia_difficulty === 'any') {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_difficulty: `Field Difficulty is required` } })));
+            return;
         } else {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, trivia_difficulty: null } })));
         }
@@ -81,7 +83,7 @@ const Choosequiz = ({ history }) => {
         triviaServises.getAll(fields)
             .then(res => {
                 if (res.results.length === 0) {
-                    context.setTestList([{id: 'Not Found', title:'Error', description: `Still don't have this quiz :(`}]);
+                    context.setNotifyList([{id: 'Not Found', title:'Error', description: `Still don't have this quiz :(`}]);
                 }
                 context.setTrivia(res.results);
                 history.push(`/quizes/external/${fields.trivia_category}/${res.results[0].category}`);
@@ -92,7 +94,7 @@ const Choosequiz = ({ history }) => {
                 // const errorsList = err.errors.map((err, i) => {
                 //     return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
                 // });
-                // context.setTestList(errorsList);
+                // context.setNotifyList(errorsList);
             })
     }
 

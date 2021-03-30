@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 //Import services
 import AppContext from '../AppContext';
 import authService from '../../sevices/auth/authServices';
-import testInput from '../../sevices/test/authTestServices';
+import testAuthInput from '../../sevices/test/authTestServices';
 
 //Import components from Material UI
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
@@ -45,7 +45,7 @@ class Login extends Component {
         const [inputName, inputValue] = [event.target.name, event.target.value];
         this.setState({ [inputName]: inputValue });
         clearInterval(this.state.errorTimeout[inputName]);
-        const err = testInput[inputName](inputValue);
+        const err = testAuthInput[inputName](inputValue);
         // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
 
         if (err) {
@@ -66,20 +66,20 @@ class Login extends Component {
                     const errorsList = response.errors.map((err, i) => {
                         return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
                     });
-                    this.context.setTestList(errorsList);
+                    this.context.setNotifyList(errorsList);
                     return;
                 }
                 const { user, token } = response;
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
-                this.context.setTestList([{ id: 'Login successful', title: 'Success', description: 'Login successful', position:'middle' }])
+                this.context.setNotifyList([{ id: 'Login successful', title: 'Success', description: 'Login successful', position:'middle' }])
                 this.setState({ redirectToHome: true });
             })
             .catch(err => {
                 const errorsList = err.errors.map((err, i) => {
                     return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
                 });
-                this.context.setTestList(errorsList);
+                this.context.setNotifyList(errorsList);
             })
     }
 

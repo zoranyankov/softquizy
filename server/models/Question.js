@@ -12,6 +12,7 @@ const questionSchema = new mongoose.Schema({
     question: {
         type: String,
         required: [true, 'Question is required!'],
+        minlength: 10,
         maxlength: 100,
     },
     // imageUrl: {
@@ -27,10 +28,14 @@ const questionSchema = new mongoose.Schema({
     correct_answer: {
         type: String,
         required: [true, 'need to specify correct answer'],
+        minlength: 10,
+        maxlength: 100,
     },
     incorrect_answers: [{
         type: String,
         required: [true, 'need to specify at lease one wrong answer'],
+        minlength: 10,
+        maxlength: 100,
     }],
     creatorId: {
         type: String,

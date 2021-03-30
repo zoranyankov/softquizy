@@ -4,7 +4,7 @@ import { Redirect, Link } from 'react-router-dom';
 //Import services
 import AppContext from '../AppContext';
 import authService from '../../sevices/auth/authServices';
-import testInput from '../../sevices/test/authTestServices';
+import testAuthInput from '../../sevices/test/authTestServices';
 
 //Import components from Material UI
 import CreateIcon from '@material-ui/icons/Create';
@@ -35,7 +35,7 @@ class Register extends Component {
         const [inputName, inputValue] = [event.target.name, event.target.value];
         this.setState({ [inputName]: inputValue });
         clearInterval(this.state.errorTimeout[inputName]);
-        const err = testInput[inputName](inputValue);
+        const err = testAuthInput[inputName](inputValue);
         // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
 
         if (err) {
@@ -51,22 +51,22 @@ class Register extends Component {
     handleSubmit(event) {
         event.preventDefault();
         if (this.state.rePassword !== this.state.password) {
-            this.context.setTestList([{ id: 'Both passwords must match', title: 'Error', description: 'Both passwords must match' }])
+            this.context.setNotifyList([{ id: 'Both passwords must match', title: 'Error', description: 'Both passwords must match' }])
             return;
         }
         authService.register(this.state)
             .then((response) => {
                 if (!response || response.errors) {
                     const errorsList = response.errors.map((err, i) => ({ id: i + err.message, title: 'Error', description: err.message }));
-                    this.context.setTestList(errorsList);
+                    this.context.setNotifyList(errorsList);
                     return;
                 }
-                this.context.setTestList([{ id: 'Register successful', title: 'Success', description: 'Register successful' }])
+                this.context.setNotifyList([{ id: 'Register successful', title: 'Success', description: 'Register successful' }])
                 this.setState({ redirectToLogin: true });
             })
             .catch(err => {
                 const errorsList = err.errors.map((err, i) => ( { id: i + err.message, title: 'Error', description: err.message }));
-                this.context.setTestList(errorsList);
+                this.context.setNotifyList(errorsList);
                 console.log('inRegisterFendler')
                 console.log(err)
             })

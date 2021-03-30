@@ -42,7 +42,7 @@ function App() {
     //Define global states
     const [isAuth, setIsAuth] = useState(getUserName);
     const [trivia, setTrivia] = useState([]);
-    const [testList, setTestList] = useState([]);
+    const [notifyList, setNotifyList] = useState([]);
 
     //Global App context object
     const userSettings = {
@@ -51,8 +51,8 @@ function App() {
         setIsAuth,
         trivia,
         setTrivia,
-        testList,
-        setTestList
+        notifyList,
+        setNotifyList
     };
 
     useEffect(() => {
@@ -72,7 +72,7 @@ function App() {
                     console.log('Userpage Verify Error:' + err)
                 })
         }
-    }, [parsedToken, isAuth, testList])
+    }, [parsedToken, isAuth, notifyList])
 
     return (
         <Router>
@@ -87,8 +87,8 @@ function App() {
                             <Route path="/quizes" component={Quizes} />
                         </Switch>
                     </div>
-                    {testList && <Toast
-                        toastList={testList}
+                    {notifyList && <Toast
+                        toastList={notifyList}
                         // position="bottom-right"
                         position="top-left"
                     />}

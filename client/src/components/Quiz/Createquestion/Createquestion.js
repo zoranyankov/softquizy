@@ -9,9 +9,12 @@ import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
+import testQuestionInput from '../../../sevices/test/questionsTestService';
 
+
+//Import shared components
+import Notificate from '../../Shared/Notificate';
 import ButtonLink from '../../Shared/ButtonLink';
-
 
 import './Createquestion.css';
 
@@ -22,7 +25,7 @@ const Createquestion = ({ history }) => {
     const context = useContext(AppContext);
     let isAuth = !hasToken ? false : context.isAuthName;
 
-    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''] });
+    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: '', errorTimeout: '' });
 
 
     //Execute guard - redirect if is not authenticated
@@ -39,7 +42,7 @@ const Createquestion = ({ history }) => {
     function handleInputChange(event, oldState, i) {
 
         const target = event.target;
-        console.log(target);
+        // console.log(target);
 
         //Auto resize the textareas
         if (target.name === 'incorrect_answer') {
@@ -58,7 +61,41 @@ const Createquestion = ({ history }) => {
             ...oldState,
             [name]: value
         });
+        clearInterval(fields.errorTimeout[name]);
+
+        if (name === 'category' || name === 'difficulty') {
+            if (value === 'any') {
+                setFields(oldState => ({
+                    ...oldState,
+                    errorTimeout: {
+                        [name]: setTimeout(() => {
+                            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: `Field ${name} is required` } })))
+                        }, 3000)
+                    }
+                }));
+                return;
+            } else {
+                setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })));
+                return;
+            }
+        }
+
+        const err = testQuestionInput(name, value);
+
+
+        if (err) {
+            setFields(oldState => ({...oldState,
+                errorTimeout: {[name]: setTimeout(() => {
+                        setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
+                    }, 3000)
+                }
+            }));
+            return;
+        } else {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })))
+        }
     }
+
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -91,7 +128,9 @@ const Createquestion = ({ history }) => {
                     <option value="6">Math</option>
                     <option value="7">Geography</option>
                     <option value="8">History</option>
-                </select><br /><br />
+                </select>
+                <Notificate type="error">{fields.errors.category || < br />}</Notificate><br />
+
                 <label htmlFor="difficulty">Select Difficulty: </label><br />
                 <select
                     name="difficulty"
@@ -103,7 +142,8 @@ const Createquestion = ({ history }) => {
                     <option value="easy">Easy</option>
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
-                </select><br /><br />
+                </select>
+                <Notificate type="error">{fields.errors.difficulty || < br />}</Notificate><br />
                 <label htmlFor="question">Write the question: </label><br />
                 <textarea
                     type="text"
@@ -112,7 +152,8 @@ const Createquestion = ({ history }) => {
                     name="question"
                     value={fields.question}
                     onChange={(e) => handleInputChange(e, fields)}
-                /><br /><br />
+                />
+                <Notificate type="error">{fields.errors.question || < br />}</Notificate><br />
                 <label htmlFor="correct_answer">Write the correct answer: </label><br />
                 <textarea
                     type="text"
@@ -121,7 +162,8 @@ const Createquestion = ({ history }) => {
                     name="correct_answer"
                     value={fields.correct_answer}
                     onChange={(e) => handleInputChange(e, fields)}
-                /><br /><br />
+                />
+                <Notificate type="error">{fields.errors.correct_answer || < br />}</Notificate><br /><br />
                 <label htmlFor="incorrect_answer">Write the wrong answers: </label><br />
                 {fields.incorrect_answers.map((wa, i) =>
                     <div key={i} >
