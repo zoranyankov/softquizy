@@ -46,15 +46,15 @@ class Login extends Component {
         this.setState({ [inputName]: inputValue });
         clearInterval(this.state.errorTimeout[inputName]);
         const err = testInput[inputName](inputValue);
-        this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
+        // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
 
         if (err) {
             this.setState({
             errorTimeout :{[inputName] : setTimeout(() => {
             this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
             }, 3000)}});
-        // } else {
-        //     this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
+        } else {
+            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
         }
     }
 
