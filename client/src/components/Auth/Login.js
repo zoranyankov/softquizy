@@ -13,10 +13,6 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import Notificate from '../Shared/Notificate';
 import ButtonLink from '../Shared/ButtonLink';
 
-import errorIcon from '../../../src/assets/error.svg';
-import info from '../../../src/assets/info.svg';
-
-
 class Login extends Component {
     constructor(props) {
         super(props);
@@ -26,7 +22,8 @@ class Login extends Component {
             username: '',
             password: '',
             redirectToHome: false,
-            errors: ''
+            errors: '',
+            errorTimeout: '',
         };
     }
 
@@ -46,13 +43,19 @@ class Login extends Component {
     //Error handling and control inputs
     handleChange(event) {
         const [inputName, inputValue] = [event.target.name, event.target.value];
-        const err = testInput[inputName](inputValue);
-        if (err) {
-            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
-        } else {
-            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
-        }
         this.setState({ [inputName]: inputValue });
+        clearInterval(this.state.errorTimeout[inputName]);
+        const err = testInput[inputName](inputValue);
+        this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
+
+        if (err) {
+            this.setState({
+            errorTimeout :{[inputName] : setTimeout(() => {
+            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
+            }, 3000)}});
+        // } else {
+        //     this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
+        }
     }
 
     handleSubmit(event) {
@@ -61,15 +64,7 @@ class Login extends Component {
             .then((response) => {
                 if (!response || response.errors) {
                     const errorsList = response.errors.map((err, i) => {
-                        return (
-                            {
-                                id: i + err.message,
-                                title: 'Error',
-                                description: err.message,
-                                backgroundColor: '#d9534f',
-                                icon: errorIcon
-                            }
-                        );
+                        return ( { id: i + err.message, title: 'Error', description: err.message } );
                     });
                     this.context.setTestList(errorsList);
                     return;
@@ -77,30 +72,14 @@ class Login extends Component {
                 const { user, token } = response;
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
-                this.context.setTestList([{
-                    id: 'Login successful',
-                    title: 'Success',
-                    description: 'Login successful',
-                    backgroundColor: '#5cb85c',
-                    icon: info
-                }])
+                this.context.setTestList([{ id: 'Login successful', title: 'Success', description: 'Login successful',}])
                 this.setState({ redirectToHome: true });
             })
             .catch(err => {
                 const errorsList = err.errors.map((err, i) => {
-                    return (
-                        {
-                            id: i + err.message,
-                            title: 'Error',
-                            description: err.message,
-                            backgroundColor: '#d9534f',
-                            icon: errorIcon
-                        }
-                    );
+                    return ( { id: i + err.message, title: 'Error', description: err.message } );
                 });
                 this.context.setTestList(errorsList);
-                console.log('inlLoginFeError')
-                console.log(err)
             })
     }
 
@@ -127,9 +106,7 @@ class Login extends Component {
                             className="form-control"
                             placeholder="Username"
                             name="username"
-                            // value={this.state.username}
-                            // onChange={this.handleChange}
-                            onBlur={this.handleChange}
+                            onChange={this.handleChange}
                         />
                         <Notificate type="error">{this.state.errors.username}</Notificate>
                     </div>
@@ -140,8 +117,7 @@ class Login extends Component {
                             className="form-control"
                             placeholder="Password"
                             name="password"
-                            // value={this.state.password}
-                            onBlur={this.handleChange}
+                            onChange={this.handleChange}
                         />
                         <Notificate type="error">{this.state.errors.password}</Notificate>
                     </div>

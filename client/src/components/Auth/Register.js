@@ -12,9 +12,6 @@ import CreateIcon from '@material-ui/icons/Create';
 import Notificate from '../Shared/Notificate';
 import ButtonLink from '../Shared/ButtonLink';
 
-import errorIcon from '../../../src/assets/error.svg';
-import info from '../../../src/assets/info.svg';
-
 
 class Register extends Component {
     constructor(props) {
@@ -26,76 +23,47 @@ class Register extends Component {
             password: '',
             rePassword: '',
             redirectToLogin: false,
-            errors: ''
+            errors: '',
+            errorTimeout: '',
         };
     }
 
     static contextType = AppContext;
 
     //Error handling and control inputs
-    handleChange(event) {
+     handleChange(event) {
         const [inputName, inputValue] = [event.target.name, event.target.value];
-        const err = testInput[inputName](inputValue);
-        if (err) {
-            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
-        } else if (this.state.password !== this.state.rePassword) {
-            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
-        } else {
-            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
-        }
         this.setState({ [inputName]: inputValue });
+        clearInterval(this.state.errorTimeout[inputName]);
+        const err = testInput[inputName](inputValue);
+        this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
+
+        if (err) {
+            this.setState({
+            errorTimeout :{[inputName] : setTimeout(() => {
+            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
+            }, 3000)}});
+        }
     }
 
     handleSubmit(event) {
         event.preventDefault();
         if (this.state.rePassword !== this.state.password) {
-            this.context.setTestList([{
-                id: 'Both passwords must match',
-                title: 'Error',
-                description: 'Both passwords must match',
-                backgroundColor: '#d9534f',
-                icon: errorIcon
-            }])
+            this.context.setTestList([{ id: 'Both passwords must match', title: 'Error', description: 'Both passwords must match' }])
             return;
         }
         authService.register(this.state)
             .then((response) => {
                 if (!response || response.errors) {
-                    const errorsList = response.errors.map((err, i) => {
-                        return (
-                            {
-                                id: i + err.message,
-                                title: 'Error',
-                                description: err.message,
-                                backgroundColor: '#d9534f',
-                                icon: errorIcon
-                            }
-                        );
-                    });
+                    const errorsList = response.errors.map((err, i) => ({ id: i + err.message, title: 'Error', description: err.message }));
                     this.context.setTestList(errorsList);
                     return;
                 }
-                this.context.setTestList([{
-                    id: 'Register successful',
-                    title: 'Success',
-                    description: 'Register successful',
-                    backgroundColor: '#5cb85c',
-                    icon: info
-                }])
+                this.context.setTestList([{ id: 'Register successful', title: 'Success', description: 'Register successful' }])
                 this.setState({ redirectToLogin: true });
             })
             .catch(err => {
-                const errorsList = err.errors.map((err, i) => {
-                    return (
-                        {
-                            id: i + err.message,
-                            title: 'Error',
-                            description: err.message,
-                            backgroundColor: '#d9534f',
-                            icon: errorIcon
-                        }
-                    );
-                });
+                const errorsList = err.errors.map((err, i) => ( { id: i + err.message, title: 'Error', description: err.message }));
                 this.context.setTestList(errorsList);
                 console.log('inRegisterFendler')
                 console.log(err)
@@ -129,8 +97,7 @@ class Register extends Component {
                             className="form-control"
                             placeholder="Username"
                             name="username"
-                            // value={this.state.username}
-                            onBlur={this.handleChange}
+                            onChange={this.handleChange}
                         />
                     </div>
                     <Notificate type="error">{this.state.errors.username}</Notificate>
@@ -141,8 +108,7 @@ class Register extends Component {
                             className="form-control"
                             placeholder="Password"
                             name="password"
-                            // value={this.state.password}
-                            onBlur={this.handleChange}
+                            onChange={this.handleChange}
                         />
                     </div>
                     <Notificate type="error">{this.state.errors.password}</Notificate>
@@ -153,8 +119,7 @@ class Register extends Component {
                             className="form-control"
                             placeholder="Repeat-Password"
                             name="rePassword"
-                            // value={this.state.rePassword}
-                            onBlur={this.handleChange}
+                            onChange={this.handleChange}
                         />
                     </div>
                     <Notificate type="error">{this.state.errors.rePassword}</Notificate>
