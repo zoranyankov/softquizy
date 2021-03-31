@@ -1,10 +1,16 @@
 const testQuestionInput = (field, strToTest) => {
-    if (strToTest.length < 10) {
+    const length = strToTest.length;
+    console.log(length);
+    console.log('inTEsting');
+    if(length >= 10 && length <= 100) {
+        return null;
+    }
+    if (length < 10) {
         return `${field} must be at least 10 characters long`;
-    } else if (strToTest.length > 100) {
+    }
+    if (length > 100) {
         return `${field} can be maximum 100 characters long`;
     }
-    return null;
 }
 
 export default testQuestionInput;

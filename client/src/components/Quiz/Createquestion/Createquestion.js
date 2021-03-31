@@ -25,7 +25,7 @@ const Createquestion = ({ history }) => {
     const context = useContext(AppContext);
     let isAuth = !hasToken ? false : context.isAuthName;
 
-    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: '', errorTimeout: '' });
+    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: {incorrect_answer: {}}, errorTimeout: '' });
 
 
     //Execute guard - redirect if is not authenticated
@@ -43,25 +43,51 @@ const Createquestion = ({ history }) => {
 
         const target = event.target;
         // console.log(target);
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
 
         //Auto resize the textareas
+        if (target.type === 'textarea') {
+            target.style.height = 'auto';
+            target.style.height = (target.scrollHeight) + 'px';
+        }
+
+        //Set state of incorrect_answers
         if (target.name === 'incorrect_answer') {
             target.style.height = 'auto';
             target.style.height = (target.scrollHeight) + 'px';
             console.log(target.value);
             oldState.incorrect_answers[i] = target.value;
             setFields(oldState => ({ ...oldState, incorrect_answers: oldState.incorrect_answers }));
+        const err = testQuestionInput(name, value);
+         if (err) {
+             console.log(err)
+             console.log(name)
+             console.log(oldState.errors)
+             oldState.errors[name][i] = err;
+             const newErrors =  oldState.errors
+             console.log(newErrors[name][i]);
+            setFields(oldState => ({...oldState,
+                errorTimeout: {[name]: setTimeout(() => {
+                        setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]:{[i] : newErrors}} })))
+                    }, 3000)}
+            }));
+            return;
+        } else {
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: {[i] : null} } })))
+        }
+
             return;
         }
 
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
-
+        //Set state of all other inputs
         setFields({
             ...oldState,
-            [name]: value
+            [name]: value,
         });
+        console.log(name);
         clearInterval(fields.errorTimeout[name]);
+        console.log(fields.errorTimeout[name]);
 
         if (name === 'category' || name === 'difficulty') {
             if (value === 'any') {
@@ -80,8 +106,8 @@ const Createquestion = ({ history }) => {
             }
         }
 
+        console.log(value.length);
         const err = testQuestionInput(name, value);
-
 
         if (err) {
             setFields(oldState => ({...oldState,
@@ -93,6 +119,7 @@ const Createquestion = ({ history }) => {
             return;
         } else {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })))
+            return;
         }
     }
 
@@ -175,6 +202,8 @@ const Createquestion = ({ history }) => {
                             value={wa || ''}
                             onChange={(e) => handleInputChange(e, fields, i)}
                         />
+                {/* <Notificate type="error">{fields.errors.incorrect_answer[0] || < br />}</Notificate><br /> */}
+
                         {i > 0
                             ? <button className="remove-btn" onClick={(e) => removeClick(e, fields, i)} >
                                 <RemoveCircleIcon />

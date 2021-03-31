@@ -42,9 +42,10 @@ const Choosequiz = ({ history }) => {
         const name = target.name;
         setFields({
             ...oldState,
-            [name]: value
+            [name]: value,
+            errorTimeout: {...oldState.errorTimeout, [name]:''}
         });
-        clearInterval(fields.errorTimeout[name]);
+        // clearInterval(fields.errorTimeout[name]);
 
         const err = (value === 'any') ? `Field ${name.replace('trivia_', '')} is required` : null;
         // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));

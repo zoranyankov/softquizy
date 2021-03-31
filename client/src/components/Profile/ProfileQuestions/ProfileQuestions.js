@@ -39,7 +39,11 @@ const ProfileQuestions = (props) => {
 
     //Initial render
     if (userQuestions.length === 0) {
-        return <h1>Still loading...</h1>;
+        return (
+            <>
+                <h1>Still loading...</h1>
+            </>
+        );
     }
 
     return (
