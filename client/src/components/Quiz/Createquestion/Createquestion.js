@@ -25,7 +25,7 @@ const Createquestion = ({ history }) => {
     const appContext = useContext(AppContext);
     let isAuth = !hasToken ? false : appContext.isAuthName;
 
-    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: {incorrect_answer: {}}, errorTimeout: '' });
+    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: { incorrect_answer: {} }, errorTimeout: '' });
 
 
     //Execute guard - redirect if is not authenticated
@@ -53,30 +53,33 @@ const Createquestion = ({ history }) => {
         }
 
         //Set state of incorrect_answers
-        if (target.name === 'incorrect_answer') {
+        if (target.name.startsWith('incorrect_answer')) {
             target.style.height = 'auto';
             target.style.height = (target.scrollHeight) + 'px';
             console.log(target.value);
             oldState.incorrect_answers[i] = target.value;
             setFields(oldState => ({ ...oldState, incorrect_answers: oldState.incorrect_answers }));
-        const err = testQuestionInput(name, value);
-         if (err) {
-             console.log(err)
-             console.log(name)
-             console.log(oldState.errors)
-             oldState.errors[name][i] = err;
-             const newErrors =  oldState.errors
-             console.log(newErrors[name][i]);
-            setFields(oldState => ({...oldState,
-                errorTimeout: {[name]: setTimeout(() => {
-                        setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]:{[i] : newErrors}} })))
-                    }, 3000)}
-            }));
-            return;
-        } else {
-            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: {[i] : null} } })))
-        }
-
+            const err = testQuestionInput(name, value);
+            if (!err) {
+                setFields(oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } }));
+            } else {
+                console.log(err)
+                console.log(name)
+                console.log(oldState.errors)
+                //  oldState.errors[name][i] = err;
+                //  const newErrors =  oldState.errors
+                //  console.log(newErrors[name][i]);
+                setFields(oldState => ({
+                    ...oldState,
+                    errorTimeout: {
+                        [name]: setTimeout(() => {
+                            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
+                            // setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name] :{...oldState.errors[name], [name]:{[i] : newErrors}}} })))
+                        }, 2000)
+                    }
+                }));
+            }
+            // } else { setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } }))) }
             return;
         }
 
@@ -110,8 +113,10 @@ const Createquestion = ({ history }) => {
         const err = testQuestionInput(name, value);
 
         if (err) {
-            setFields(oldState => ({...oldState,
-                errorTimeout: {[name]: setTimeout(() => {
+            setFields(oldState => ({
+                ...oldState,
+                errorTimeout: {
+                    [name]: setTimeout(() => {
                         setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
                     }, 3000)
                 }
@@ -210,11 +215,10 @@ const Createquestion = ({ history }) => {
                             type="text"
                             className="form-control incorrect-answer"
                             placeholder={`Some wrong answer ${i}`}
-                            name="incorrect_answer"
+                            name={`incorrect_answer_${i}`}
                             value={wa || ''}
                             onChange={(e) => handleInputChange(e, fields, i)}
                         />
-                {/* <Notificate type="error">{fields.errors.incorrect_answer[0] || < br />}</Notificate><br /> */}
 
                         {i > 0
                             ? <button className="remove-btn" onClick={(e) => removeClick(e, fields, i)} >
@@ -227,6 +231,7 @@ const Createquestion = ({ history }) => {
                                 <VpnKeyIcon />
                             </button>
                         }
+                        <Notificate type="error">{fields.errors[`incorrect_answer_${i}`] || < br />}</Notificate><br />
                     </div>
                 )}
                 <button onClick={addMoreAnswers} >

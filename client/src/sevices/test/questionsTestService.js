@@ -6,10 +6,10 @@ const testQuestionInput = (field, strToTest) => {
         return null;
     }
     if (length < 10) {
-        return `${field} must be at least 10 characters long`;
+        return `Field must be at least 10 characters long`;
     }
     if (length > 100) {
-        return `${field} can be maximum 100 characters long`;
+        return `Field can be maximum 100 characters long`;
     }
 }
 
