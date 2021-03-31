@@ -90,7 +90,7 @@ function App() {
                     {notifyList && <Toast
                         toastList={notifyList}
                         // position="bottom-right"
-                        position="top-left"
+                        position="middle"
                     />}
                     <Footer />
                 </div >

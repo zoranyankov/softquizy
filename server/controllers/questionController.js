@@ -77,7 +77,14 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, chec
             return;
         })
         .catch(err => {
+            let errors;
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: { message: err.message } };
+            }
             console.log("CreateError" + err);
+            res.status(422).json({ errors, title: 'Create Question Page' });
             return err;
         });
 });

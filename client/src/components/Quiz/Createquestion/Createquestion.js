@@ -126,9 +126,21 @@ const Createquestion = ({ history }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const {category, difficulty, question, correct_answer, incorrect_answers} = fields;
+        if (category === 'any' || difficulty === 'any' || !question || !correct_answer.length || incorrect_answers.length < 2) {
+            console.log('InCustomError');
+            const error = [{ id: "AllFieldsAreRequired" , title: 'Error', description: "All fields are required" }];
+            appContext.setNotifyList(error);
+            return;
+        }
         apiQuestionServices.create(fields)
-            .then(res => {
-                console.log(res);
+            .then(response => {
+                console.log(response);
+                if (!response || response.errors) {
+                    const errorsList = response.errors.map((err, i) => ({ id: i + err.message, title: 'Error', description: err.message }));
+                    appContext.setNotifyList(errorsList);
+                    return;
+                }
                 history.push('/');
             })
             .catch(err => console.log(err))
