@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
+import checkIcon from '../../../assets/check.svg';
 import errorIcon from '../../../assets/error.svg';
-import info from '../../../assets/info.svg';
+import infoIcon from '../../../assets/info.svg';
+import warningIcon from '../../../assets/warning.svg';
 
 import './Toast.css';
 
@@ -11,11 +13,15 @@ const Toast = ({ toastList, position, autoDelete, dismissTime }) => {
     const [list, setList] = useState(toastList);
     const icon = {
         "Error" : errorIcon,
-        "Success" : info,
+        "Success" : checkIcon,
+        "Info" : infoIcon,
+        'Warning' : warningIcon,
     };
     const backgroundColor = {
         "Error" : "#d9534f",
         "Success" : "#5cb85c",
+        "Info" : "#5bc0de",
+        "Warning" : "#f0ad4e",
     };
     if (toastList.find(m => m.title === "Success")) {
         autoDelete = true;

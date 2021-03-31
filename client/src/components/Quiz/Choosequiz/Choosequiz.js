@@ -22,10 +22,10 @@ const Choosequiz = ({ history }) => {
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
-    const context = useContext(AppContext);
-    let isAuth = !hasToken ? false : context.isAuthName;
+    const appContext = useContext(AppContext);
+    let isAuth = !hasToken ? false : appContext.isAuthName;
 
-    // console.log(context);
+    // console.log(appContext);
 
     let [fields, setFields] = useState({ trivia_category: 'any', trivia_difficulty: 'any', errors: '', errorTimeout: '' });
 
@@ -84,9 +84,9 @@ const Choosequiz = ({ history }) => {
         triviaServises.getAll(fields)
             .then(res => {
                 if (res.results.length === 0) {
-                    context.setNotifyList([{id: 'Not Found', title:'Error', description: `Still don't have this quiz :(`}]);
+                    appContext.setNotifyList([{id: 'Not Found', title:'Error', description: `Still don't have this quiz :(`}]);
                 }
-                context.setTrivia(res.results);
+                appContext.setTrivia(res.results);
                 history.push(`/quizes/external/${fields.trivia_category}/${res.results[0].category}`);
             })
             .catch(err => {
@@ -95,7 +95,7 @@ const Choosequiz = ({ history }) => {
                 // const errorsList = err.errors.map((err, i) => {
                 //     return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
                 // });
-                // context.setNotifyList(errorsList);
+                // appContext.setNotifyList(errorsList);
             })
     }
 

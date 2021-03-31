@@ -10,8 +10,8 @@ const Home = (props) => {
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
-    const context = useContext(AppContext);
-    let isAuth = !hasToken ? false : context.isAuthName;
+    const appContext = useContext(AppContext);
+    let isAuth = !hasToken ? false : appContext.isAuthName;
    
     // console.log(isAuth);
 

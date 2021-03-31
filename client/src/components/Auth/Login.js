@@ -52,7 +52,7 @@ class Login extends Component {
             this.setState({
             errorTimeout :{[inputName] : setTimeout(() => {
             this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
-            }, 3000)}});
+            }, 2000)}});
         } else {
             this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
         }
@@ -108,7 +108,7 @@ class Login extends Component {
                             name="username"
                             onChange={this.handleChange}
                         />
-                        <Notificate type="error">{this.state.errors.username}</Notificate>
+                        <Notificate type="error">{this.state.errors.username || < br />}</Notificate>
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="password">Password</label>
@@ -119,7 +119,7 @@ class Login extends Component {
                             name="password"
                             onChange={this.handleChange}
                         />
-                        <Notificate type="error">{this.state.errors.password}</Notificate>
+                        <Notificate type="error">{this.state.errors.password || < br />}</Notificate>
                     </div>
                     <br></br>
                     <ButtonLink component={<VpnKeyIcon />} type="submit">

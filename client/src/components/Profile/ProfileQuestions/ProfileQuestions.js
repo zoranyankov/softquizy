@@ -15,12 +15,12 @@ const ProfileQuestions = (props) => {
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
-    const context = useContext(AppContext);
-    let isAuth = !hasToken ? false : context.isAuthName;
+    const appContext = useContext(AppContext);
+    let isAuth = !hasToken ? false : appContext.isAuthName;
 
     let [userQuestions, setuserQuestions] = useState([]);
 
-    const userId = context.userId;
+    const userId = appContext.userId;
     // console.log(userId);
 
     useEffect(() => {

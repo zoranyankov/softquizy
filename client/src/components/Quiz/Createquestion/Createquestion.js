@@ -22,8 +22,8 @@ const Createquestion = ({ history }) => {
 
     //Get actual state of Token if is authenticated
     const hasToken = JSON.parse(localStorage.getItem('sid'));
-    const context = useContext(AppContext);
-    let isAuth = !hasToken ? false : context.isAuthName;
+    const appContext = useContext(AppContext);
+    let isAuth = !hasToken ? false : appContext.isAuthName;
 
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: {incorrect_answer: {}}, errorTimeout: '' });
 
