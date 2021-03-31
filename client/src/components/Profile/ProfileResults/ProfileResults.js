@@ -7,6 +7,7 @@ import apiResultServices from '../../../sevices/api/apiResultServices';
 
 //Import components
 import Accordion from '../../Accordion';
+import Toast from '../../Shared/Toast';
 
 //Import local styles
 import './ProfileResults.css';
@@ -39,8 +40,18 @@ const ProfileResults = (props) => {
 
     //Initial render
     if (userResults.length === 0) {
-        return <h1>Still loading...</h1>;
+        return (
+            <Toast
+                toastList={[{ id: "LoadingResults", title: "Info", description: "Loading Results..." }]}
+                // position="bottom-right"
+                position="middle"
+            />
+        )
     }
+    // return <h1>Still loading...</h1>;
+    //     appContext.setNotifyList([{ id: 'Loading results', title: 'Info', description: 'Loading results', position: 'middle' }])
+    //     return null;
+    // }
 
     return (
         <>
@@ -51,6 +62,11 @@ const ProfileResults = (props) => {
                         <ResultsTable rows={result.userResults} score={result.score} quizName={result.quizName} />
                     </div>
                 ))} */}
+            {/* {userResults.length === 0 && <Toast
+                        toastList={appContext.notifyList}
+                        // position="bottom-right"
+                        position="top-left"
+                    />} */}
             <br />
             <br />
             <br />

@@ -7,6 +7,7 @@ import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
 //Import components
 import Accordion from '../../Accordion';
+import Toast from '../../Shared/Toast';
 
 //Import local styles
 import './ProfileQuestions.css';
@@ -40,9 +41,11 @@ const ProfileQuestions = (props) => {
     //Initial render
     if (userQuestions.length === 0) {
         return (
-            <>
-                <h1>Still loading...</h1>
-            </>
+            <Toast
+                toastList={[{ id: "LoadingQuestons", title: "Info", description: "Loading Questons..." }]}
+                // position="bottom-right"
+                position="middle"
+            />
         );
     }
 

@@ -1,10 +1,12 @@
 import { useEffect, useState, useContext } from 'react';
 
 import AppContext from '../../AppContext';
+
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
 // import Quizheader from '../Quizheader';
 import Questions from '../Questions';
+import Toast from '../../Shared/Toast';
 
 
 const Quiz = (props) => {
@@ -18,7 +20,7 @@ const Quiz = (props) => {
 
     let [questions, setQuestions] = useState([]);
 
-console.log('render Quiz component');
+    console.log('render Quiz component');
     useEffect(() => {
         console.log('in useEffect of Quiz');
         if (inLocal) {
@@ -36,7 +38,14 @@ console.log('render Quiz component');
     return (
         <div className="quiz-content">
             {/* <Quizheader quizName={quizName} currentQuestion={} /> */}
-            {questions && <Questions props={props} quizName={quizName} questions={questions} inLocal={inLocal}/>}
+            {questions
+                ? <Questions props={props} quizName={quizName} questions={questions} inLocal={inLocal} />
+                : <Toast
+                toastList={[{ id: "LoadingQuizes", title: "Info", description: "Loading Quizes..." }]}
+                // position="bottom-right"
+                position="middle"
+            />
+        }
         </div>
     );
 }

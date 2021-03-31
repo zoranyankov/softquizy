@@ -7,8 +7,9 @@
 .toaster-containter .middle {
     top: 40%;
     right: 28%;
-    transition: transform .6s ease-in-out;
-    animation: toast-in-right .7s;
+    font-size: 18px;
+    /* transition: transform .6s ease-in-out;
+    animation: toast-in-right .7s; */
 }
 
 .toaster-containter .top-right {
@@ -77,7 +78,7 @@
 .toaster-containter .notification-message {
     margin: 0;
     text-align: left;
-    height: 18px;
+    height: 30px;
     margin-left: -1px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -95,7 +96,7 @@
 }
 
 .toaster-containter .toast {
-    /* height: 50px; */
+    /* height: 7rem; */
     width: 365px;
     color: #fff;
     padding: 20px 15px 10px 10px;

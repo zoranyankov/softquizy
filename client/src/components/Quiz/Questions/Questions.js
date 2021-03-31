@@ -8,6 +8,8 @@ import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
 import Quizheader from '../Quizheader';
 import Qlist from '../Qlist';
 import ResultsTable from '../ResultsTable';
+import Toast from '../../Shared/Toast';
+
 
 //Import local styles
 import './Questions.css';
@@ -57,7 +59,14 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
 
     //Initial render
     if (!endOfQuiz && (questions.length === 0)) {
-        return <h1>Still loading...</h1>;
+        return (
+            <Toast
+                toastList={[{ id: "LoadingQuestions", title: "Info", description: "Loading Questions..." }]}
+                // position="bottom-right"
+                position="middle"
+            />
+        );
+        // return <h1>Still loading...</h1>;
     }
 
     //Questions charachters decode
@@ -75,7 +84,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     return (
         <>
 
-            {q && <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score}/>}
+            {q && <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score} />}
             {q &&
                 <div className="questions">
                     <ul className="question-list">
