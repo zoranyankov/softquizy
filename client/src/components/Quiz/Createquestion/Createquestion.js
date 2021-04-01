@@ -109,7 +109,7 @@ const Createquestion = ({ history }) => {
         const { category, difficulty, question, correct_answer, incorrect_answers } = fields;
         if (category === 'any' || difficulty === 'any' || !question || !correct_answer || incorrect_answers.length < 1) {
             const msg = 'Field is required';
-            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg} })));
+            setFields((oldState => ({ ...oldState, errors: { category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg, ...oldState.errors} })));
             const error = [{ id: 'AllFieldsAreRequired', title: 'Error', description: 'All fields are required' }];
             appContext.setNotifyList(error);
             return;

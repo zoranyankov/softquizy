@@ -72,7 +72,7 @@ class Login extends Component {
                 const { user, token } = response;
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
-                this.context.setNotifyList([{ id: 'Login successful', title: 'Success', description: `Login successful -  You are wellcome`, position:'middle' }])
+                this.context.setNotifyList([{ id: 'Login successful', title: 'Success', description: `Wellcome ${user.username.toUpperCase()}`, position:'middle' }])
                 this.setState({ redirectToHome: true });
             })
             .catch(err => {
