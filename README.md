@@ -34,8 +34,6 @@ QuizApp
 ├───Guest
 |    ├── Quizes page
 |    ├── Login
-|    |   └── Question
-|    |       └── Answer
 |    └── Register
 └─── User
      ├── Quizes page
@@ -64,3 +62,8 @@ When user wants to try some additional quizzes – he can choose from external R
 
 Logged in users can create own questions for one of the 3 available categories, which will be added to the chosen category. 
 
+
+Notes
+---------
+
+StrictMode is disabled, because of compatibility issues with material ui accordion component.
