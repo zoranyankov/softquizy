@@ -80,7 +80,13 @@ const Createquestion = ({ history }) => {
                 console.log(res);
                 history.push('/');
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log('Create question fetch Error: ' + err);
+                const errorsList = err.errors.map((err, i) => {
+                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
+                });
+                appContext.setNotifyList(errorsList);
+            })
     }
 
     const addMoreAnswers = (event) => {

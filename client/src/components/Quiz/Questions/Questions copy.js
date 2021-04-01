@@ -25,7 +25,13 @@ const Questions = ({ props, category }) => {
                 .then(questions => {
                     setCatQuestions(questions);
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    console.log('Get question by category Error: ' + err);
+                    const errorsList = err.errors.map((err, i) => {
+                        return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
+                    });
+                    appContext.setNotifyList(errorsList);
+                })
         } else {
             setCatQuestions(appContext.trivia);
         }

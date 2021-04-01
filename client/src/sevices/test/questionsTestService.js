@@ -1,7 +1,8 @@
-const testQuestionInput = (field, strToTest) => {
+const testQuestionInput = (strToTest) => {
     const length = strToTest.length;
     console.log(length);
     console.log('inTEsting');
+    console.log(length);
     if(length >= 10 && length <= 100) {
         return null;
     }

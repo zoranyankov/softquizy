@@ -4,7 +4,6 @@ import AppContext from '../../AppContext';
 
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
-// import Quizheader from '../Quizheader';
 import Questions from '../Questions';
 import Toast from '../../Shared/Toast';
 
@@ -20,20 +19,23 @@ const Quiz = (props) => {
 
     let [questions, setQuestions] = useState([]);
 
-    console.log('render Quiz component');
     useEffect(() => {
-        console.log('in useEffect of Quiz');
         if (inLocal) {
             apiQuestionServices.getCategory(category)
                 .then(apiQuestions => {
-                    console.log(apiQuestions);
                     setQuestions(apiQuestions);
                 })
-                .catch(err => console.log("Quiz component Error:" + err));
+                .catch(err => {
+                    console.log("Quiz component Error:" + err);
+                    const errorsList = err.errors.map((err, i) => {
+                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                    });
+                    appContext.setNotifyList(errorsList);
+                });
         } else {
             setQuestions(appContext.trivia);
         }
-    }, [category, url, appContext.trivia, inLocal])
+    }, [category, url, appContext.trivia, appContext, inLocal])
 
     return (
         <div className="quiz-content">
@@ -41,11 +43,11 @@ const Quiz = (props) => {
             {questions
                 ? <Questions props={props} quizName={quizName} questions={questions} inLocal={inLocal} />
                 : <Toast
-                toastList={[{ id: "LoadingQuizes", title: "Info", description: "Loading Quizes..." }]}
-                // position="bottom-right"
-                position="middle"
-            />
-        }
+                    toastList={[{ id: "LoadingQuizes", title: "Info", description: "Loading Quizes..." }]}
+                    // position="bottom-right"
+                    position="middle"
+                />
+            }
         </div>
     );
 }

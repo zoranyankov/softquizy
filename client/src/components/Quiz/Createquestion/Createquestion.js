@@ -18,6 +18,8 @@ import ButtonLink from '../../Shared/ButtonLink';
 
 import './Createquestion.css';
 
+let errorTimeout = {};
+
 const Createquestion = ({ history }) => {
 
     //Get actual state of Token if is authenticated
@@ -25,7 +27,7 @@ const Createquestion = ({ history }) => {
     const appContext = useContext(AppContext);
     let isAuth = !hasToken ? false : appContext.isAuthName;
 
-    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: { incorrect_answer: {} }, errorTimeout: '' });
+    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: { incorrect_answer: {} } });
 
 
     //Execute guard - redirect if is not authenticated
@@ -33,16 +35,17 @@ const Createquestion = ({ history }) => {
         return <Redirect to="/auth/login" />;
     }
 
+    //Event callback for remove incorrect_answer
     const removeClick = (event, fields, i) => {
         event.preventDefault();
         fields.incorrect_answers.splice(i, 1);
         setFields(oldState => ({ ...oldState, incorrect_answers: fields.incorrect_answers }));
     }
 
+    //Event for controll and validate input fields
     function handleInputChange(event, oldState, i) {
 
         const target = event.target;
-        // console.log(target);
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
 
@@ -54,54 +57,33 @@ const Createquestion = ({ history }) => {
 
         //Set state of incorrect_answers
         if (target.name.startsWith('incorrect_answer')) {
-            target.style.height = 'auto';
-            target.style.height = (target.scrollHeight) + 'px';
-            console.log(target.value);
-            oldState.incorrect_answers[i] = target.value;
-            setFields(oldState => ({ ...oldState, incorrect_answers: oldState.incorrect_answers }));
-            const err = testQuestionInput(name, value);
+            clearTimeout(errorTimeout[name]);
+            const newIncorrectAnswers = oldState.incorrect_answers;
+            newIncorrectAnswers[i] = target.value;
+            setFields(oldState => ({ ...oldState, incorrect_answers: newIncorrectAnswers }));
+            const err = testQuestionInput(value);
             if (!err) {
                 setFields(oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } }));
             } else {
-                console.log(err)
-                console.log(name)
-                console.log(oldState.errors)
-                //  oldState.errors[name][i] = err;
-                //  const newErrors =  oldState.errors
-                //  console.log(newErrors[name][i]);
-                setFields(oldState => ({
-                    ...oldState,
-                    errorTimeout: {
-                        [name]: setTimeout(() => {
-                            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
-                            // setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name] :{...oldState.errors[name], [name]:{[i] : newErrors}}} })))
-                        }, 2000)
-                    }
-                }));
+                errorTimeout[name] = setTimeout(() => {
+                    setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
+                }, 2000)
             }
-            // } else { setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } }))) }
             return;
         }
 
         //Set state of all other inputs
+        clearTimeout(errorTimeout[name]);
         setFields({
             ...oldState,
             [name]: value,
         });
-        console.log(name);
-        clearInterval(fields.errorTimeout[name]);
-        console.log(fields.errorTimeout[name]);
 
         if (name === 'category' || name === 'difficulty') {
             if (value === 'any') {
-                setFields(oldState => ({
-                    ...oldState,
-                    errorTimeout: {
-                        [name]: setTimeout(() => {
-                            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: `Field ${name} is required` } })))
-                        }, 3000)
-                    }
-                }));
+                errorTimeout[name] = setTimeout(() => {
+                    setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: `Field ${name} is required` } })))
+                }, 2000);
                 return;
             } else {
                 setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })));
@@ -109,32 +91,26 @@ const Createquestion = ({ history }) => {
             }
         }
 
-        console.log(value.length);
-        const err = testQuestionInput(name, value);
+        const err = testQuestionInput(value);
 
         if (err) {
-            setFields(oldState => ({
-                ...oldState,
-                errorTimeout: {
-                    [name]: setTimeout(() => {
-                        setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
-                    }, 3000)
-                }
-            }));
-            return;
+            errorTimeout[name] = setTimeout(() => {
+                setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
+            }, 2000);
         } else {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })))
-            return;
+            // return;
         }
     }
 
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        const {category, difficulty, question, correct_answer, incorrect_answers} = fields;
-        if (category === 'any' || difficulty === 'any' || !question || !correct_answer.length || incorrect_answers.length < 2) {
-            console.log('InCustomError');
-            const error = [{ id: "AllFieldsAreRequired" , title: 'Error', description: "All fields are required" }];
+        const { category, difficulty, question, correct_answer, incorrect_answers } = fields;
+        if (category === 'any' || difficulty === 'any' || !question || !correct_answer || incorrect_answers.length < 1) {
+            const msg = 'Field is required';
+            setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg} })));
+            const error = [{ id: 'AllFieldsAreRequired', title: 'Error', description: 'All fields are required' }];
             appContext.setNotifyList(error);
             return;
         }
@@ -146,9 +122,16 @@ const Createquestion = ({ history }) => {
                     appContext.setNotifyList(errorsList);
                     return;
                 }
+                appContext.setNotifyList([{id: 'Question is created', title: 'Success', description: 'Question is created'}]);
                 history.push('/');
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                console.log('Create question fetch Error: ' + err);
+                const errorsList = err.errors.map((err, i) => {
+                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
+                });
+                appContext.setNotifyList(errorsList);
+            })
     }
 
     const addMoreAnswers = (event) => {

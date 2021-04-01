@@ -1,13 +1,16 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 
 //Import components from Material UI
 import CreateIcon from '@material-ui/icons/Create';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
+
+import AppContext from '../../AppContext';
+import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
+
 import ButtonLink from '../../Shared/ButtonLink';
 
-import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 import { CATEGORY_NAMES, CATEGORY_IMAGES } from '../../../config/config';
 
 import '../Home.css';
@@ -18,6 +21,7 @@ import Quizcard from '../Quizcard';
 const Userpage = ({ history }) => {
 
     let [questions, setQuestions] = useState('');
+    const appContext = useContext(AppContext);
 
     useEffect(() => {
         if (questions === '') {
@@ -41,9 +45,15 @@ const Userpage = ({ history }) => {
                     // console.log(qss);
                     qss ? setQuestions(qss) : setQuestions('');
                 })
-                .catch(err => console.log("Userpage Get Categories Error:" + err));
+                .catch(err => {
+                    console.log("Userpage Get Categories Error:" + err)
+                    const errorsList = err.errors.map((err, i) => {
+                        return ({ id: err.message, title: 'Error', description: err.message, position: 'middle' });
+                    });
+                    appContext.setNotifyList(errorsList);
+                });
         }
-    }, [questions]);
+    }, [questions, appContext]);
 
     return (
         <div className="home-container">

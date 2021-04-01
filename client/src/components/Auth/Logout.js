@@ -5,11 +5,12 @@ import { Redirect } from 'react-router-dom';
 import AppContext from '../AppContext';
 
 const Logout = () => {
-    const { setIsAuth } = useContext(AppContext);
+    const { setIsAuth, setNotifyList } = useContext(AppContext);
     useEffect(() => {
         localStorage.removeItem('sid');
         setIsAuth(false);
     })
+    setNotifyList([{id:'You leave successfully', title:'Success', description: 'You leave successfully'}])
     return <Redirect to="/" />
 }
 

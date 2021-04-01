@@ -30,8 +30,14 @@ const ProfileQuestions = (props) => {
             .then(questions => {
                 setuserQuestions(questions);
             })
-            .catch(err => console.log('Profile get Question error: ' + err))
-    }, [userId, isAuth])
+            .catch(err => {
+                console.log('Profile get Question error: ' + err);
+                const errorsList = err.errors.map((err, i) => {
+                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
+                });
+                appContext.setNotifyList(errorsList);
+            })
+    }, [userId, isAuth, appContext])
 
     //Execute guard - redirect if is not authenticated
     if (!isAuth) {
