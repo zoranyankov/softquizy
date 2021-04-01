@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'skyblue',
         color: 'darkBlue',
         margin: theme.spacing(5),
+        borderRadius: "0em",
         // margin: '3rem 5rem',
     },
     create_button: {
@@ -63,8 +64,9 @@ const Profile = ({ history }) => {
 
     return (
         <div className="quiz-content">
-            <div className="logo" />
-            {/* <h1>THE PROFILE PAGE</h1> */}
+            <div className="logo">
+            <h1 style={{ padding:"3rem", fontSize:"3rem", height:"25rem"}}>THE PROFILE PAGE</h1>
+            </div>
             <div className="profile-page">
 
                 {/* PROFILE RESULTS BUTTON */}
