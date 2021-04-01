@@ -57,7 +57,7 @@ function App() {
 
     useEffect(() => {
         //Verify if Token is valid
-        if (parsedToken) {
+        if (parsedToken !== null) {
             const { token, user } = parsedToken;
             authService.verify({ username: user.username, token })
                 .then(res => {

@@ -58,7 +58,6 @@ const Toast = ({ toastList, position, autoDelete, dismissTime }) => {
         toastList.splice(toastListItem, 1);
         setList([...list]);
     }
-console.log(position);
     return (
         <div className="toaster-containter">
             <div className={`notification-container ${position || 'bottom-right'}`}>
