@@ -21,9 +21,10 @@ const errorTimeout = {};
 const Choosequiz = ({ history }) => {
 
     //Get actual state of Token if is authenticated
-    const hasToken = JSON.parse(localStorage.getItem('sid'));
+    // const hasToken = JSON.parse(localStorage.getItem('sid'));
+    // let isAuth = !hasToken ? false : appContext.isAuthName;
     const appContext = useContext(AppContext);
-    let isAuth = !hasToken ? false : appContext.isAuthName;
+    let isAuth = appContext.isAuthName;
 
     // console.log(appContext);
 

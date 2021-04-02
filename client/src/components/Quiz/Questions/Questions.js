@@ -1,6 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
+import {Link} from 'react-router-dom';
 
 //Import services
+import AppContext from '../../AppContext';
 import apiResultServices from '../../../sevices/api/apiResultServices';
 import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
 
@@ -16,6 +18,9 @@ import './Questions.css';
 
 const Questions = ({ props, quizName, questions, inLocal }) => {
 
+    //Get actual state of Token if is authenticated
+    const appContext = useContext(AppContext);
+
     //Set local states
     let q = null;
     let [currentQuestion, setCurrentQuestion] = useState(0);
@@ -26,10 +31,11 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     useEffect(() => {
         //If quiz is over - send results to Database
         if (endOfQuiz) {
-            const creatorId = JSON.parse(localStorage.getItem('sid')).user._id;
+            const creatorId = appContext.userId;
+            console.log(creatorId);
             apiResultServices.add({ creatorId, quizName, userResults, score });
         }
-    }, [userResults, quizName, endOfQuiz, score]);
+    }, [userResults, quizName, endOfQuiz, score, appContext.userId]);
 
     const handleItemClick = (event, question, correctAnswer, selected, id) => {
         event.preventDefault();
@@ -73,7 +79,12 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     if (questions.length !== 0) {
         if (questions.error) {
             console.log('Error :' + questions.error.name + ' - ' + questions.error.message);
-            return <h1>There is authorisation problems!</h1>
+            return (
+                <>
+            <h1>There is authorisation problems!</h1>
+            <h3>Please <Link to='/auth/login'>Login </Link> or <Link to='/auth/register'> Register </Link></h3>
+                </>
+            );
         }
         q = questions[currentQuestion];
         q.question = htmlDecode(q.question);

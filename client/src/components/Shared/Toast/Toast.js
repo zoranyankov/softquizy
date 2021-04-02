@@ -29,7 +29,7 @@ const Toast = ({ toastList, position, autoDelete, dismissTime }) => {
     }
     if (toastList.find(m => m.title === "Error")) {
         autoDelete = true;
-        dismissTime = 50000;
+        dismissTime = 5000;
     }
 
 
