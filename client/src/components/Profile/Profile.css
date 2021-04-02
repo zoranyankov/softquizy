@@ -4,7 +4,6 @@
 }
 
 .quiz-content .profile-header {
-    display: inline-block;
     float: left;
     width: 100%;
 }
@@ -17,7 +16,6 @@
 }
 
 .quiz-content .profile-logo {
-    display: inline-block;
     float: left;
     height: 21rem;
     margin-left: 5rem;

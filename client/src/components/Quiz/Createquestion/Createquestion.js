@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Image } from 'cloudinary-react';
 
 //Import components from Material UI
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
@@ -142,9 +143,13 @@ const Createquestion = ({ history }) => {
     }
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="create-form">
-                <h2 className="form-signin-heading">Create local Question</h2><br />
+        <div className="create-question-content">
+            <div className="create-question-header">
+                <Image cloudName="softquizy" className="create-question-logo" publicId='create-question'/>
+                {/* <h1 className="create-question-title">Create local Question</h1> */}
+            </div>
+            <form onSubmit={handleSubmit} className="create-question-form">
+                <h1 className="create-question-title">Create local Question</h1><br />
                 <label htmlFor="category">Select Category: </label><br />
                 <select
                     name="category"

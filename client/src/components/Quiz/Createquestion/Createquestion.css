@@ -1,43 +1,60 @@
-.create-form {
-    background-image: url("https://res.cloudinary.com/softquizy/image/upload/v1617355390/create-question.gif");
-    background-repeat: no-repeat;
+.create-question-content {
+    text-align: center;
 }
 
-.create-form .form-control {
+.create-question-header {
+    float: left;
+    width: 15rem;
+}
+
+.create-question-logo {
+    float: left;
+    margin-left: 1rem;
+    margin-top: 3rem;
+}
+
+.create-question-content .create-question-title {
+    font-size: 3rem;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.create-question-form {
+    display: inline-block;
+    background-repeat: no-repeat;
+    margin-top: 1rem;
+    margin-right: 21rem;
+    display: inline-flexbox;
+}
+
+.create-question-content .form-control {
     width: 20rem;
     border-radius: 0.3rem;
     padding: 0.5rem;
 }
 
-.create-form .text {
+.create-question-content .text {
     width: 20rem;
     height: 57px;
     padding: 0.3rem;
     margin-left: 0.5rem;
 }
 
-.create-form .incorrect-answer {
+.create-question-content .incorrect-answer {
     width: 17rem;
     height: 57px;
     padding: 0.3rem;
     margin-left: 0.5rem;
 }
 
-
-/* .create-form .text-content {
-    width: 300px;
-    height: 200px;
-} */
-
-.create-form .remove-btn {
+.create-question-content .remove-btn {
     vertical-align: top;
     margin-left: 0.5rem;
 }
 
-.create-form .create-btn {
+.create-question-content .create-btn {
     display: inline-block;
     padding: 0.5 1.5rem;
-    /* padding: 0.3rem; */
     margin: 2rem 3rem;
     border: olivedrab 1px solid;
     border-radius: 0.3rem;
