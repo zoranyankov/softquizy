@@ -97,12 +97,12 @@ const Profile = ({ history }) => {
                 >
                     Profile Questions
                 </Button>
-
-                <Switch>
-                    <Route path={`${match.url}/results`} component={ProfileResults} />
-                    <Route path={`${match.url}/questions`} component={ProfileQuestions} />
-                </Switch>
-
+                <div className="profile-results">
+                    <Switch>
+                        <Route path={`${match.url}/results`} component={ProfileResults} />
+                        <Route path={`${match.url}/questions`} component={ProfileQuestions} />
+                    </Switch>
+                </div>
                 {/* <Accordion data={userResults} /> */}
                 {/* {userResults.map(result => (
                     <div className="quiz-results" key={result._id}>

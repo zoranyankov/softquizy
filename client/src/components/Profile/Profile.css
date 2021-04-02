@@ -5,7 +5,6 @@
 
 .quiz-content .profile-header {
     display: inline-block;
-    /* text-align: center; */
     float: left;
     width: 100%;
 }
@@ -20,17 +19,17 @@
 .quiz-content .profile-logo {
     display: inline-block;
     float: left;
-    /* background-image: url("https://res.cloudinary.com/softquizy/image/upload/v1617355783/profile-page-logo.gif"); */
-    /* background-repeat: no-repeat; */
-    /* min-height: 7rem; */
     height: 21rem;
     margin-left: 5rem;
     margin-top: 3rem;
 }
 
-/* .quiz-content .profile-page-buttons .quiz-results { */
 .quiz-content .profile-page-buttons {
+    text-align: center;
+}
+
+.quiz-content .profile-results .quiz-results {
     /* width: 70rem; */
     text-align: center;
-    /* padding: 1rem 7rem; */
+    padding: 1rem 7rem;
 }
