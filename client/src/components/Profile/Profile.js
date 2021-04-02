@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { Redirect, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Image } from 'cloudinary-react';
 
 //Import global context and services
 import AppContext from '../AppContext';
@@ -28,9 +29,9 @@ const useStyles = makeStyles((theme) => ({
     button: {
         backgroundColor: 'skyblue',
         color: 'darkBlue',
-        margin: theme.spacing(5),
+        // margin: theme.spacing(5),
         borderRadius: "0em",
-        // margin: '3rem 5rem',
+        margin: '0 5rem 5rem 0',
     },
     create_button: {
         backgroundColor: 'green',
@@ -65,10 +66,11 @@ const Profile = ({ history }) => {
 
     return (
         <div className="quiz-content">
-            <div className="logo">
-            <h1 style={{ padding:"3rem", fontSize:"3rem", height:"25rem"}}>THE PROFILE PAGE</h1>
+            <div className="profile-header">
+                <Image cloudName="softquizy" className="profile-logo" publicId='profile-page-logo'/>
+                <h1 className="profile-title">THE PROFILE PAGE</h1>
             </div>
-            <div className="profile-page">
+            <div className="profile-page-buttons">
 
                 {/* PROFILE RESULTS BUTTON */}
                 <Button
