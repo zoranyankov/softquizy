@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
+import { Image } from 'cloudinary-react';
 
 //import global AppContext
 import AppContext from '../../AppContext';
@@ -54,7 +55,7 @@ const Choosequiz = ({ history }) => {
         if (err) {
             errorTimeout[name] = setTimeout(() => {
                 setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
-            }, 3000)
+            }, 1000)
         } else {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })))
         }
@@ -115,9 +116,13 @@ const Choosequiz = ({ history }) => {
 
 
     return (
-        <div>
-            <form onSubmit={handleSubmit} className="form-api">
-                <h2 className="form-signin-heading">Choose form Trivia API</h2>
+        <div  className="choose-external-content">
+            <div className="choose-external-header">
+                <Image cloudName="softquizy" className="choose-external-logo" publicId='choose-quiz'/>
+                {/* <h1 className="create-question-title">Create local Question</h1> */}
+            </div>
+            <form onSubmit={handleSubmit} className="choose-external-form">
+                <h2 className="choose-external-title">Choose form Trivia API</h2>
 
                 {/* <label htmlFor="trivia_amount">Number of Questions:</label>
                 <input type="number" name="trivia_amount" id="trivia_amount" className="form-control" min="1" max="50" value="10" />

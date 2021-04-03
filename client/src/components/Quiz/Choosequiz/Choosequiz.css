@@ -1,15 +1,47 @@
-.form-api {
-    background-image: url("https://res.cloudinary.com/softquizy/image/upload/v1617355232/choose-quiz.gif");
-    background-repeat: no-repeat;
+.choose-external-content {
+    text-align: center;
 }
 
-.form-api .form-control {
+.choose-external-header {
+    float: left;
+    width: 15rem;
+}
+
+.choose-external-logo {
+    float: left;
+    margin-left: 3rem;
+    margin-top: 3rem;
+    width: 13rem;
+    /* height: 10rem; */
+}
+
+.choose-external-content .choose-external-title {
+    font-size: 3rem;
+    margin-top: 1rem;
+    display: inline-block;
+}
+
+.choose-external-form {
+    display: inline-block;
+    background-repeat: no-repeat;
+    margin-top: 1rem;
+    margin-right: 15rem;
+    display: inline-flexbox;
+}
+
+
+/* .form-api {
+    background-image: url("https://res.cloudinary.com/softquizy/image/upload/v1617355232/choose-quiz.gif");
+    background-repeat: no-repeat;
+} */
+
+.choose-external-form .form-control {
     width: 300px;
     border-radius: 0.3rem;
     padding: 0.5rem;
 }
 
-.form-api .create-btn {
+.choose-external-form .choose-btn {
     display: inline-block;
     padding: 0 1rem;
     margin: 2rem 3rem;
@@ -19,3 +51,12 @@
     font-size: 15px;
     box-shadow: 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12), 0 5px 5px -3px rgba(0, 0, 0, 0.20);
 }
+
+
+/* padding: 0.5 1.5rem; */
+
+
+/* border: olivedrab 1px solid; */
+
+
+/* border-radius: 0.3rem; */

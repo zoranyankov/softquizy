@@ -35,7 +35,7 @@ import Toast from './components/Shared/Toast';
 function App() {
 
     //Get actual state of Token if is authenticated
-    let parsedToken = JSON.parse(localStorage.getItem('sid'));
+    let parsedToken = JSON.parse(localStorage.getItem('sid')) || '';
     const getUserName = (parsedToken && parsedToken.user) ? parsedToken.user.username : false;
     const userId = (parsedToken && parsedToken.user) ? parsedToken.user._id : false;
 
@@ -57,20 +57,27 @@ function App() {
 
     useEffect(() => {
         //Verify if Token is valid
-        if (parsedToken !== null) {
-            const { token, user } = parsedToken;
-            authService.verify({ username: user.username, token })
-                .then(res => {
-                    if (!res || !res.result) {
+        if (parsedToken) {
+            if (parsedToken.hasOwnProperty('token')) {
+                const { token, user } = parsedToken;
+                authService.verify({ username: user.username, token })
+                    .then(res => {
+                        if (!res || !res.result) {
+                            localStorage.removeItem('sid');
+                            setIsAuth(false);
+                            console.log('appErr');
+                            // return null;
+                        }
+                    })
+                    .catch(err => {
+                        console.log('Userpage Verify Error:' + err)
+                        console.log(err);
                         localStorage.removeItem('sid');
-                        setIsAuth(false);
-                        // return null;
-                    }
-                })
-                .catch(err => {
-                    localStorage.removeItem('sid');
-                    console.log('Userpage Verify Error:' + err)
-                })
+                    })
+            } else {
+                console.log('not Valid Token - will be removed');
+                localStorage.removeItem('sid');
+            }
         }
     }, [parsedToken, isAuth, notifyList])
 

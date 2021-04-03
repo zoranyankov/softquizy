@@ -9,7 +9,8 @@
 
 .create-question-logo {
     float: left;
-    margin-left: 1rem;
+    /* margin-left: 1rem; */
+    width: 20rem;
     margin-top: 3rem;
 }
 
@@ -23,7 +24,7 @@
     display: inline-block;
     background-repeat: no-repeat;
     margin-top: 1rem;
-    margin-right: 21rem;
+    margin-right: 15rem;
     display: inline-flexbox;
 }
 
