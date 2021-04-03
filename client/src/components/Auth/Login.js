@@ -50,9 +50,12 @@ class Login extends Component {
 
         if (err) {
             this.setState({
-            errorTimeout :{[inputName] : setTimeout(() => {
-            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
-            }, 2000)}});
+                errorTimeout: {
+                    [inputName]: setTimeout(() => {
+                        this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
+                    }, 2000)
+                }
+            });
         } else {
             this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
         }
@@ -64,7 +67,7 @@ class Login extends Component {
             .then((response) => {
                 if (!response || response.errors) {
                     const errorsList = response.errors.map((err, i) => {
-                        return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
+                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
                     });
                     this.context.setNotifyList(errorsList);
                     return;
@@ -72,13 +75,22 @@ class Login extends Component {
                 const { user, token } = response;
                 localStorage.setItem('sid', JSON.stringify({ user, token }));
                 this.context.setIsAuth(user.username);
-                this.context.setNotifyList([{ id: 'Login successful', title: 'Success', description: `Wellcome ${user.username.toUpperCase()}`, position:'middle' }])
+                this.context.setNotifyList([{ id: 'Login successful', title: 'Success', description: `Wellcome ${user.username.toUpperCase()}`, position: 'middle' }])
                 this.setState({ redirectToHome: true });
             })
             .catch(err => {
-                const errorsList = err.errors.map((err, i) => {
-                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
-                });
+                let errorsList = [];
+                if (err.message === 'Failed to fetch') {
+                    errorsList = [{ id: 'Server problem', title: 'Error', description: 'Server problem', position: 'middle' }];
+                }
+                if (err.message) {
+                    errorsList = [{ id: err.message, title: 'Error', description: err.message, position: 'middle' }];
+                }
+                if (err.errors && err.errors.length !== 0) {
+                    errorsList = err.errors.map((err, i) => {
+                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                    });
+                }
                 this.context.setNotifyList(errorsList);
             })
     }

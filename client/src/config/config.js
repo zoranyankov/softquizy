@@ -1,6 +1,6 @@
-const SERVER_AUTH_URL = 'http://localhost:5000/auth';
-const API_QUESTION_URL = 'http://localhost:5000/api/questions';
-const API_RESULT_URL = 'http://localhost:5000/api/results';
+const SERVER_AUTH_URL = 'http://localhost:80/auth';
+const API_QUESTION_URL = 'http://localhost:80/api/questions';
+const API_RESULT_URL = 'http://localhost:80/api/results';
 const TRIVIA_API_URL = 'https://opentdb.com/api.php';
 
 const CATEGORY_IMAGES = {
@@ -88,6 +88,8 @@ async function request(url, method, body, headers) {
         if (response.status === 204) {
             // return {errors: {error: 'You still didn\'t finish any quizes'}}
             throw new Error('No data')
+        } else if (response.status === 404) {
+            throw new Error('Not Found')
         }
         let resultData = await response.json();
         return resultData;

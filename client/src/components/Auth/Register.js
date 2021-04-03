@@ -65,10 +65,19 @@ class Register extends Component {
                 this.setState({ redirectToLogin: true });
             })
             .catch(err => {
-                const errorsList = err.errors.map((err, i) => ( { id: i + err.message, title: 'Error', description: err.message }));
+                let errorsList = [];
+                if (err.message === 'Failed to fetch') {
+                    errorsList = [{ id: 'Server problem', title: 'Error', description: 'Server problem', position: 'middle' }];
+                }
+                if (err.message) {
+                    errorsList = [{ id: err.message, title: 'Error', description: err.message, position: 'middle' }];
+                }
+                if (err.errors && err.errors.length !== 0) {
+                    errorsList = err.errors.map((err, i) => {
+                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                    });
+                }
                 this.context.setNotifyList(errorsList);
-                console.log('inRegisterFendler')
-                console.log(err)
             })
     }
 
