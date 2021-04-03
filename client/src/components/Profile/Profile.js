@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Redirect, Switch, Route, useRouteMatch } from 'react-router-dom';
-import { Image } from 'cloudinary-react';
+import { Image, Transformation } from 'cloudinary-react';
 
 //Import global context and services
 import AppContext from '../AppContext';
@@ -31,13 +31,7 @@ const useStyles = makeStyles((theme) => ({
         color: 'darkBlue',
         // margin: theme.spacing(5),
         borderRadius: "0em",
-        margin: '0 5rem 5rem 0',
-    },
-    create_button: {
-        backgroundColor: 'green',
-        color: 'darkBlue',
-        margin: theme.spacing(5),
-        // margin: '3rem 5rem',
+        margin: '2rem 1rem 5rem 5rem ',
     },
 }));
 
@@ -67,8 +61,14 @@ const Profile = ({ history }) => {
     return (
         <div className="quiz-content">
             <div className="profile-header">
-                <Image cloudName="softquizy" className="profile-logo" publicId='profile-page-logo'/>
-                <h1 className="profile-title">THE PROFILE PAGE</h1>
+                <Image cloudName="softquizy" className="profile-animation" publicId='profile-page-logo' />
+                <div className="profile-data">
+                    <h1 className="profile-title">{isAuth.toUpperCase()}</h1>
+                    <Image cloudName="softquizy" className="profile-logo" publicId='placeholder-profile'>
+                        <Transformation effect="bgremoval" radius="130" width="180" crop="scale" />
+                    </Image>
+                    <h6 className="profile-logo-title">Profile picture is comming up...</h6>
+                </div>
             </div>
             <div className="profile-page-buttons">
 

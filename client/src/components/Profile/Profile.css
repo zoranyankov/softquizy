@@ -1,5 +1,5 @@
 .quiz-content {
-    padding: 1rem 7rem;
+    padding: 1rem 0rem;
     text-align: center;
 }
 
@@ -8,21 +8,40 @@
     width: 100%;
 }
 
-.quiz-content .profile-title {
+.quiz-content .profile-data {
     height: 21rem;
     font-size: 3rem;
     margin-top: 1rem;
-    margin-right: 21rem;
+    margin-right: 13rem;
 }
 
-.quiz-content .profile-logo {
+.quiz-content .profile-title {
+    font-size: 3rem;
+}
+
+.quiz-content .profile-logo-title {
+    font-size: 1rem;
+    margin: 0;
+}
+
+.quiz-content .profile-animation {
     float: left;
     height: 21rem;
     margin-left: 5rem;
     margin-top: 3rem;
 }
 
+.quiz-content .profile-logo {
+    /* float: left; */
+    border-radius: 13rem;
+    width: 13rem;
+    height: 13rem;
+    /* margin-left: 5rem; */
+    /* margin-top: 3rem; */
+}
+
 .quiz-content .profile-page-buttons {
+    display: inline-block;
     text-align: center;
 }
 

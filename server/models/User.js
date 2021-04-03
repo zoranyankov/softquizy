@@ -45,6 +45,16 @@ const userSchema = new mongoose.Schema({
         //     message: props => `${props.value} is not a valid username!`
         // },
     },
+    picture: {
+        type: String, 
+        // validate: /^https?/i,
+        validate: {
+            validator: function(v) {
+                return v.match(/^https?/i);
+            },
+            message: props => `${props.value} is not a valid Url`,
+        },
+    },
     results: [{
         type: Object,
     }]
