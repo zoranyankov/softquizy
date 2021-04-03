@@ -21,6 +21,7 @@ const ProfileQuestions = (props) => {
     let isAuth = appContext.isAuthName;
 
     let [userQuestions, setuserQuestions] = useState([]);
+    let [noData, setNoData] = useState(false);
 
     const userId = appContext.userId;
     // console.log(userId);
@@ -33,10 +34,7 @@ const ProfileQuestions = (props) => {
             })
             .catch(err => {
                 console.log('Profile get Question error: ' + err);
-                const errorsList = err.errors.map((err, i) => {
-                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
-                });
-                appContext.setNotifyList(errorsList);
+                setNoData(true);
             })
     }, [userId, isAuth, appContext])
 
@@ -45,6 +43,16 @@ const ProfileQuestions = (props) => {
         return <Redirect to="/auth/login" />;
     }
 
+    // Notify when there is stil no results for this user
+    if (noData) {
+        return (
+            <Toast
+                toastList={[{ id: "You still didn't create any Questions", title: 'Warning', description: "You still didn't create any Questions", position: 'middle' }]}
+                // position="bottom-right"
+                position="middle"
+            />
+        )
+    }
     //Initial render
     if (userQuestions.length === 0) {
         return (
@@ -60,11 +68,6 @@ const ProfileQuestions = (props) => {
         <>
             <h3>CEATED QUESTIONS</h3>
             <Accordion data={userQuestions} />
-            {/* {userQuestions.map(result => (
-                    <div className="quiz-questions" key={result._id}>
-                        <QuestionTable rows={result.userQuestions} score={result.score} quizName={result.quizName} />
-                    </div>
-                ))} */}
             <br />
             <br />
             <br />

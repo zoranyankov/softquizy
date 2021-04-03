@@ -18,6 +18,11 @@ router.get('/:userId', verifyToken, (req, res) => {
     // }
     resultService.getOneByUserId(userId)
         .then((results) => {
+            if (results.length === 0) {
+                res.status(204).end();
+                // res.status(204).json({errors : {message: "You still didn't finish any quizes"}});
+                return;
+            }
             res.status(302).json(results);
             return;
         })

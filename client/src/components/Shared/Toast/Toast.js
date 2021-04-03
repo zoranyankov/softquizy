@@ -23,13 +23,13 @@ const Toast = ({ toastList, position, autoDelete, dismissTime }) => {
         "Info" : "#5bc0de",
         "Warning" : "#f0ad4e",
     };
-    if (toastList.find(m => m.title === "Success")) {
+    if (toastList.find(m => (m.title === "Success") || (m.title === "Info"))) {
         autoDelete = true;
-        dismissTime = 2000;
+        dismissTime = 1500;
     }
-    if (toastList.find(m => m.title === "Error")) {
+    if (toastList.find(m => ((m.title === "Error") || (m.title === "Warning")))) {
         autoDelete = true;
-        dismissTime = 5000;
+        dismissTime = 3000;
     }
 
 

@@ -57,7 +57,7 @@ const Profile = ({ history }) => {
     if (!isAuth) {
         return <Redirect to="/auth/login" />;
     }
-
+console.log('profile RENDERRR');
     return (
         <div className="quiz-content">
             <div className="profile-header">

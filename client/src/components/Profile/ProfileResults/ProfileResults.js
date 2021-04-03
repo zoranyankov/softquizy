@@ -21,31 +21,39 @@ const ProfileResults = (props) => {
     let isAuth = appContext.isAuthName;
 
     let [userResults, setUserResults] = useState([]);
+    let [noData, setNoData] = useState(false);
 
     const userId = appContext.userId;
-    // console.log(userId);
 
     useEffect(() => {
-        console.log('inUseEffect of Profile comp');
         apiResultServices.getByUserId(userId)
             .then(results => {
+                setNoData(false);
                 setUserResults(results)
             })
             .catch(err => {
                 console.log('Profile get Results error: ' + err);
-                const errorsList = err.errors.map((err, i) => {
-                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
-                });
-                appContext.setNotifyList(errorsList);
+                setNoData(true);
             })
-    }, [userId, isAuth, appContext])
+    }, [userId, isAuth])
 
     //Execute guard - redirect if is not authenticated
     if (!isAuth) {
         return <Redirect to="/auth/login" />;
     }
 
-    //Initial render
+    // Notify when there is stil no results for this user
+    if (noData) {
+        return (
+            <Toast
+                toastList={[{ id: "You still didn't passed any Quezes", title: 'Warning', description: "You still didn't passed any Quezes", position: 'middle' }]}
+                // position="bottom-right"
+                position="middle"
+            />
+        )
+    }
+
+    // Initial render   
     if (userResults.length === 0) {
         return (
             <Toast
@@ -55,25 +63,11 @@ const ProfileResults = (props) => {
             />
         )
     }
-    // return <h1>Still loading...</h1>;
-    //     appContext.setNotifyList([{ id: 'Loading results', title: 'Info', description: 'Loading results', position: 'middle' }])
-    //     return null;
-    // }
 
     return (
         <>
             <h3>RESULTS HISTORY</h3>
             <Accordion data={userResults} type="results" />
-            {/* {userResults.map(result => (
-                    <div className="quiz-results" key={result._id}>
-                        <ResultsTable rows={result.userResults} score={result.score} quizName={result.quizName} />
-                    </div>
-                ))} */}
-            {/* {userResults.length === 0 && <Toast
-                        toastList={appContext.notifyList}
-                        // position="bottom-right"
-                        position="top-left"
-                    />} */}
             <br />
             <br />
             <br />

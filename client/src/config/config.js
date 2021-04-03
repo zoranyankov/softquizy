@@ -85,12 +85,16 @@ async function request(url, method, body, headers) {
         // console.log(url);
         // console.log(obj);
         let response = await fetch(url, obj);
+        if (response.status === 204) {
+            // return {errors: {error: 'You still didn\'t finish any quizes'}}
+            throw new Error('No data')
+        }
         let resultData = await response.json();
         return resultData;
     } catch (error) {
         console.log('error');
         console.log(error);
-        return error;
+        throw error;
         // notificate('error', error.message);
     }
 }

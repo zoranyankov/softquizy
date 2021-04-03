@@ -24,10 +24,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleAccordion({ data, type }) {
     const classes = useStyles();
-
+console.log(data);
     return (
         <div className={classes.root}>
-            {data.map(table => (
+            {(data.length !== 0) && data.map(table => (
                 <div className="quiz-results" key={table._id}>
                     <Accordion>
                         <AccordionSummary

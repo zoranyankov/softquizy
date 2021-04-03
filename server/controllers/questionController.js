@@ -100,7 +100,11 @@ router.get('/:userId', verifyToken, (req, res) => {
     console.log('inQuestion api route');
     questionService.getOneByUserId(userId)
         .then((questions) => {
-            console.log(questions);
+            if (questions.length === 0) {
+                res.status(204).end();
+                // res.status(204).json({errors : {message: "You still didn't finish any quizes"}});
+                return;
+            }
             res.status(302).json(questions);
             return;
         })
