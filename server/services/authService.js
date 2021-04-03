@@ -25,8 +25,9 @@ async function login(user, pass) {
         })
 }
 
-async function register(username, password) {
-    const newUser = new User({ username, password });
+async function register(username, password, picture) {
+    console.log(picture);
+    const newUser = new User({ username, password, picture });
     return newUser.save();
 }
 

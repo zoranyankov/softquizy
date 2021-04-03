@@ -142,8 +142,11 @@ router.get('/get', (req, res) => {
 // });
 
 router.post('/register', (req, res, next) => {
-    const { username, password } = req.body;
+    console.log('in Register');
+    const { username, password, picture } = req.body;
     let newUser = username.toLowerCase();
+    console.log(picture);
+    let newPicture = picture? picture : 'https://res.cloudinary.com/softquizy/image/upload/v1617431642/placeholder-profile.jpg';
     // const errors = req.errors;
     // console.log(username);
     // console.log(password);
@@ -166,7 +169,7 @@ router.post('/register', (req, res, next) => {
                 // next( {message: `Password ${password} is invalid!` });
                 return;
             }
-            return authSevice.register(newUser, password)
+            return authSevice.register(newUser, password, newPicture)
                 .then((user) => {
                     console.log('User created');
                     return res.status(201).json(user);
