@@ -1,8 +1,6 @@
 import api from './api';
 import request, { getToken } from '../../config/config';
 
-// const token = getToken();
-// console.log(token);
 
 const add = (data) => {
     const token = getToken();
@@ -12,20 +10,7 @@ const add = (data) => {
 const getAll = () => {
     const token = getToken();
     return request(api.getAllResults, "GET", '', { 'x-access-token': token });
-    // return request...
 }
-
-// const getCategories = () => {
-//     const token = getToken();
-//     return request(api.getCategories, "GET", '', { 'x-access-token': token });
-//     // return request...
-// }
-
-// const getCategory = (category) => {
-//     const token = getToken();
-//     return request(`${api.getCategory}/${category}`, "GET", '', { 'x-access-token': token });
-//     // return request...
-// }
 
 const getByUserId = (userId) => {
     const token = getToken();
@@ -46,8 +31,6 @@ const apiQuestionServices = {
     getByUserId,
     editOne,
     deleteOne,
-    // getCategories,
-    // getCategory,
 }
 
 export default apiQuestionServices;

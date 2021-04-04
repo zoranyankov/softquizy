@@ -8,23 +8,12 @@ import './ButtonLink.css';
 
 //Make custom styles for Material UI Button component
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
     button: {
         backgroundColor: 'skyblue',
         color: 'darkBlue',
         margin: theme.spacing(5),
         // margin: '3rem 5rem',
-    },
-    create_button: {
-        backgroundColor: 'green',
-        color: 'darkBlue',
-        margin: theme.spacing(5),
-        // margin: '3rem 5rem',
-    },
+    }
 }));
 
 const ButtonLink = ({ history, children, path, component, type }) => {
@@ -44,7 +33,6 @@ const ButtonLink = ({ history, children, path, component, type }) => {
                 className={classes.button}
                 variant="contained"
                 color="primary"
-                // href="/quizes/create-question"
                 type="submit"
                 startIcon={component}
             >
@@ -59,7 +47,6 @@ const ButtonLink = ({ history, children, path, component, type }) => {
             className={classes.button}
             variant="contained"
             color="primary"
-            // href="/quizes/create-question"
             onClick={(e) => onButtonClick(e)}
             startIcon={component}
         >

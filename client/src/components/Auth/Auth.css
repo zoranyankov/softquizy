@@ -6,7 +6,6 @@
 .auth-container .form-container {
     position: relative;
     text-align: center;
-    /* width: 300px; */
 }
 
 .auth-container .form-control {
@@ -17,7 +16,6 @@
 
 .auth-container .form-group {
     position: relative;
-    /* margin-left: 30rem; */
 }
 
 .form-label {
@@ -26,10 +24,4 @@
 
 .auth-container .btn {
     position: relative;
-    /* margin-left: 37rem; */
 }
-
-
-/* .auth-container .nav-link {
-    padding: 3rem;
-} */

@@ -1,4 +1,6 @@
 import React from 'react';
+
+//Import components from Material UI
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -9,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 // import { TableFooter } from '@material-ui/core';
 
+//Import constants
 import { CATEGORY_NAMES } from '../../../config/config';
 
 const useStyles = makeStyles({

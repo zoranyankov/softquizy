@@ -1,10 +1,4 @@
-import {
-    Switch,
-    Route,
-    // Redirect,
-    useRouteMatch,
-    // useParams
-} from "react-router-dom";
+import { Switch, Route, useRouteMatch } from "react-router-dom";
 
 import Login from './Login';
 import Register from './Register';
@@ -12,18 +6,15 @@ import Logout from './Logout';
 
 import './Auth.css';
 
-const Auth = (props) => {
+const Auth = () => {
     let match = useRouteMatch();
 
     return (
-        // <div className="auth-containter">
-            <Switch>
-                <Route path={`${match.url}/login`} component={Login} />
-                <Route path={`${match.url}/register`} component={Register} />
-                <Route path={`${match.url}/logout`} component={Logout} />
-            </Switch>
-        // </div>
-
+        <Switch>
+            <Route path={`${match.url}/login`} component={Login} />
+            <Route path={`${match.url}/register`} component={Register} />
+            <Route path={`${match.url}/logout`} component={Logout} />
+        </Switch>
     )
 }
 

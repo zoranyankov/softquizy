@@ -1,4 +1,6 @@
 import React from 'react';
+
+//Import components from Material UI
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -66,12 +68,7 @@ export default function ResultsTable({ rows, score, quizName }) {
           ))}
         </TableBody>
         <TableFooter>
-          <StyledTableRow>
-          </StyledTableRow>
-          <StyledTableRow>
-          </StyledTableRow>
-          <StyledTableRow>
-          </StyledTableRow>
+          <StyledTableRow /><StyledTableRow /><StyledTableRow />
           <StyledTableRow>
             <StyledTableCell colSpan={4} align="right">You have finished the {quizName} quiz and your result is: </StyledTableCell>
             <StyledTableCell align="right" >{score} Pts</StyledTableCell>

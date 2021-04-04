@@ -11,18 +11,24 @@ import './Toast.css';
 const Toast = ({ toastList, position, autoDelete, dismissTime }) => {
 
     const [list, setList] = useState(toastList);
+    
+    //Set default icons
     const icon = {
         "Error" : errorIcon,
         "Success" : checkIcon,
         "Info" : infoIcon,
         'Warning' : warningIcon,
     };
+
+    //Set default background-colors
     const backgroundColor = {
         "Error" : "#d9534f",
         "Success" : "#5cb85c",
         "Info" : "#5bc0de",
         "Warning" : "#f0ad4e",
     };
+
+    //Set default autoDelete timers with default dissmissTimes
     if (toastList.find(m => (m.title === "Success") || (m.title === "Info"))) {
         autoDelete = true;
         dismissTime = 1500;
@@ -58,6 +64,7 @@ const Toast = ({ toastList, position, autoDelete, dismissTime }) => {
         toastList.splice(toastListItem, 1);
         setList([...list]);
     }
+    
     return (
         <div className="toaster-containter">
             <div className={`notification-container ${position || 'bottom-right'}`}>

@@ -1,5 +1,4 @@
-// var htmlEnDeCode = (function () {
-    var charToEntityRegex,
+var charToEntityRegex,
     entityToCharRegex,
     charToEntity,
     entityToChar;
@@ -7,6 +6,7 @@
 function resetCharacterEntities() {
     charToEntity = {};
     entityToChar = {};
+
     // add the default set
     addCharacterEntities({
         '&amp;': '&',
@@ -15,11 +15,11 @@ function resetCharacterEntities() {
         '.&quot;': '"',
         '&#39;': "'",
         '&#039;t': "'",
-        "&ecirc;" : "ê",
-        "&eacute;" : "é",
-        "&ntilde;" : "Ñ",
-        "&ldquo;" : "«",
-        "&rdquo;" : "»",
+        "&ecirc;": "ê",
+        "&eacute;": "é",
+        "&ntilde;": "Ñ",
+        "&ldquo;": "«",
+        "&rdquo;": "»",
     });
 }
 
@@ -62,4 +62,3 @@ export {
     htmlEncode as default,
     htmlDecode,
 };
-// })();

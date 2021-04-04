@@ -1,9 +1,10 @@
 import { useEffect, useState, useContext } from 'react';
 
+//Import global AppContext and services
 import AppContext from '../../AppContext';
-
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
+//Import components
 import Questions from '../Questions';
 import Toast from '../../Shared/Toast';
 
@@ -39,13 +40,12 @@ const Quiz = (props) => {
 
     return (
         <div className="quiz-content">
-            {/* <Quizheader quizName={quizName} currentQuestion={} /> */}
             {questions
                 ? <Questions props={props} quizName={quizName} questions={questions} inLocal={inLocal} />
                 : <Toast
                     toastList={[{ id: "LoadingQuizes", title: "Info", description: "Loading Quizes..." }]}
-                    // position="bottom-right"
                     position="middle"
+                // position="bottom-right"
                 />
             }
         </div>

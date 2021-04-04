@@ -21,11 +21,6 @@ import './Profile.css';
 
 //Make custom styles for Material UI Button component
 const useStyles = makeStyles((theme) => ({
-    root: {
-        '& > *': {
-            margin: theme.spacing(1),
-        },
-    },
     button: {
         backgroundColor: 'skyblue',
         color: 'darkBlue',
@@ -47,8 +42,10 @@ const Profile = ({ history }) => {
     let match = useRouteMatch();
 
     //Get actual state of Token if is authenticated
-    // const hasToken = JSON.parse(localStorage.getItem('sid'));
-    // let isAuth = !hasToken ? false : appContext.isAuthName;
+        // const hasToken = JSON.parse(localStorage.getItem('sid'));
+        // let isAuth = !hasToken ? false : appContext.isAuthName;
+
+    //Get authentication state from global Context
     const appContext = useContext(AppContext);
     let isAuth = appContext.isAuthName;
 
@@ -57,7 +54,6 @@ const Profile = ({ history }) => {
     if (!isAuth) {
         return <Redirect to="/auth/login" />;
     }
-console.log('profile RENDERRR');
     return (
         <div className="quiz-content">
             <div className="profile-header">
@@ -78,11 +74,10 @@ console.log('profile RENDERRR');
                     className={classes.button}
                     variant="contained"
                     color="primary"
-                    // href="/profile/results"
                     onClick={(e) => onButtonClick(e, '/profile/results')}
                     startIcon={<ImportContactsIcon />}
                 >
-                    Profile Results
+                    {isAuth}'s Results
                 </Button>
 
                 {/* PROFILE QUESTIONS BUTTON */}
@@ -91,11 +86,10 @@ console.log('profile RENDERRR');
                     className={classes.button}
                     variant="contained"
                     color="primary"
-                    // href="/profile/questions"
                     onClick={(e) => onButtonClick(e, '/profile/questions')}
                     startIcon={<ImportContactsIcon />}
                 >
-                    Profile Questions
+                    {isAuth}'s Questions
                 </Button>
                 <div className="profile-results">
                     <Switch>
@@ -103,12 +97,6 @@ console.log('profile RENDERRR');
                         <Route path={`${match.url}/questions`} component={ProfileQuestions} />
                     </Switch>
                 </div>
-                {/* <Accordion data={userResults} /> */}
-                {/* {userResults.map(result => (
-                    <div className="quiz-results" key={result._id}>
-                        <ResultsTable rows={result.userResults} score={result.score} quizName={result.quizName} />
-                    </div>
-                ))} */}
             </div>
         </div>
     );

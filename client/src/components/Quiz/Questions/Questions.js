@@ -72,7 +72,6 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
                 position="middle"
             />
         );
-        // return <h1>Still loading...</h1>;
     }
 
     //Questions charachters decode
@@ -99,7 +98,6 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
             {q &&
                 <div className="questions">
                     <ul className="question-list">
-                        {/* {catQuestions.map(q => ( */}
                         <Qlist
                             key={q._id}
                             id={q._id}
@@ -108,13 +106,12 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
                             answer={q.correct_answer}
                             onClick={handleItemClick}
                         />
-                        {/*))}*/}
                     </ul>
                 </div>
             }
             {endOfQuiz &&
                 <div>
-                    <h1 className="quiz-results-header">Your result from {quizName} is: {score}</h1>
+                    <h1 className="quiz-results-header">Your result from {quizName} is: {score} Pts</h1>
                     <div className="quiz-results">
                         <ResultsTable rows={userResults} score={score} quizName={quizName} />
                         {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}

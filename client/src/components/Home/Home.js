@@ -1,21 +1,19 @@
 import { Fragment, useContext } from 'react';
 
+//Import global AppContext
 import AppContext from '../AppContext';
 
+//Import components
 import Guestpage from './Guestpage';
 import Userpage from './Userpage';
 import './Home.css';
 
 const Home = (props) => {
 
-    //Get actual state of Token if is authenticated
-    // const hasToken = JSON.parse(localStorage.getItem('sid'));
-    // let isAuth = !hasToken ? false : appContext.isAuthName;
+    //Get authentication state from global Context
     const appContext = useContext(AppContext);
     let isAuth = appContext.isAuthName;
    
-    // console.log(isAuth);
-
     return (
         <Fragment>
             {isAuth ? <Userpage /> : <Guestpage />}

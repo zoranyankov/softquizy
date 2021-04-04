@@ -8,6 +8,7 @@ import CreateIcon from '@material-ui/icons/Create';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
 
+//Import globav AppContext and services
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 import testQuestionInput from '../../../sevices/test/questionsTestService';
@@ -17,6 +18,7 @@ import testQuestionInput from '../../../sevices/test/questionsTestService';
 import Notificate from '../../Shared/Notificate';
 import ButtonLink from '../../Shared/ButtonLink';
 
+//Import custom styles for current component
 import './Createquestion.css';
 
 let errorTimeout = {};
@@ -24,13 +26,13 @@ let errorTimeout = {};
 const Createquestion = ({ history }) => {
 
     //Get actual state of Token if is authenticated
-    // const hasToken = JSON.parse(localStorage.getItem('sid'));
-    // let isAuth = !hasToken ? false : appContext.isAuthName;
+        // const hasToken = JSON.parse(localStorage.getItem('sid'));
+        // let isAuth = !hasToken ? false : appContext.isAuthName;
+    //Get autentication state from global AppContext
     const appContext = useContext(AppContext);
     let isAuth = appContext.isAuthName;
 
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: { incorrect_answer: {} } });
-
 
     //Execute guard - redirect if is not authenticated
     if (!isAuth) {
@@ -44,9 +46,8 @@ const Createquestion = ({ history }) => {
         setFields(oldState => ({ ...oldState, incorrect_answers: fields.incorrect_answers }));
     }
 
-    //Event for controll and validate input fields
+    //Event for real-time control and validate input fields
     function handleInputChange(event, oldState, i) {
-
         const target = event.target;
         const value = target.type === 'checkbox' ? target.checked : target.value;
         const name = target.name;
@@ -81,6 +82,7 @@ const Createquestion = ({ history }) => {
             [name]: value,
         });
 
+        //Real-time validation of select fields
         if (name === 'category' || name === 'difficulty') {
             if (value === 'any') {
                 errorTimeout[name] = setTimeout(() => {
@@ -109,6 +111,8 @@ const Createquestion = ({ history }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const { category, difficulty, question, correct_answer, incorrect_answers } = fields;
+        
+        //Check for missing fields
         if (category === 'any' || difficulty === 'any' || !question || !correct_answer || incorrect_answers.length < 1) {
             const msg = 'Field is required';
             setFields((oldState => ({ ...oldState, errors: { category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg, ...oldState.errors} })));
@@ -146,7 +150,6 @@ const Createquestion = ({ history }) => {
         <div className="create-question-content">
             <div className="create-question-header">
                 <Image cloudName="softquizy" className="create-question-logo" publicId='create-question'/>
-                {/* <h1 className="create-question-title">Create local Question</h1> */}
             </div>
             <form onSubmit={handleSubmit} className="create-question-form">
                 <h1 className="create-question-title">Create local Question</h1><br />

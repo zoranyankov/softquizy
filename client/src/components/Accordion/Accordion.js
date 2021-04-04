@@ -1,4 +1,6 @@
 import React from 'react';
+
+//Import components from Material UI
 import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -6,9 +8,11 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+//Import components
 import ResultsTable from '../Quiz/ResultsTable';
 import QuestionsTable from '../Quiz/QuestionsTable';
 
+//Import constants
 import { CATEGORY_NAMES } from '../../config/config';
 
 
@@ -24,7 +28,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleAccordion({ data, type }) {
     const classes = useStyles();
-console.log(data);
     return (
         <div className={classes.root}>
             {(data.length !== 0) && data.map(table => (
@@ -37,8 +40,8 @@ console.log(data);
                         >
                             <Typography className={classes.heading}>
                                 {type === 'results'
-                                    ? `${table.quizName} with ${table.score} Pts`
-                                    : CATEGORY_NAMES[table.category]
+                                    ? `${table.quizName} with ${table.score} Pts |------------------> Quiz is made on: ${table.createdAt.slice(0, 19).replace('T', ' at: ')}`
+                                    : CATEGORY_NAMES[table.category] + ` |------------------> Question is made on: ${table.createdAt.slice(0, 19).replace('T', ' at: ')}`
                                 }
                             </Typography>
                         </AccordionSummary>
@@ -56,80 +59,3 @@ console.log(data);
         </div>
     )
 }
-
-// import { useState } from 'react';
-// import { withStyles } from '@material-ui/core/styles';
-// import MuiAccordion from '@material-ui/core/Accordion';
-// import MuiAccordionSummary from '@material-ui/core/AccordionSummary';
-// import MuiAccordionDetails from '@material-ui/core/AccordionDetails';
-// import Typography from '@material-ui/core/Typography';
-
-// import ResultsTable from '../Quiz/ResultsTable';
-
-// const Accordion = withStyles({
-//     root: {
-//         border: '1px solid rgba(0, 0, 0, .125)',
-//         boxShadow: 'none',
-//         '&:not(:last-child)': {
-//             borderBottom: 0,
-//         },
-//         '&:before': {
-//             display: 'none',
-//         },
-//         '&$expanded': {
-//             margin: 'auto',
-//         },
-//     },
-//     expanded: {},
-// })(MuiAccordion);
-
-// const AccordionSummary = withStyles({
-//     root: {
-//         backgroundColor: 'rgba(0, 0, 0, .03)',
-//         borderBottom: '1px solid rgba(0, 0, 0, .125)',
-//         marginBottom: -1,
-//         minHeight: 56,
-//         '&$expanded': {
-//             minHeight: 56,
-//         },
-//     },
-//     content: {
-//         '&$expanded': {
-//             margin: '12px 0',
-//         },
-//     },
-//     expanded: {},
-// })(MuiAccordionSummary);
-
-// const AccordionDetails = withStyles((theme) => ({
-//     root: {
-//         padding: theme.spacing(2),
-//     },
-// }))(MuiAccordionDetails);
-
-// export default function CustomizedAccordions({ data }) {
-//     const [expanded, setExpanded] = useState('panel1');
-
-//     const handleChange = (panel) => (event, newExpanded) => {
-//         setExpanded(newExpanded ? panel : false);
-//     };
-
-//     return (
-//         <div>
-//             {data.map(table => (
-//                 <div className="quiz-results" key={table._id}>
-//                     <Accordion square expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-//                         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-//                             <Typography>Collapsible Group Item #1</Typography>
-//                         </AccordionSummary>
-//                         <AccordionDetails>
-//                             {/* <Typography> */}
-//                                 <ResultsTable rows={table.userResults} score={table.score} quizName={table.quizName} />
-//                             {/* </Typography> */}
-//                         </AccordionDetails>
-//                     </Accordion>
-//                 </div>
-//             ))}
-//         </div>
-//     );
-// }

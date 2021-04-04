@@ -1,17 +1,13 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
+//Import Claudinary component
 import { Image } from 'cloudinary-react';
 
-
+//Import custom styles for current component
 import './Quizcard.css'
 
-const Quizcard = ({
-    to,
-    logoImgUrl,
-    category,
-    categoryName,
-}) => {
+const Quizcard = ({ to, categoryName}) => {
     return (
         <Fragment>
             <Link to={to} className="quiz-link ">

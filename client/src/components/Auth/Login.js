@@ -48,6 +48,7 @@ class Login extends Component {
         const err = testAuthInput[inputName](inputValue);
         // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
 
+        //Real-time validation of user inputs
         if (err) {
             this.setState({
                 errorTimeout: {

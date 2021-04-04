@@ -15,8 +15,10 @@ import './ProfileResults.css';
 const ProfileResults = (props) => {
 
     //Get actual state of Token if is authenticated
-    // const hasToken = JSON.parse(localStorage.getItem('sid'));
-    // let isAuth = !hasToken ? false : appContext.isAuthName;
+        // const hasToken = JSON.parse(localStorage.getItem('sid'));
+        // let isAuth = !hasToken ? false : appContext.isAuthName;
+
+    //Get authentication state from global Context
     const appContext = useContext(AppContext);
     let isAuth = appContext.isAuthName;
 

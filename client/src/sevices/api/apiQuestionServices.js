@@ -1,8 +1,6 @@
 import api from './api';
 import request, { getToken } from '../../config/config';
 
-// const token = getToken();
-// console.log(token);
 
 const create = (data) => {
     const token = getToken();
@@ -25,7 +23,6 @@ const getCategory = (category) => {
 }
 
 const getByUserId = (userId) => {
-    console.log(userId);
     const token = getToken();
     return request(`${api.getQuestions}/${userId}`, "GET", '', { 'x-access-token': token });
 }

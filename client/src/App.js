@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    // Redirect,
-    // Link,
-    // useRouteMatch,
-    // useParams
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 //Import component styles - for current component
 import './App.css';
@@ -23,12 +15,6 @@ import Auth from './components/Auth';
 import Profile from './components/Profile';
 import Quizes from './components/Quiz/Quizes';
 import Footer from './components/Footer';
-
-
-// import checkIcon from './assets/check.svg';
-// import errorIcon from './assets/error.svg';
-// import infoIcon from './assets/info.svg';
-// import warningIcon from './assets/warning.svg';
 import Toast from './components/Shared/Toast';
 
 
@@ -96,8 +82,8 @@ function App() {
                     </div>
                     {notifyList && <Toast
                         toastList={notifyList}
-                        // position="bottom-right"
                         position="middle"
+                        // position="bottom-right"
                     />}
                     <Footer />
                 </div >

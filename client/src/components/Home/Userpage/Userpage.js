@@ -5,20 +5,21 @@ import { withRouter } from 'react-router-dom';
 import CreateIcon from '@material-ui/icons/Create';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 
-
+//Import global AppContext and services
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 
-import ButtonLink from '../../Shared/ButtonLink';
+//Import constants
+import { CATEGORY_NAMES } from '../../../config/config';
 
-import { CATEGORY_NAMES, CATEGORY_IMAGES } from '../../../config/config';
-
+//Import custom styles for current component
 import '../Home.css';
 
-// import NavListItem from '../../Header/NavListItem';
+//Import components
 import Quizcard from '../Quizcard';
+import ButtonLink from '../../Shared/ButtonLink';
 
-const Userpage = ({ history }) => {
+const Userpage = () => {
 
     let [questions, setQuestions] = useState('');
     const appContext = useContext(AppContext);
@@ -27,22 +28,16 @@ const Userpage = ({ history }) => {
         if (questions === '') {
             apiQuestionServices.getCategories()
                 .then(qss => {
-                    // console.log(qss);
 
                     //Filter to unique categories with images - to show in Userpage
                     qss = qss.reduce((a, x) => {                            //TODO: find better way
                         if (a.find(y => y.category === x.category)) {
                             return a;
                         }
-                        x = {
-                            ...x,
-                            categoryName: CATEGORY_NAMES[x.category],
-                            logoImgUrl: CATEGORY_IMAGES[x.category],
-                        }
+                        x = {...x, categoryName: CATEGORY_NAMES[x.category] }
                         a.push(x);
                         return a;
                     }, []);
-                    // console.log(qss);
                     qss ? setQuestions(qss) : setQuestions('');
                 })
                 .catch(err => {
@@ -67,7 +62,6 @@ const Userpage = ({ history }) => {
                             <Quizcard
                                 to={`/quizes/local/${category}/${categoryName}`}
                                 categoryName={categoryName}
-                                logoImgUrl={logoImgUrl}
                                 alt={`quiz-${category}-pic`}
                                 key={_id}
                             />

@@ -1,27 +1,20 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+
+//Import icon from Material UI
 import HomeIcon from '@material-ui/icons/Home';
 
-// import AppContext from '../AppContext';
-
+//Import components
 import NavList from './NavList';
 
 import './Header.css';
 
 const Header = (props) => {
-    // let [isAuth, setAuth] = React.useState('false');
-    // setAuth = (localStorage.getItem('sid'));
-    // const isAuth = JSON.parse(localStorage.getItem('sid')).user.username;
-    // console.log(isAuth);
-
-    // const isAuth = JSON.parse(useContext(AppContext)).user.username;
 
     return (
         <header className="nav-header">
             <nav className="navbar">
                 <Link to="/" className='navbar-brand'><span className="nav-content nav-link" ><HomeIcon fontSize='small' color='primary' className='matIcon' /> Quizes</span></Link>
-                {/* <a className='navbar-brand' href="home">Books</a> */}
-
                 <ul className='navbar-nav'>
                     <NavList />
                 </ul>

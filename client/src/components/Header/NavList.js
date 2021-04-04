@@ -1,11 +1,13 @@
 import { Fragment, useContext } from 'react';
+
+//Import icons from Material UI
 import CreateIcon from '@material-ui/icons/Create';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import PersonIcon from '@material-ui/icons/Person';
 
-
+//Import components
 import NavListItem from './NavListItem';
 import AppContext from '../AppContext';
 
@@ -13,8 +15,6 @@ import AppContext from '../AppContext';
 const NavList = () => {
 
     const isAuth = useContext(AppContext).isAuthName;
-    // const isAuth = JSON.parse(localStorage.getItem('sid')).user.username;
-    // console.log(isAuth);
 
     return (isAuth
         ? <Fragment>

@@ -1,14 +1,9 @@
-const SERVER_AUTH_URL = 'http://localhost:80/auth';
-const API_QUESTION_URL = 'http://localhost:80/api/questions';
-const API_RESULT_URL = 'http://localhost:80/api/results';
+const SERVER_AUTH_URL = 'http://localhost:5000/auth';
+const API_QUESTION_URL = 'http://localhost:5000/api/questions';
+const API_RESULT_URL = 'http://localhost:5000/api/results';
 const TRIVIA_API_URL = 'https://opentdb.com/api.php';
 
-const CATEGORY_IMAGES = {
-    6: "https://cdn1.focus.bg/bazar/25/pics/2542792e24b632d47d792969d51892ea.jpg",
-    7: "https://thumbs.dreamstime.com/b/set-geography-symbols-equipments-web-banners-vintage-outline-sketch-web-banners-doodle-style-education-concept-back-to-136641038.jpg",
-    8: "http://www.heptx.com/wp-content/uploads/2018/02/Classical-History-MS-300x300.jpg",
-}
-
+//Trivia find names by category number
 const CATEGORY_NAMES = {
     6: "Math",
     7: "Geography",
@@ -39,6 +34,7 @@ const CATEGORY_NAMES = {
     32: "Entertainment: Cartoon &amp; Animations",
 }
 
+//Get current Token 
 const getToken = () => {
     const hasToken = JSON.parse(localStorage.getItem('sid'));
     if (!hasToken) {
@@ -49,17 +45,17 @@ const getToken = () => {
     return hasToken.token;
 }
 
-//LOCAL USER SERVICES
+//LOCAL USER SERVICES - optional
 const localUser = {
     saveUser(userInfo) {
-        localStorage.setItem('userInfo', JSON.stringify(userInfo));
+        localStorage.setItem('sid', JSON.stringify(userInfo));
     },
     getUser() {
-        const user = localStorage.getItem('userInfo');
+        const user = localStorage.getItem('sid');
         return user ? JSON.parse(user) : null;
     },
     clearUser() {
-        localStorage.removeItem('userInfo');
+        localStorage.removeItem('sid');
     }
 }
 
@@ -82,8 +78,6 @@ async function request(url, method, body, headers) {
         obj.headers = Object.assign(obj.headers, { ...headers });
     }
     try {
-        // console.log(url);
-        // console.log(obj);
         let response = await fetch(url, obj);
         if (response.status === 204) {
             // return {errors: {error: 'You still didn\'t finish any quizes'}}
@@ -94,13 +88,12 @@ async function request(url, method, body, headers) {
         let resultData = await response.json();
         return resultData;
     } catch (error) {
-        console.log('error');
-        console.log(error);
+        console.log('In request function catch');
         throw error;
-        // notificate('error', error.message);
     }
 }
 
+//Function to mix the answers (questions)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -109,6 +102,7 @@ function shuffleArray(array) {
     return array;
 }
 
+//Optional function for HTMLEncoding
 function HTMLEncode(str) {
     var i = str.length,
         aRet = [];
@@ -131,7 +125,6 @@ export {
     API_RESULT_URL,
     TRIVIA_API_URL,
     CATEGORY_NAMES,
-    CATEGORY_IMAGES,
     localUser,
     getToken,
     shuffleArray,

@@ -9,6 +9,7 @@ import testAuthInput from '../../sevices/test/authTestServices';
 //Import components from Material UI
 import CreateIcon from '@material-ui/icons/Create';
 
+//Import shared components
 import Notificate from '../Shared/Notificate';
 import ButtonLink from '../Shared/ButtonLink';
 
@@ -36,8 +37,8 @@ class Register extends Component {
         this.setState({ [inputName]: inputValue });
         clearInterval(this.state.errorTimeout[inputName]);
         const err = testAuthInput[inputName](inputValue);
-        // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
 
+        //Real-time validation of user inputs
         if (err) {
             this.setState({
             errorTimeout :{[inputName] : setTimeout(() => {

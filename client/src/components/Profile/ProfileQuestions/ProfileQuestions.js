@@ -15,8 +15,10 @@ import './ProfileQuestions.css';
 const ProfileQuestions = (props) => {
 
     //Get actual state of Token if is authenticated
-    // const hasToken = JSON.parse(localStorage.getItem('sid'));
-    // let isAuth = !hasToken ? false : appContext.isAuthName;
+        // const hasToken = JSON.parse(localStorage.getItem('sid'));
+        // let isAuth = !hasToken ? false : appContext.isAuthName;
+
+    //Get authentication state from global Context
     const appContext = useContext(AppContext);
     let isAuth = appContext.isAuthName;
 
@@ -24,7 +26,6 @@ const ProfileQuestions = (props) => {
     let [noData, setNoData] = useState(false);
 
     const userId = appContext.userId;
-    // console.log(userId);
 
     useEffect(() => {
         console.log('inUseEffect of Profile comp');
