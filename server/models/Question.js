@@ -15,16 +15,6 @@ const questionSchema = new mongoose.Schema({
         minlength: 10,
         maxlength: 100,
     },
-    // imageUrl: {
-    //     type: String,
-    //     // validate: /^https?/i,
-    //     validate: {
-    //         validator: function(v) {
-    //             return v.match(/^https?/i);
-    //         },
-    //         message: props => `${props.value} is not a valid Url`,
-    //     },
-    // },
     correct_answer: {
         type: String,
         required: [true, 'need to specify correct answer'],
@@ -45,10 +35,10 @@ const questionSchema = new mongoose.Schema({
         type: String,
         required: [true, 'creatorName is required!'],
     },
-    // accessories: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: 'Accessory',
-    // }]
+    createdAt: {
+        type: Date,
+        default: new Date(),
+    }
 })
 
 module.exports = mongoose.model('Question', questionSchema);

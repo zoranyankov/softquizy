@@ -2,7 +2,6 @@ const { Router } = require('express');
 
 
 const questionService = require('../services/questionServices');
-const { isLogged, isCreator, isAuthorized } = require('../middlewares/guards');
 const checkQuestionInput = require('./helpers/checkQuestionInput');
 const verifyToken = require('../middlewares/verifyToken');
 
@@ -10,53 +9,68 @@ const router = Router();
 
 router.get('/', verifyToken, (req, res, next) => {
     const _id = req.user ? req.user._id : null;
-    // console.log(_id);
     questionService.getAll(req.query)
         .then(questions => {
             questions.forEach(c => c.isCreator = c.creatorId == _id);
-            // console.log(questions);
             res.status(200).json(questions);
-            // res.render('home/home', questions);
-            // return;
         })
-        .catch(next);
+        .catch(err => {
+            console.log('ingGetAllQuestionError');
+            let errors;
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: [{ message: err.message }] };
+            }
+            console.log(errors);
+            res.status(422).json({ ...errors, title: 'Get Question Page' });
+            return;
+        });
 });
 
 router.get('/categories', verifyToken, (req, res, next) => {
     const _id = req.user ? req.user._id : null;
-    // console.log(_id);
     questionService.getCategories(req.query)
         .then(questions => {
-            // console.log(_id);
-            // console.log(questions);
-            // console.log(questions[0].creatorId);
             questions.forEach(c => c.isCreator = c.creatorId == _id);
-            // console.log(questions);
             res.status(200).json(questions);
-            // res.render('home/home', questions);
-            // return;
         })
-        .catch(next);
+        .catch(err => {
+            console.log('ingGetAllCategoriesError');
+            let errors;
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: [{ message: err.message }] };
+            }
+            console.log(errors);
+            res.status(422).json({ ...errors, title: 'Get Categories Page' });
+            return;
+        });
 });
 
 router.get('/category/:cat', verifyToken, (req, res, next) => {
     const _id = req.user ? req.user._id : null;
-    // console.log(_id);
     questionService.getCategory(req.params.cat)
         .then(questions => {
-            // console.log(_id);
-            // console.log(questions);
-            // console.log(questions[0].creatorId);
             questions.forEach(c => c.isCreator = c.creatorId == _id);
-            // console.log(questions);
             res.status(200).json(questions);
-            // res.render('home/home', questions);
-            // return;
         })
-        .catch(next);
+        .catch(err => {
+            console.log('ingGetOneCategoryError');
+            let errors;
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: [{ message: err.message }] };
+            }
+            console.log(errors);
+            res.status(422).json({ ...errors, title: 'Get One Category Page' });
+            return;
+        });
 });
 
-router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, checkQuestionInput,
+router.post('/create', verifyToken, (req, res, next) => { //TODO: checkQuestionInput,
 
     const errors = req.errors;
     const newQuestion = req.body;
@@ -71,20 +85,19 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: isLogged, chec
     questionService.create({ ...newQuestion, creatorId: req.user._id, creatorName: req.user.name })
         .then(data => {
             console.log('Question created');
-            // console.log(data);
             res.status(201).json(data);
-            // res.redirect('/questions');
             return;
         })
         .catch(err => {
             let errors;
+            console.log("inCreateQuestionError");
             if (err.errors) {
                 errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
             } else {
-                errors = { errors: { message: err.message } };
+                errors = { errors: [{ message: err.message }] };
             }
-            console.log("CreateError" + err);
-            res.status(422).json({ errors, title: 'Create Question Page' });
+            console.log(errors);
+            res.status(422).json({ ...errors, title: 'Create Question Page' });
             return err;
         });
 });
@@ -109,21 +122,20 @@ router.get('/:userId', verifyToken, (req, res) => {
             return;
         })
         .catch(err => {
-            console.log('getOneByUserId error: ' + err);
             let errors;
+            console.log("inGetOneByUseIdError");
             if (err.errors) {
                 errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
             } else {
-                errors = { errors: { message: err.message } };
+                errors = { errors: [{ message: err.message }] };
             }
-            res.status(422).json({ errors, title: 'Verify Page' });
-            // res.status(422).render('auth/login', { errors, title: 'Login Page' });
-            // next(err);
-            return;
+            console.log(errors);
+            res.status(422).json({ ...errors, title: 'Get One Question By User Id Page' });
+            return err;
         });
 });
 
-// router.get('/details/:prod_id', isLogged, (req, res, next) => {
+// router.get('/details/:prod_id', (req, res, next) => {
 //     const _id = req.user ? req.user._id : null;
 //     questionService.getOnePopulated(req.params.prod_id)
 //         .then((currentQuestion) => {
@@ -134,7 +146,7 @@ router.get('/:userId', verifyToken, (req, res) => {
 //         .catch(next);
 // });
 
-// router.get('/edit/:prod_id', isLogged, isCreator, (req, res, next) => {
+// router.get('/edit/:prod_id', isCreator, (req, res, next) => {
 //     questionService.getOnePopulated(req.params.prod_id)
 //         .then((data) => {
 //             res.render('questions/editQuestion', { ...data });
@@ -143,7 +155,7 @@ router.get('/:userId', verifyToken, (req, res) => {
 //         .catch(next);
 // });
 
-// router.post('/edit/:prod_id', isLogged, isCreator, checkQuestionInput, (req, res, next) => {
+// router.post('/edit/:prod_id', isCreator, checkQuestionInput, (req, res, next) => {
 //     const errors = req.errors;
 
 //     if (errors && errors.errors.length > 0) {
@@ -159,7 +171,7 @@ router.get('/:userId', verifyToken, (req, res) => {
 //         })
 //         .catch(next);
 // });
-// router.get('/delete/:prod_id', isLogged, isCreator, (req, res, next) => {
+// router.get('/delete/:prod_id', isCreator, (req, res, next) => {
 //     questionService.getOnePopulated(req.params.prod_id)
 //         .then((data) => {
 //             res.render('questions/deleteQuestion', { ...data });
@@ -167,12 +179,12 @@ router.get('/:userId', verifyToken, (req, res) => {
 //         })
 //         .catch(next);
 // });
-// router.post('/delete/:prod_id', isLogged, isCreator, (req, res, next) => {
+// router.post('/delete/:prod_id', isCreator, (req, res, next) => {
 //     questionService.removeOne(req.params.prod_id)
 //         .then((data) => res.redirect('/questions'))
 //         .catch(next);
 // });
-// router.get('/clearDB', isLogged, (req, res, next) => {
+// router.get('/clearDB', (req, res, next) => {
 //     questionService.clear()
 //         .then((data) => res.redirect('/questions'))
 //         .catch(next);

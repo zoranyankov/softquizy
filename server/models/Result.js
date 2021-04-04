@@ -13,26 +13,13 @@ const resultSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Score is required!'],
     },
-    // difficulty: {
-    //     type: String,
-    //     required: [true, 'DificultyLevel is required!'],
-    // },
-    // question: {
-    //     type: String,
-    //     required: [true, 'Question is required!'],
-    //     maxlength: 100,
-    // },
-    // creatorId: {
-    //     type: String,
-    //     required: [true, 'CreatorId is required!'],
-    // },
-    // creatorName: {
-    //     type: String,
-    //     required: [true, 'creatorName is required!'],
-    // },
     creatorId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
     }
 })
 

@@ -4,13 +4,12 @@ function createResult(data) {
     return new Result(data).save();
 }
 
-async function getOneByUserId(userId) {
-    // user = user.toLowerCase(); // first option
+async function getAllByUserId(userId) {
     return Result.find({ creatorId: userId })
         .then((results) => {
             if (!results) {
-                // return { errors: [{ message: 'Wrong User or Password!' }] };
-                return { error : { message: 'Wrong User or Password!' }};
+                return { errors: [{ message: 'Wrong User or Password!' }] };
+                // return { error : { message: 'Wrong User or Password!' }};
                 // return false;
             }
             return results;
@@ -80,7 +79,7 @@ async function getAllResults(query) {
 module.exports = {
     createResult,
     getAllResults,
-    getOneByUserId,
+    getAllByUserId,
     // getOne,
     // clear,
     // getOnePopulated,

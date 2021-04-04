@@ -5,7 +5,6 @@ const routes = require('./routes');
 const config = require('./config/config');
 const cors = require('cors');
 
-
 const errorHandler = require('./middlewares/errorHandler');
 
 require('./config/express')(app);

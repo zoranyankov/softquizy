@@ -14,8 +14,6 @@ function mongooseConfig() {
     const db = mongoose.connection;
     db.on('error', console.error.bind(console, 'Error: '));
     db.once('open', console.log.bind(console, `Mongo is connected on ${config.DB_PATH}...`))
-        // db.on('error', (err) => console.log('Error: ' + err));
-        // db.once('open', () => console.log('DBname connected...'))
 }
 
 module.exports = mongooseConfig;
