@@ -97,7 +97,7 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: checkQuestionI
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ ...errors, title: 'Create Question Page' });
+            res.status(422).json({ errors, title: 'Create Question Page' });
             return err;
         });
 });

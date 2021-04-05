@@ -84,6 +84,8 @@ async function request(url, method, body, headers) {
             throw new Error('No data')
         } else if (response.status === 404) {
             throw new Error('Not Found')
+        // } else if (response.status === 422) {
+        //     throw new Error(`${response.message}`)
         }
         let resultData = await response.json();
         return resultData;

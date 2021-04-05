@@ -26,8 +26,8 @@ let errorTimeout = {};
 const Createquestion = ({ history }) => {
 
     //Get actual state of Token if is authenticated
-        // const hasToken = JSON.parse(localStorage.getItem('sid'));
-        // let isAuth = !hasToken ? false : appContext.isAuthName;
+    // const hasToken = JSON.parse(localStorage.getItem('sid'));
+    // let isAuth = !hasToken ? false : appContext.isAuthName;
     //Get autentication state from global AppContext
     const appContext = useContext(AppContext);
     let isAuth = appContext.isAuthName;
@@ -101,9 +101,10 @@ const Createquestion = ({ history }) => {
             errorTimeout[name] = setTimeout(() => {
                 setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: err } })))
             }, 2000);
+            return;
         } else {
             setFields((oldState => ({ ...oldState, errors: { ...oldState.errors, [name]: null } })))
-            // return;
+            return;
         }
     }
 
@@ -111,30 +112,36 @@ const Createquestion = ({ history }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const { category, difficulty, question, correct_answer, incorrect_answers } = fields;
-        
+
         //Check for missing fields
         if (category === 'any' || difficulty === 'any' || !question || !correct_answer || incorrect_answers.length < 1) {
             const msg = 'Field is required';
-            setFields((oldState => ({ ...oldState, errors: { category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg, ...oldState.errors} })));
+            setFields((oldState => ({ ...oldState, errors: { category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg, ...oldState.errors } })));
             const error = [{ id: 'AllFieldsAreRequired', title: 'Error', description: 'All fields are required' }];
             appContext.setNotifyList(error);
             return;
         }
+        if (fields.errors) {
+            console.log(fields.errors);
+            const error = [{ id: 'PleaseFixYourWrongInputs', title: 'Error', description: 'Please Fix Your Wrong Inputs' }];
+            appContext.setNotifyList(error);
+            return;
+        }
+
         apiQuestionServices.create(fields)
             .then(response => {
-                console.log(response);
                 if (!response || response.errors) {
                     const errorsList = response.errors.map((err, i) => ({ id: i + err.message, title: 'Error', description: err.message }));
                     appContext.setNotifyList(errorsList);
                     return;
                 }
-                appContext.setNotifyList([{id: 'Question is created', title: 'Success', description: 'Question is created'}]);
+                appContext.setNotifyList([{ id: 'Question is created', title: 'Success', description: 'Question is created' }]);
                 history.push('/');
             })
             .catch(err => {
                 console.log('Create question fetch Error: ' + err);
                 const errorsList = err.errors.map((err, i) => {
-                    return ( { id: i + err.message, title: 'Error', description: err.message, position:'middle' });
+                    return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
                 });
                 appContext.setNotifyList(errorsList);
             })
@@ -149,7 +156,7 @@ const Createquestion = ({ history }) => {
     return (
         <div className="create-question-content">
             <div className="create-question-header">
-                <Image cloudName="softquizy" className="create-question-logo" publicId='create-question'/>
+                <Image cloudName="softquizy" className="create-question-logo" publicId='create-question' />
             </div>
             <form onSubmit={handleSubmit} className="create-question-form">
                 <h1 className="create-question-title">Create local Question</h1><br />
