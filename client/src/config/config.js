@@ -1,6 +1,6 @@
-const SERVER_AUTH_URL = 'http://localhost:5000/auth';
-const API_QUESTION_URL = 'http://localhost:5000/api/questions';
-const API_RESULT_URL = 'http://localhost:5000/api/results';
+const SERVER_AUTH_URL = `${process.env.REACT_APP_API_URL}auth`;
+const API_QUESTION_URL = `${process.env.REACT_APP_API_URL}api/questions`;
+const API_RESULT_URL = `${process.env.REACT_APP_API_URL}api/results`;
 const TRIVIA_API_URL = 'https://opentdb.com/api.php';
 
 //Trivia find names by category number

@@ -56,7 +56,7 @@ const Userpage = () => {
                 <h1>CHOOSE FROM LOCAL QUIZES</h1>
 
                 {/* LOAD LOCAL QUIZES */}
-                {questions
+                {questions.length > 0
                     ? <Fragment>
                         {questions.map(({ category, categoryName, _id, logoImgUrl }) => (
                             <Quizcard
