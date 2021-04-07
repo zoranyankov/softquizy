@@ -68,7 +68,7 @@ async function request(url, method, body, headers) {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(body)
+            body: JSON.stringify(body),
         })
     }
     if (headers) {
@@ -84,13 +84,13 @@ async function request(url, method, body, headers) {
             throw new Error('No data')
         } else if (response.status === 404) {
             throw new Error('Not Found')
-        // } else if (response.status === 422) {
-        //     throw new Error(`${response.message}`)
+            // } else if (response.status === 422) {
+            //     throw new Error(`${response.message}`)
         }
         let resultData = await response.json();
         return resultData;
     } catch (error) {
-        console.log('In request function catch');
+        console.log('In request function catch', error);
         throw error;
     }
 }
@@ -111,8 +111,8 @@ function HTMLEncode(str) {
 
     while (i--) {
         var iC = str[i].charCodeAt();
-        if (iC < 65 || iC > 127 || (iC>90 && iC<97)) {
-            aRet[i] = '&#'+iC+';';
+        if (iC < 65 || iC > 127 || (iC > 90 && iC < 97)) {
+            aRet[i] = '&#' + iC + ';';
         } else {
             aRet[i] = str[i];
         }

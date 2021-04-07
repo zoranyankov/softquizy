@@ -15,6 +15,8 @@ import QuestionsTable from '../Quiz/QuestionsTable';
 //Import constants
 import { CATEGORY_NAMES } from '../../config/config';
 
+import './Accordion.css';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,8 +42,25 @@ export default function SimpleAccordion({ data, type }) {
                         >
                             <Typography className={classes.heading}>
                                 {type === 'results'
-                                    ? `${table.quizName} with ${table.score} Pts |------------------> Quiz is made on: ${table.createdAt.slice(0, 19).replace('T', ' at: ')}`
-                                    : CATEGORY_NAMES[table.category] + ` |------------------> Question is made on: ${table.createdAt.slice(0, 19).replace('T', ' at: ')}`
+                                    ? <div className="accordion-header">
+                                        <span className="accordion-points">
+                                            {table.quizName} with {table.score} Pts
+                                        </span>
+                                        <br />
+                                        <span className="accordion-date">
+                                            Quiz is made on:  {(new Date(table.createdAt)).toLocaleDateString()}
+                                        </span>
+                                    </div>
+                                    // ? `${table.quizName} with ${table.score} Pts |------------------> Quiz is made on: ${table.createdAt.slice(0, 19).replace('T', ' at: ')}`
+                                    : <div className="accordion-header">
+                                        <span className="accordion-points">
+                                            {CATEGORY_NAMES[table.category]}
+                                        </span>
+                                        <br />
+                                        <span className="accordion-date">
+                                            Question is made on: {(new Date(table.createdAt)).toLocaleDateString()}
+                                        </span>
+                                    </div>
                                 }
                             </Typography>
                         </AccordionSummary>
