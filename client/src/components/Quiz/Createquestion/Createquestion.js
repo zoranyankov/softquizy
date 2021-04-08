@@ -32,7 +32,7 @@ const Createquestion = ({ history }) => {
     const appContext = useContext(AppContext);
     let isAuth = appContext.isAuthName;
 
-    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: { incorrect_answer: {} } });
+    let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: {} });
 
     //Execute guard - redirect if is not authenticated
     if (!isAuth) {
@@ -114,18 +114,24 @@ const Createquestion = ({ history }) => {
         const { category, difficulty, question, correct_answer, incorrect_answers } = fields;
 
         //Check for missing fields
-        if (category === 'any' || difficulty === 'any' || !question || !correct_answer || incorrect_answers.length < 1) {
+        if (category === 'any' || difficulty === 'any' || !question || !correct_answer || !incorrect_answers[0]) {
             const msg = 'Field is required';
             setFields((oldState => ({ ...oldState, errors: { category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg, ...oldState.errors } })));
             const error = [{ id: 'AllFieldsAreRequired', title: 'Error', description: 'All fields are required' }];
             appContext.setNotifyList(error);
             return;
         }
-        if (fields.errors) {
+        console.log(Object.values(fields.errors).some(x => x ));
+        if (Object.values(fields.errors).some(x => x)) {
             console.log(fields.errors);
             const error = [{ id: 'PleaseFixYourWrongInputs', title: 'Error', description: 'Please Fix Your Wrong Inputs' }];
             appContext.setNotifyList(error);
             return;
+        }
+        if (fields.incorrect_answers.some(x => x === '')) {
+            const error = [{ id: 'PleaseFillInAllIncorrectAnswers', title: 'Error', description: 'Please Fill In All Incorrect Answers' }];
+            appContext.setNotifyList(error);
+            return;            
         }
 
         apiQuestionServices.create(fields)
