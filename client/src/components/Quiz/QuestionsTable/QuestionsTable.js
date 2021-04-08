@@ -18,6 +18,8 @@ import ButtonLink from '../../Shared/ButtonLink';
 //Import constants
 import { CATEGORY_NAMES } from '../../../config/config';
 
+import './QuestionTable.css';
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -72,13 +74,13 @@ export default function QuestionsTable({ question }) {
             <StyledTableCell align="right">{question.incorrect_answers.join(' / ')}</StyledTableCell>
           </StyledTableRow>
         </TableBody>
-        <ButtonLink path="/quizes/choose-ext-quiz" component={<EditIcon />}>
-          Edit Question
-        	</ButtonLink>
-        <ButtonLink path="/quizes/choose-ext-quiz" component={<DeleteIcon />}>
-          Delete Question
-          </ButtonLink>
       </Table>
-    </TableContainer>
+      <ButtonLink className="edit-btn" path={`/questions/edit/${question._id}`} component={<EditIcon />}>
+        Edit Question
+        	</ButtonLink>
+      <ButtonLink className="delete-btn" path={`/questions/delete/${question._id}`} component={<DeleteIcon />}>
+      Delete Question
+          </ButtonLink>
+    </TableContainer >
   );
 }

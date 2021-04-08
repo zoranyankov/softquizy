@@ -1,0 +1,15 @@
+.edit-btn {
+    background-color: darkseagreen;
+}
+
+.delete-btn {
+    background-color: red;
+}
+
+.edit-btn:hover {
+    background-color: darkslategrey;
+}
+
+.delete-btn:hover {
+    background-color: darkred;
+}
