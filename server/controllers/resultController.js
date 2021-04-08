@@ -34,7 +34,7 @@ router.get('/:userId', verifyToken, (req, res) => {
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ ...errors, title: 'Get All Result By User Id Page' });
+            res.status(422).json({ errors, title: 'Get All Result By User Id Page' });
             return;
         });
 });
@@ -90,7 +90,7 @@ router.post('/add', verifyToken, (req, res, next) => { //TODO: checkResultsInput
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ ...errors, title: 'Get Create Result Page' });
+            res.status(422).json({ errors, title: 'Get Create Result Page' });
             return;
         });
 });

@@ -9,7 +9,7 @@ router.post('/login', checkAuthInput, (req, res) => {
     const { username, password } = req.body;
     const errors = req.errors;
     if (errors && errors.errors.length > 0) {
-        res.status(422).json({ ...errors, title: 'Login Page' });
+        res.status(422).json({ errors, title: 'Login Page' });
         return;
     }
     authSevice.login(username, password)
@@ -26,7 +26,7 @@ router.post('/login', checkAuthInput, (req, res) => {
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ ...errors, title: 'Login Page' });
+            res.status(422).json({ errors, title: 'Login Page' });
             return;
         });
 });
@@ -46,7 +46,7 @@ router.post('/verify', (req, res) => {
             } else {
                 errors = { errors: [{ message: err.message }] };
             }
-            res.status(422).json({ ...errors, title: 'Verify Page' });
+            res.status(422).json({ errors, title: 'Verify Page' });
             return;
         });
 });
@@ -115,7 +115,7 @@ router.post('/register', checkAuthInput, (req, res, next) => {
                     } else {
                         errors = { errors: [{ message: err.message }] };
                     }
-                    res.status(422).json({ ...errors, title: 'Register Page' });
+                    res.status(422).json({ errors, title: 'Register Page' });
                     return;
                 })
         })

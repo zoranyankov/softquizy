@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { ENGLISH_ALFANUMERIC_PATT, EMAIL_PATT } = require('../config/config');
+const { ENGLISH_ALFANUMERIC_PATT, ENGLISH_ALFANUMSPACE_PATT, EMAIL_PATT } = require('../config/config');
 const bcrypt = require('bcrypt');
 const { SALT_ROUNDS } = require('../config/config');
 
@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         minlength: [5, 'Username is to short'],
         requred: true,
-        validate: [ENGLISH_ALFANUMERIC_PATT, props => `${props.value} is not a valid username!`],
+        validate: [ENGLISH_ALFANUMSPACE_PATT, props => `${props.value} is not a valid username!`],
         unique: true,
         // validate: {
         //     validator: function (v) {
