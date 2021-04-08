@@ -8,7 +8,7 @@ const errorHandler = function() {
             errors = err;
             // errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
         }
-        res.status(status).json(errors)
+        res.status(status).json({"Global Error Handler":errors});
     }
 }
 

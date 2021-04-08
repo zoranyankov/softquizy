@@ -23,7 +23,7 @@ router.get('/', verifyToken, (req, res, next) => {
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ ...errors, title: 'Get Question Page' });
+            res.status(422).json({ errors, title: 'Get Question Page' });
             return;
         });
 });
@@ -65,7 +65,7 @@ router.get('/category/:cat', verifyToken, (req, res, next) => {
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ ...errors, title: 'Get One Category Page' });
+            res.status(422).json({ errors, title: 'Get One Category Page' });
             return;
         });
 });
@@ -130,7 +130,7 @@ router.get('/:userId', verifyToken, (req, res) => {
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ ...errors, title: 'Get One Question By User Id Page' });
+            res.status(422).json({ errors, title: 'Get One Question By User Id Page' });
             return err;
         });
 });
