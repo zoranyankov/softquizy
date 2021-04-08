@@ -40,7 +40,7 @@ export default function SimpleAccordion({ data, type }) {
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography className={classes.heading}>
+                            <Typography component={'span'} className={classes.heading}>
                                 {type === 'results'
                                     ? <div className="accordion-header">
                                         <span className="accordion-points">
