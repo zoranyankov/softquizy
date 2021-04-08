@@ -45,7 +45,7 @@ class Login extends Component {
         const [inputName, inputValue] = [event.target.name, event.target.value];
         this.setState({ [inputName]: inputValue });
         clearInterval(this.state.errorTimeout[inputName]);
-        const err = testAuthInput[inputName](inputValue);
+        const err = testAuthInput.values[inputName](inputValue);
         // this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })));
 
         //Real-time validation of user inputs
@@ -64,6 +64,9 @@ class Login extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
+        if (!testAuthInput.validation(this.context, this.state)) {
+            return
+        }
         authService.login(this.state)
             .then((response) => {
                 if (!response || response.errors) {

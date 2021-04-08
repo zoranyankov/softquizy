@@ -36,7 +36,7 @@ class Register extends Component {
         const [inputName, inputValue] = [event.target.name, event.target.value];
         this.setState({ [inputName]: inputValue });
         clearInterval(this.state.errorTimeout[inputName]);
-        const err = testAuthInput[inputName](inputValue);
+        const err = testAuthInput.values[inputName](inputValue);
 
         //Real-time validation of user inputs
         if (err) {
@@ -51,9 +51,8 @@ class Register extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.rePassword !== this.state.password) {
-            this.context.setNotifyList([{ id: 'Both passwords must match', title: 'Error', description: 'Both passwords must match' }])
-            return;
+        if (!testAuthInput.validation(this.context, this.state)) {
+            return
         }
         authService.register(this.state)
             .then((response) => {
