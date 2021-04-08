@@ -44,21 +44,20 @@ export default function SimpleAccordion({ data, type }) {
                                 {type === 'results'
                                     ? <div className="accordion-header">
                                         <span className="accordion-points">
-                                            {table.quizName} with {table.score} Pts
+                                            {table.quizName} with <strong>{table.score}</strong> Pts
                                         </span>
                                         <br />
                                         <span className="accordion-date">
-                                            Quiz is made on:  {(new Date(table.createdAt)).toLocaleDateString()}
+                                            Quiz is made on:  {(new Date(table.createdAt)).toLocaleString()}
                                         </span>
                                     </div>
-                                    // ? `${table.quizName} with ${table.score} Pts |------------------> Quiz is made on: ${table.createdAt.slice(0, 19).replace('T', ' at: ')}`
                                     : <div className="accordion-header">
                                         <span className="accordion-points">
                                             {CATEGORY_NAMES[table.category]}
                                         </span>
                                         <br />
                                         <span className="accordion-date">
-                                            Question is made on: {(new Date(table.createdAt)).toLocaleDateString()}
+                                            Question is made on: {(new Date(table.createdAt)).toLocaleString()}
                                         </span>
                                     </div>
                                 }
