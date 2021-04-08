@@ -8,7 +8,7 @@ const checkAuthInput = require('./helpers/checkAuthInput');
 router.post('/login', checkAuthInput, (req, res) => {
     const { username, password } = req.body;
     const errors = req.errors;
-    if (errors && errors.errors.length > 0) {
+    if (errors && errors.length > 0) {
         res.status(422).json({ errors, title: 'Login Page' });
         return;
     }
@@ -88,8 +88,8 @@ router.post('/register', checkAuthInput, (req, res, next) => {
     let newUser = username.toLowerCase();
     let newPicture = picture ? picture : 'https://res.cloudinary.com/softquizy/image/upload/v1617431642/placeholder-profile.jpg';
     const errors = req.errors;
-    if (errors && errors.errors.length > 0) {
-        res.status(422).json({ ...errors, title: 'Register Page' });
+    if (errors && errors.length > 0) {
+        res.status(422).json({ errors, title: 'Register Page' });
         return;
     }
     User.findOne({ username: newUser })

@@ -6,15 +6,15 @@ const username = (nameToTest) => {
 }
 
 const password = (passToTest) => {
-    if (passToTest.length < 8) {
-        return `Password must be at least 8 characters long`;
+    if (passToTest.length < 7) {
+        return `Password must be at least 7 characters long`;
     } 
     return null;
 }
 
 const rePassword = (rePassToTest) => {
-    if(rePassToTest.length < 8) {
-        return `Password must be at least 8 characters long`;
+    if(rePassToTest.length < 7) {
+        return `Password must be at least 7 characters long`;
     }
 }
 

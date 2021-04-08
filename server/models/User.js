@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        minlength: [8, 'Password is to short'],
+        minlength: [7, 'Password is to short'],
         requred: true,
         // unique: true,
         // validate: {
