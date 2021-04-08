@@ -103,12 +103,15 @@ router.post('/register', checkAuthInput, (req, res, next) => {
                 return;
             }
             return authSevice.register(newUser, password, newPicture)
-                .then((user) => {
-                    console.log('User created');
-                    return res.status(201).json(user);
+                .then(() => {
+                    return authSevice.login(newUser, password)
+                        .then(({ user, token }) => {
+                            res.json({ user, token });
+                            return;
+                        })
                 })
                 .catch(err => {
-                    console.log('inRegisterError');
+                    console.log('inRegisterError', err);
                     let errors;
                     if (err.errors) {
                         errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));

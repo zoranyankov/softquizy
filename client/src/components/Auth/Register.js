@@ -23,7 +23,7 @@ class Register extends Component {
             username: '',
             password: '',
             rePassword: '',
-            redirectToLogin: false,
+            redirectToHome: false,
             errors: '',
             errorTimeout: '',
         };
@@ -32,7 +32,7 @@ class Register extends Component {
     static contextType = AppContext;
 
     //Error handling and control inputs
-     handleChange(event) {
+    handleChange(event) {
         const [inputName, inputValue] = [event.target.name, event.target.value];
         this.setState({ [inputName]: inputValue });
         clearInterval(this.state.errorTimeout[inputName]);
@@ -41,9 +41,12 @@ class Register extends Component {
         //Real-time validation of user inputs
         if (err) {
             this.setState({
-            errorTimeout :{[inputName] : setTimeout(() => {
-            this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
-            }, 3000)}});
+                errorTimeout: {
+                    [inputName]: setTimeout(() => {
+                        this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: err } })))
+                    }, 3000)
+                }
+            });
         } else {
             this.setState((oldState => ({ ...oldState, errors: { ...oldState.errors, [inputName]: null } })))
         }
@@ -57,12 +60,18 @@ class Register extends Component {
         authService.register(this.state)
             .then((response) => {
                 if (!response || response.errors) {
-                    const errorsList = response.errors.map((err, i) => ({ id: i + err.message, title: 'Error', description: err.message }));
+                    const errorsList = response.errors.map((err, i) => {
+                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                    });
                     this.context.setNotifyList(errorsList);
                     return;
                 }
-                this.context.setNotifyList([{ id: 'Register successful', title: 'Success', description: 'Register successful' }])
-                this.setState({ redirectToLogin: true });
+                const { user, token } = response;
+                localStorage.setItem('sid', JSON.stringify({ user, token }));
+                this.context.setIsAuth(user.username);
+                this.context.setNotifyList([{ id: 'Resister successful', title: 'Success', description: `Wellcome ${user.username.toUpperCase()}`, position: 'middle' }])
+                this.setState({ redirectToHome: true });
+                return;
             })
             .catch(err => {
                 let errorsList = [];
@@ -82,17 +91,13 @@ class Register extends Component {
     }
 
     render() {
-        const redirectToLogin = this.state.redirectToLogin;
+        const redirectToHome = this.state.redirectToHome;
 
-        //Execute guard if already logged in
-        if (this.context.isAuthName) {
+        //Redirect to home page if successfully registered or if already logged in
+        if (this.context.isAuthName || redirectToHome) {
             return <Redirect to="/" />
         }
 
-        //Redirect to login page if successfully registered
-        if (redirectToLogin) {
-            return <Redirect to="/auth/login" />
-        }
         return (
             <div className="auth-container">
                 <h1>Register page</h1>
