@@ -10,11 +10,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { TableFooter } from '@material-ui/core';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
 
-//Import components
-import ButtonLink from '../../Shared/ButtonLink';
 
 const useStyles = makeStyles({
   table: {
@@ -80,13 +76,6 @@ export default function ResultsTable({ rows, score, quizName }) {
           </StyledTableRow>
         </TableFooter>
       </Table>
-      <ButtonLink path="/quizes/choose-ext-quiz" component={<EditIcon />}>
-        Edit Question
-      </ButtonLink>
-      <ButtonLink path="/quizes/choose-ext-quiz" component={<DeleteIcon />}>
-        Delete Question
-      </ButtonLink>
     </TableContainer>
-    
   );
 }

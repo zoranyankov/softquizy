@@ -9,7 +9,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-// import { TableFooter } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
+
+//Import components
+import ButtonLink from '../../Shared/ButtonLink';
 
 //Import constants
 import { CATEGORY_NAMES } from '../../../config/config';
@@ -60,14 +64,20 @@ export default function QuestionsTable({ question }) {
           </TableRow>
         </TableHead>
         <TableBody>
-            <StyledTableRow key={question.question}>
-              <StyledTableCell component="th" scope="question">{CATEGORY_NAMES[question.category]}</StyledTableCell>
-              <StyledTableCell component="th" scope="question">{question.question}</StyledTableCell>
-              <StyledTableCell align="right">{question.difficulty}</StyledTableCell>
-              <StyledTableCell align="right">{question.correct_answer}</StyledTableCell>
-              <StyledTableCell align="right">{question.incorrect_answers.join(' / ')}</StyledTableCell>
-            </StyledTableRow>
+          <StyledTableRow key={question.question}>
+            <StyledTableCell component="th" scope="question">{CATEGORY_NAMES[question.category]}</StyledTableCell>
+            <StyledTableCell component="th" scope="question">{question.question}</StyledTableCell>
+            <StyledTableCell align="right">{question.difficulty}</StyledTableCell>
+            <StyledTableCell align="right">{question.correct_answer}</StyledTableCell>
+            <StyledTableCell align="right">{question.incorrect_answers.join(' / ')}</StyledTableCell>
+          </StyledTableRow>
         </TableBody>
+        <ButtonLink path="/quizes/choose-ext-quiz" component={<EditIcon />}>
+          Edit Question
+        	</ButtonLink>
+        <ButtonLink path="/quizes/choose-ext-quiz" component={<DeleteIcon />}>
+          Delete Question
+          </ButtonLink>
       </Table>
     </TableContainer>
   );
