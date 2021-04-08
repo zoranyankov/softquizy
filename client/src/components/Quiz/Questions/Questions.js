@@ -7,7 +7,7 @@ import apiResultServices from '../../../sevices/api/apiResultServices';
 import { htmlDecode } from '../../../sevices/trivia/htmlHelper';
 
 //Import components
-import Quizheader from '../Quizheader';
+import QuizHeader from '../QuizHeader';
 import Qlist from '../Qlist';
 import ResultsTable from '../ResultsTable';
 import Toast from '../../Shared/Toast';
@@ -94,7 +94,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     return (
         <>
 
-            {q && <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score} />}
+            {q && <QuizHeader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score} />}
             {q &&
                 <div className="questions">
                     <ul className="question-list">

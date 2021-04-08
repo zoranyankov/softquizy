@@ -19,11 +19,11 @@ import Notificate from '../../Shared/Notificate';
 import ButtonLink from '../../Shared/ButtonLink';
 
 //Import custom styles for current component
-import './Createquestion.css';
+import './CreateQuestion.css';
 
 let errorTimeout = {};
 
-const Createquestion = ({ history }) => {
+const CreateQuestion = ({ history }) => {
 
     //Get actual state of Token if is authenticated
     // const hasToken = JSON.parse(localStorage.getItem('sid'));
@@ -250,4 +250,4 @@ const Createquestion = ({ history }) => {
     );
 }
 
-export default Createquestion;
+export default CreateQuestion;

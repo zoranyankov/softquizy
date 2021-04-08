@@ -1,1 +1,1 @@
-export { default } from './Quizheader';
+export { default } from './QuizHeader';

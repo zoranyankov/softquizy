@@ -16,11 +16,11 @@ import Notificate from '../../Shared/Notificate';
 import ButtonLink from '../../Shared/ButtonLink';
 
 //Import custom styles for this component
-import './Choosequiz.css';
+import './ChooseQuiz.css';
 
 const errorTimeout = {};
 
-const Choosequiz = ({ history }) => {
+const ChooseQuiz = ({ history }) => {
 
     //Get actual state of Token if is authenticated
         // const hasToken = JSON.parse(localStorage.getItem('sid'));
@@ -148,4 +148,4 @@ const Choosequiz = ({ history }) => {
     );
 }
 
-export default Choosequiz;
+export default ChooseQuiz;

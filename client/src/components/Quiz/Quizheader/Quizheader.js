@@ -1,6 +1,6 @@
-import './Quizheader.css';
+import './QuizHeader.css';
 
-const Quizheader = ({ currentQuestion, questoinsCount, quizName, score }) => {
+const QuizHeader = ({ currentQuestion, questoinsCount, quizName, score }) => {
     return (
         <div className="question-header">
             <div className="question-count">
@@ -18,4 +18,4 @@ const Quizheader = ({ currentQuestion, questoinsCount, quizName, score }) => {
     );
 }
 
-export default Quizheader;
+export default QuizHeader;
