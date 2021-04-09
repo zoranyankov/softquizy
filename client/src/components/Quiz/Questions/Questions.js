@@ -1,5 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
+import uniqid from 'uniqid';
 
 //Import services
 import AppContext from '../../AppContext';
@@ -21,6 +22,9 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     //Get actual state of Token if is authenticated
     const appContext = useContext(AppContext);
 
+    // const location = useLocation();
+    const history = useHistory();
+
     //Set local states
     let q = null;
     let [currentQuestion, setCurrentQuestion] = useState(0);
@@ -32,17 +36,23 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
         //If quiz is over - send results to Database
         if (endOfQuiz) {
             const creatorId = appContext.userId;
-            console.log(creatorId);
             apiResultServices.add({ creatorId, quizName, userResults, score });
         }
     }, [userResults, quizName, endOfQuiz, score, appContext.userId]);
 
-    const handleItemClick = (event, question, correctAnswer, selected, id) => {
+    const refresh = (event) => {
+        event.preventDefault();
+        history.push('/');
+        history.goBack();
+    }
+
+    const handleItemClick = (event, question, correctAnswer, selected) => {
         event.preventDefault();
 
-        //Check if answer is correct
+        //Check if answer is correct and create current question result
         const isCorrect = selected === correctAnswer;
         const status = isCorrect ? 'correct' : 'wrong';
+        const id = uniqid();
         const currResult = { question, selected, correctAnswer, isCorrect, status, id };
 
         //Increase score by correct answer
@@ -94,7 +104,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     return (
         <>
 
-            {q && <QuizHeader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score} />}
+            {q && <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score} />}
             {q &&
                 <div className="questions">
                     <ul className="question-list">
@@ -114,7 +124,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
                     <h1 className="quiz-results-header">Your result from {quizName} is: {score} Pts</h1>
                     <div className="quiz-results">
                         <ResultsTable rows={userResults} score={score} quizName={quizName} />
-                        {inLocal ? <h1 className="reload" onClick={() => window.location.reload()}>Try again?</h1> : ''}
+                        {inLocal ? <h1 className="reload" onClick={refresh}>Try again?</h1> : ''}
                     </div>
                 </div>
             }
