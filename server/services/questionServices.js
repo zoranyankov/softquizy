@@ -44,9 +44,9 @@ async function getCategory(cat) {
     return (founded);
 }
 
-// function getOne(_id) {
-//     return Question.findById(_id).lean();
-// }
+function getOne(_id) {
+    return Question.findById(_id).lean();
+}
 
 // function getOneDetailed(questionId, userId) {
 //     return Question
@@ -69,24 +69,24 @@ async function getCategory(cat) {
 //     return Question.findById(_id).populate('accessories').lean();
 // }
 
-// function update(_id, data) {
-//     return Question.findByIdAndUpdate(_id, data).populate('accessories').lean();
-// }
+function update(questionId, data) {
+    return Question.findByIdAndUpdate(questionId, data).populate('accessories').lean();
+}
 
-// function removeOne(_id) {
-//     return Question.findByIdAndRemove(_id);
-// }
+function removeOne(questionId) {
+    return Question.findByIdAndRemove(questionId);
+}
 
 module.exports = {
     create,
     getAll,
     getOneByUserId,
-    // getOne,
+    getOne,
     // clear,
     // getOnePopulated,
     // edit,
-    // removeOne,
-    // update,
+    removeOne,
+    update,
     // getOneDetailed,
     getCategories,
     getCategory,

@@ -1,15 +1,14 @@
-import React, { useState, useContext } from 'react';
-import { Redirect, withRouter} from 'react-router-dom';
+import React, { useState, useContext, useEffect } from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 
 //Import components from Material UI
 import { VpnKeyIcon, CreateIcon, AddCircleIcon, RemoveCircleIcon } from '../../../config/materialConfig';
 
-//Import globav AppContext and services
+//Import global AppContext and services
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 import testQuestionInput from '../../../sevices/test/questionsTestService';
-
 
 //Import shared components
 import Notificate from '../../Shared/Notificate';
@@ -20,28 +19,56 @@ import './CreateQuestion.css';
 
 let errorTimeout = {};
 
-const CreateQuestion = ({ history, ...props}) => {
-    console.log(props.match.params.qid);
+const CreateQuestion = ({ history, ...props }) => {
+    const questionId = props.match.params.questionId;
+    const action = props.match.params.action;
 
     //Get actual state of Token if is authenticated
     // const hasToken = JSON.parse(localStorage.getItem('sid'));
     // let isAuth = !hasToken ? false : appContext.isAuthName;
     //Get autentication state from global AppContext
     const appContext = useContext(AppContext);
+
+    //Load data in case of edit / delete
+    useEffect(() => {
+        if (questionId) {
+            apiQuestionServices.getOne(questionId)
+                .then(q => {
+                    setFields(oldState => ({ ...oldState, ...q }));
+                    setButtonName(action === 'edit' ? 'Apply Changes' : 'Confirm Deletion');
+                })
+                .catch(err => {
+                    console.log('Get question fetch Error: ' + err);
+                    const errorsList = err.errors.map((err, i) => {
+                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                    });
+                    appContext.setNotifyList(errorsList);
+                })
+        }
+    }, [questionId, action, appContext])
+
     let isAuth = appContext.isAuthName;
 
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: {} });
+    let [buttonName, setButtonName] = useState('Create Question');
 
     //Execute guard - redirect if is not authenticated
     if (!isAuth) {
         return <Redirect to="/auth/login" />;
     }
 
-    //Event callback for remove incorrect_answer
+    //Event callback for remove/add incorrect_answer
     const removeClick = (event, fields, i) => {
         event.preventDefault();
+        if (action==='delete') return;
         fields.incorrect_answers.splice(i, 1);
         setFields(oldState => ({ ...oldState, incorrect_answers: fields.incorrect_answers }));
+    }
+    const addMoreAnswers = (event) => {
+        event.preventDefault();
+        if (action==='delete') return;
+        fields.incorrect_answers.push('');
+        setFields((oldState) => ({ ...oldState }));
     }
 
     //Event for real-time control and validate input fields
@@ -111,6 +138,27 @@ const CreateQuestion = ({ history, ...props}) => {
         event.preventDefault();
         const { category, difficulty, question, correct_answer, incorrect_answers } = fields;
 
+        //Delete current question
+        if(action==='delete') {
+            console.log('inDelete');
+            apiQuestionServices.deleteOne(questionId)
+            .then((response) => {
+                console.log(response);
+                appContext.setNotifyList([{ id: 'Question has been deleted', title: 'Success', description: 'Question has been deleted' }]);
+                history.push('/profile/profile-questions');
+                return;
+            })
+            .catch(err => {
+                console.log('Delete question fetch Error: ' + err);
+                const errorsList = err.errors.map((err, i) => {
+                    return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                });
+                appContext.setNotifyList(errorsList);
+                return;
+            })
+            return;
+        }
+
         //Check for missing fields
         if (category === 'any' || difficulty === 'any' || !question || !correct_answer || !incorrect_answers[0]) {
             const msg = 'Field is required';
@@ -128,9 +176,29 @@ const CreateQuestion = ({ history, ...props}) => {
         if (fields.incorrect_answers.some(x => x === '')) {
             const error = [{ id: 'PleaseFillInAllIncorrectAnswers', title: 'Error', description: 'Please Fill In All Incorrect Answers' }];
             appContext.setNotifyList(error);
-            return;            
+            return;
         }
 
+         //Edit current question
+         if(action==='edit') {
+            apiQuestionServices.editOne(questionId, fields)
+            .then((response) => {
+                appContext.setNotifyList([{ id: 'Question has been updated', title: 'Success', description: 'Question has been updated' }]);
+                history.push('/profile/profile-questions');
+                return;
+            })
+            .catch(err => {
+                console.log('Edit question fetch Error: ' + err);
+                const errorsList = err.errors.map((err, i) => {
+                    return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                });
+                appContext.setNotifyList(errorsList);
+                return;
+            })
+            return;
+        }
+
+        //Create new question
         apiQuestionServices.create(fields)
             .then(response => {
                 if (!response || response.errors) {
@@ -138,7 +206,7 @@ const CreateQuestion = ({ history, ...props}) => {
                     appContext.setNotifyList(errorsList);
                     return;
                 }
-                appContext.setNotifyList([{ id: 'Question is created', title: 'Success', description: 'Question is created' }]);
+                appContext.setNotifyList([{ id: 'Question has been created', title: 'Success', description: 'Question has been created' }]);
                 history.push('/');
             })
             .catch(err => {
@@ -148,12 +216,6 @@ const CreateQuestion = ({ history, ...props}) => {
                 });
                 appContext.setNotifyList(errorsList);
             })
-    }
-
-    const addMoreAnswers = (event) => {
-        event.preventDefault();
-        fields.incorrect_answers.push('');
-        setFields((oldState) => ({ ...oldState }));
     }
 
     return (
@@ -168,6 +230,7 @@ const CreateQuestion = ({ history, ...props}) => {
                     name="category"
                     className="form-control"
                     value={fields.category}
+                    disabled={action === 'delete' && true}
                     onChange={(e) => handleInputChange(e, fields)}
                 >
                     <option value="any">Any Category</option>
@@ -182,6 +245,7 @@ const CreateQuestion = ({ history, ...props}) => {
                     name="difficulty"
                     className="form-control"
                     value={fields.difficulty}
+                    disabled={action === 'delete' && true}
                     onChange={(e) => handleInputChange(e, fields)}
                 >
                     <option value="any">Any Difficulty</option>
@@ -196,6 +260,7 @@ const CreateQuestion = ({ history, ...props}) => {
                     className="form-control text"
                     placeholder="Who (Where / What) is the...?"
                     name="question"
+                    disabled={action === 'delete' && true}
                     value={fields.question}
                     onChange={(e) => handleInputChange(e, fields)}
                 />
@@ -207,6 +272,7 @@ const CreateQuestion = ({ history, ...props}) => {
                     placeholder="Correct answer is..."
                     name="correct_answer"
                     value={fields.correct_answer}
+                    disabled={action === 'delete' && true}
                     onChange={(e) => handleInputChange(e, fields)}
                 />
                 <Notificate type="error">{fields.errors.correct_answer || < br />}</Notificate><br /><br />
@@ -219,6 +285,7 @@ const CreateQuestion = ({ history, ...props}) => {
                             placeholder={`Some wrong answer ${i}`}
                             name={`incorrect_answer_${i}`}
                             value={wa || ''}
+                            disabled={action === 'delete' && true}
                             onChange={(e) => handleInputChange(e, fields, i)}
                         />
 
@@ -236,11 +303,11 @@ const CreateQuestion = ({ history, ...props}) => {
                         <Notificate type="error">{fields.errors[`incorrect_answer_${i}`] || < br />}</Notificate><br />
                     </div>
                 )}
-                <button onClick={addMoreAnswers} >
+                <button onClick={addMoreAnswers}>
                     <AddCircleIcon />
                 </button><br /><br /><br />
-                <ButtonLink component={<CreateIcon />} type="submit">
-                    Create Question
+                <ButtonLink component={<CreateIcon />} type="submit" setColor={action === 'delete' ? "secondary" : "primary"}>
+                    {buttonName}
                 </ButtonLink>
             </form>
         </div>

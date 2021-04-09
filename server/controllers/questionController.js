@@ -70,6 +70,39 @@ router.get('/category/:cat', verifyToken, (req, res, next) => {
         });
 });
 
+router.get('/byUser/:userId', verifyToken, (req, res) => {
+    const userId = req.params.userId;
+    // const errors = req.errors;
+    // if (errors && errors.errors.length > 0) {
+    //     res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
+    //     // next(errors);
+    //     return;
+    // }
+    console.log('inQuestion getOne by userId api route');
+    questionService.getOneByUserId(userId)
+        .then((questions) => {
+            if (questions.length === 0) {
+                res.status(204).end();
+                // res.status(204).json({errors : {message: "You haven't created any questions yet"}});
+                return;
+            }
+            res.status(302).json(questions);
+            return;
+        })
+        .catch(err => {
+            let errors;
+            console.log("inGetOneByUseIdError");
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: [{ message: err.message }] };
+            }
+            console.log(errors);
+            res.status(422).json({ errors, title: 'Get One Question By User Id Page' });
+            return err;
+        });
+});
+
 router.post('/create', verifyToken, (req, res, next) => { //TODO: checkQuestionInput,
 
     const errors = req.errors;
@@ -102,38 +135,35 @@ router.post('/create', verifyToken, (req, res, next) => { //TODO: checkQuestionI
         });
 });
 
-router.get('/:userId', verifyToken, (req, res) => {
-    const userId = req.params.userId;
+router.get('/:questionId', verifyToken, (req, res) => {
+    console.log(req.url);
+    const questionId = req.params.questionId;
     // const errors = req.errors;
     // if (errors && errors.errors.length > 0) {
     //     res.status(422).render('auth/login', { ...errors, title: 'Login page', username });
     //     // next(errors);
     //     return;
     // }
-    console.log('inQuestion api route');
-    questionService.getOneByUserId(userId)
-        .then((questions) => {
-            if (questions.length === 0) {
-                res.status(204).end();
-                // res.status(204).json({errors : {message: "You still didn't finish any quizes"}});
-                return;
-            }
-            res.status(302).json(questions);
+    console.log('inQuestion getOne by questionId api route');
+    questionService.getOne(questionId)
+        .then((question) => {
+            res.status(302).json(question);
             return;
         })
         .catch(err => {
             let errors;
-            console.log("inGetOneByUseIdError");
+            console.log("inGetOneByQuestionIdError");
             if (err.errors) {
                 errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
             } else {
                 errors = { errors: [{ message: err.message }] };
             }
             console.log(errors);
-            res.status(422).json({ errors, title: 'Get One Question By User Id Page' });
+            res.status(422).json({ errors, title: 'Get One Question By Question Id Page' });
             return err;
         });
 });
+
 
 // router.get('/details/:prod_id', (req, res, next) => {
 //     const _id = req.user ? req.user._id : null;
@@ -146,44 +176,61 @@ router.get('/:userId', verifyToken, (req, res) => {
 //         .catch(next);
 // });
 
-// router.get('/edit/:prod_id', isCreator, (req, res, next) => {
-//     questionService.getOnePopulated(req.params.prod_id)
-//         .then((data) => {
-//             res.render('questions/editQuestion', { ...data });
-//             return;
-//         })
-//         .catch(next);
-// });
+router.patch('/edit/:questionId', verifyToken, (req, res, next) => {
+    const errors = req.errors;
+    const questionId = req.params.questionId;
+    const newQuestion = req.body;
+    console.log('inEdit');
+    console.log(questionId, newQuestion);
 
-// router.post('/edit/:prod_id', isCreator, checkQuestionInput, (req, res, next) => {
-//     const errors = req.errors;
+    // if (errors && errors.errors.length > 0) {
+    //     res.status(422).render('questions/editQuestion', { ...errors, _id: req.params.prod_id, ...req.body });
+    //     // next(errors);
+    //     return;
+    // }
+    questionService.update(questionId, { ...newQuestion })
+        .then(question => {
+            res.status(302).json(question);
+            // console.log(data);
+            // res.redirect(`/questions/details/${data._id}`);
+            return;
+        })
+        .catch(err => {
+            let errors;
+            console.log("inEditQuestionIdError");
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: [{ message: err.message }] };
+            }
+            console.log(errors);
+            res.status(422).json({ errors, title: 'Edit Question By Question Id Page' });
+            return err;
+        });
+});
 
-//     if (errors && errors.errors.length > 0) {
-//         res.status(422).render('questions/editQuestion', { ...errors, _id: req.params.prod_id, ...req.body });
-//         // next(errors);
-//         return;
-//     }
-//     questionService.update(req.params.prod_id, { ...req.body })
-//         .then(data => {
-//             // console.log(data);
-//             res.redirect(`/questions/details/${data._id}`);
-//             return;
-//         })
-//         .catch(next);
-// });
-// router.get('/delete/:prod_id', isCreator, (req, res, next) => {
-//     questionService.getOnePopulated(req.params.prod_id)
-//         .then((data) => {
-//             res.render('questions/deleteQuestion', { ...data });
-//             return;
-//         })
-//         .catch(next);
-// });
-// router.post('/delete/:prod_id', isCreator, (req, res, next) => {
-//     questionService.removeOne(req.params.prod_id)
-//         .then((data) => res.redirect('/questions'))
-//         .catch(next);
-// });
+router.delete('/delete/:questionId', verifyToken, (req, res, next) => {
+    console.log('inDelete');
+    questionService.removeOne(req.params.questionId)
+        .then((data) => {
+            res.status(202).json(data);
+            // res.render('questions/deleteQuestion', { ...data });
+            return;
+        })
+        .catch(err => {
+            let errors;
+            console.log("inDeleteQuestionIdError");
+            if (err.errors) {
+                errors = Object.keys(err.errors).map(x => ({ message: err.errors[x].message }));
+            } else {
+                errors = { errors: [{ message: err.message }] };
+            }
+            console.log(errors);
+            res.status(422).json({ errors, title: 'Delete Question By Question Id Page' });
+            return err;
+        });
+});
+
 // router.get('/clearDB', (req, res, next) => {
 //     questionService.clear()
 //         .then((data) => res.redirect('/questions'))

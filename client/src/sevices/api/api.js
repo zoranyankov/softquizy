@@ -4,7 +4,10 @@ const api = {
     //Questions Endpoints
     createQuestion: `${API_QUESTION_URL}/create`,
     getAllQuestions: `${API_QUESTION_URL}/`,
-    getQuestions: `${API_QUESTION_URL}`,
+    getQuestion: `${API_QUESTION_URL}`,
+    editQuestion: `${API_QUESTION_URL}/edit`,
+    deleteQuestion: `${API_QUESTION_URL}/delete`,
+    getQuestionsByUser: `${API_QUESTION_URL}/byUser`,
     getCategories: `${API_QUESTION_URL}/categories`,
     getCategory: `${API_QUESTION_URL}/category`,
     

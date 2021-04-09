@@ -10,8 +10,7 @@ const ManageQuestion = () => {
 
     return (
         <Switch>
-            <Route path={`${match.url}/edit/:qid`} render={() =><CreateQuestion />} />
-            <Route path={`${match.url}/delete/:qid`} render={() => (<CreateQuestion manage={'delete'} qid={'qid'}/>)} />
+            <Route path={`${match.url}/:action/:questionId`} render={() =><CreateQuestion />} />
         </Switch>
     )
 }

@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
-const ButtonLink = ({ history, children, path, component, type }) => {
+const ButtonLink = ({ history, children, path, component, type, setColor }) => {
 
     const onButtonClick = (event) => {
         event.preventDefault();
@@ -31,7 +31,8 @@ const ButtonLink = ({ history, children, path, component, type }) => {
                 size='large'
                 className={classes.button}
                 variant="contained"
-                color="primary"
+                // color="primary"
+                color={setColor || "primary"}
                 type="submit"
                 startIcon={component}
             >

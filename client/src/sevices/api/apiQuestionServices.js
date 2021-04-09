@@ -24,19 +24,22 @@ const getCategory = (category) => {
 
 const getByUserId = (userId) => {
     const token = getToken();
-    return request(`${api.getQuestions}/${userId}`, "GET", '', { 'x-access-token': token });
+    return request(`${api.getQuestionsByUser}/${userId}`, "GET", '', { 'x-access-token': token });
 }
 
-const getOne = () => {
-    // return request...
+const getOne = (questionId) => {
+    const token = getToken();
+    return request(`${api.getQuestion}/${questionId}`, "GET", '', { 'x-access-token': token });
 }
 
-const editOne = () => {
-    // return request...
+const editOne = (questionId, data) => {
+    const token = getToken();
+    return request(`${api.editQuestion}/${questionId}`, "PATCH", data, { 'x-access-token': token });
 }
 
-const deleteOne = () => {
-    // return request...
+const deleteOne = (questionId) => {
+    const token = getToken();
+    return request(`${api.deleteQuestion}/${questionId}`, "DELETE", '', { 'x-access-token': token });
 }
 
 const apiQuestionServices = {
