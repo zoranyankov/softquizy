@@ -48,7 +48,7 @@ const ProfileResults = (props) => {
     if (noData) {
         return (
             <Toast
-                toastList={[{ id: "You still didn't passed any Quezes", title: 'Warning', description: "You still didn't passed any Quezes", position: 'middle' }]}
+                toastList={[{ id: "You haven't complete any Quezes yet", title: 'Warning', description: "You haven't complete any Quezes yet", position: 'middle' }]}
                 // position="bottom-right"
                 position="middle"
             />
