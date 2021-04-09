@@ -104,7 +104,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
     return (
         <>
 
-            {q && <Quizheader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score} />}
+            {q && <QuizHeader quizName={quizName} currentQuestion={currentQuestion} questoinsCount={questions.length} score={score} />}
             {q &&
                 <div className="questions">
                     <ul className="question-list">

@@ -48,7 +48,7 @@ export default function SimpleAccordion({ data, type }) {
                                         </span>
                                         <br />
                                         <span className="accordion-date">
-                                            Quiz is made on:  {(new Date(table.createdAt)).toLocaleString()}
+                                            Quiz has been taken on:  {(new Date(table.createdAt)).toLocaleString()}
                                         </span>
                                     </div>
                                     : <div className="accordion-header">
@@ -57,7 +57,7 @@ export default function SimpleAccordion({ data, type }) {
                                         </span>
                                         <br />
                                         <span className="accordion-date">
-                                            Question is made on: {(new Date(table.createdAt)).toLocaleString()}
+                                            Question has been created on: {(new Date(table.createdAt)).toLocaleString()}
                                         </span>
                                     </div>
                                 }
