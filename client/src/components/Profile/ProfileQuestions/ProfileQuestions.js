@@ -28,7 +28,6 @@ const ProfileQuestions = (props) => {
     const userId = appContext.userId;
 
     useEffect(() => {
-        console.log('inUseEffect of Profile comp');
         apiQuestionServices.getByUserId(userId)
             .then(questions => {
                 setuserQuestions(questions);

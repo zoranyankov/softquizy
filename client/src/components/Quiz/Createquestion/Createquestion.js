@@ -121,7 +121,6 @@ const CreateQuestion = ({ history }) => {
             appContext.setNotifyList(error);
             return;
         }
-        console.log(Object.values(fields.errors).some(x => x ));
         if (Object.values(fields.errors).some(x => x)) {
             console.log(fields.errors);
             const error = [{ id: 'PleaseFixYourWrongInputs', title: 'Error', description: 'Please Fix Your Wrong Inputs' }];
