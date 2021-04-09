@@ -1,8 +1,7 @@
 import { withRouter } from 'react-router-dom';
 
 //Import components from Material UI
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { Button, makeStyles } from '../../../config/materialConfig';
 
 import './ButtonLink.css';
 

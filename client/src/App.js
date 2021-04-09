@@ -16,7 +16,6 @@ import Profile from './components/Profile';
 import Quizes from './components/Quiz/Quizes';
 import Footer from './components/Footer';
 import Toast from './components/Shared/Toast';
-import ManageQuestion from './components/Quiz/ManageQuestion';
 
 
 function App() {
@@ -79,7 +78,6 @@ function App() {
                             <Route path="/auth" component={Auth} />
                             <Route path="/profile" component={Profile} />
                             <Route path="/quizes" component={Quizes} />
-                            <Route path="/quizes" component={ManageQuestion} />
                         </Switch>
                     </div>
                     {notifyList && <Toast

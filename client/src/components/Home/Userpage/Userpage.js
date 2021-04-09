@@ -2,8 +2,8 @@ import { Fragment, useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 
 //Import components from Material UI
-import CreateIcon from '@material-ui/icons/Create';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import { CreateIcon, ImportContactsIcon } from '../../../config/materialConfig';
+
 
 //Import global AppContext and services
 import AppContext from '../../AppContext';
@@ -34,7 +34,7 @@ const Userpage = () => {
                         if (a.find(y => y.category === x.category)) {
                             return a;
                         }
-                        x = {...x, categoryName: CATEGORY_NAMES[x.category] }
+                        x = { ...x, categoryName: CATEGORY_NAMES[x.category] }
                         a.push(x);
                         return a;
                     }, []);

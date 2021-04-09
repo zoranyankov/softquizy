@@ -1,16 +1,8 @@
 import React from 'react';
 
 //Import components from Material UI
-import { withStyles, makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import DeleteIcon from '@material-ui/icons/Delete';
-import EditIcon from '@material-ui/icons/Edit';
+import { withStyles, makeStyles, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, DeleteIcon, EditIcon } from '../../../config/materialConfig';
+
 
 //Import components
 import ButtonLink from '../../Shared/ButtonLink';
@@ -75,12 +67,12 @@ export default function QuestionsTable({ question }) {
           </StyledTableRow>
         </TableBody>
       </Table>
-      <ButtonLink className="edit-btn" path={`/questions/edit/${question._id}`} component={<EditIcon />}>
+      <ButtonLink className="edit-btn" path={`/profile/questions/edit/${question._id}`} component={<EditIcon />}>
         Edit Question
-        	</ButtonLink>
-      <ButtonLink className="delete-btn" path={`/questions/delete/${question._id}`} component={<DeleteIcon />}>
-      Delete Question
-          </ButtonLink>
+      </ButtonLink>
+      <ButtonLink className="delete-btn" path={`/profile/questions/delete/${question._id}`} component={<DeleteIcon />}>
+        Delete Question
+      </ButtonLink>
     </TableContainer >
   );
 }

@@ -6,7 +6,7 @@ import { Image } from 'cloudinary-react';
 import AppContext from '../../AppContext';
 
 //Import components from Material UI
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import { ImportContactsIcon } from '../../../config/materialConfig';
 
 //Import services
 import triviaServises from '../../../sevices/trivia/triviaServices';

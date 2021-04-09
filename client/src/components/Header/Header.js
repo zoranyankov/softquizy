@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 //Import icon from Material UI
-import HomeIcon from '@material-ui/icons/Home';
+import { HomeIcon } from '../../config/materialConfig';
 
 //Import components
 import NavList from './NavList';

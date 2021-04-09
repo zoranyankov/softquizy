@@ -7,7 +7,7 @@ import authService from '../../sevices/auth/authServices';
 import testAuthInput from '../../sevices/test/authTestServices';
 
 //Import components from Material UI
-import CreateIcon from '@material-ui/icons/Create';
+import { CreateIcon } from '../../config/materialConfig';
 
 //Import shared components
 import Notificate from '../Shared/Notificate';

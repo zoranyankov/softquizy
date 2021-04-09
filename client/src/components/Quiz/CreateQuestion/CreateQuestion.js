@@ -1,12 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, withRouter} from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 
 //Import components from Material UI
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import CreateIcon from '@material-ui/icons/Create';
-import AddCircleIcon from '@material-ui/icons/AddCircle';
-import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
+import { VpnKeyIcon, CreateIcon, AddCircleIcon, RemoveCircleIcon } from '../../../config/materialConfig';
 
 //Import globav AppContext and services
 import AppContext from '../../AppContext';
@@ -23,7 +20,8 @@ import './CreateQuestion.css';
 
 let errorTimeout = {};
 
-const CreateQuestion = ({ history }) => {
+const CreateQuestion = ({ history, ...props}) => {
+    console.log(props.match.params.qid);
 
     //Get actual state of Token if is authenticated
     // const hasToken = JSON.parse(localStorage.getItem('sid'));
@@ -249,4 +247,4 @@ const CreateQuestion = ({ history }) => {
     );
 }
 
-export default CreateQuestion;
+export default withRouter(CreateQuestion);

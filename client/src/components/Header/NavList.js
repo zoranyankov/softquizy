@@ -1,11 +1,7 @@
 import { Fragment, useContext } from 'react';
 
 //Import icons from Material UI
-import CreateIcon from '@material-ui/icons/Create';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import PersonIcon from '@material-ui/icons/Person';
+import { CreateIcon, ImportContactsIcon, ExitToAppIcon, VpnKeyIcon, PersonIcon } from '../../config/materialConfig';
 
 //Import components
 import NavListItem from './NavListItem';

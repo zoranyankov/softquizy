@@ -6,15 +6,12 @@ import { Image, Transformation } from 'cloudinary-react';
 import AppContext from '../AppContext';
 
 //Import components from Material UI
-import Button from '@material-ui/core/Button';
-// import VpnKeyIcon from '@material-ui/icons/VpnKey';
-import { makeStyles } from '@material-ui/core/styles';
-// import CreateIcon from '@material-ui/icons/Create';
-import ImportContactsIcon from '@material-ui/icons/ImportContacts';
+import { Button, makeStyles, ImportContactsIcon } from '../../config/materialConfig';
 
 //Import components
-import ProfileResults from '../Profile/ProfileResults';
-import ProfileQuestions from '../Profile/ProfileQuestions';
+import ProfileResults from './ProfileResults';
+import ProfileQuestions from './ProfileQuestions';
+import ManageQuestion from './ManageQuestion';
 
 //Import local styles
 import './Profile.css';
@@ -86,7 +83,7 @@ const Profile = ({ history }) => {
                     className={classes.button}
                     variant="contained"
                     color="primary"
-                    onClick={(e) => onButtonClick(e, '/profile/questions')}
+                    onClick={(e) => onButtonClick(e, '/profile/profile-questions')}
                     startIcon={<ImportContactsIcon />}
                 >
                     {isAuth}'s Questions
@@ -94,7 +91,8 @@ const Profile = ({ history }) => {
                 <div className="profile-results">
                     <Switch>
                         <Route path={`${match.url}/results`} component={ProfileResults} />
-                        <Route path={`${match.url}/questions`} component={ProfileQuestions} />
+                        <Route path={`${match.url}/profile-questions`} component={ProfileQuestions} />
+                        <Route path={`${match.url}/questions`} component={ManageQuestion} />
                     </Switch>
                 </div>
             </div>

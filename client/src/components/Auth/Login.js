@@ -7,7 +7,7 @@ import authService from '../../sevices/auth/authServices';
 import testAuthInput from '../../sevices/test/authTestServices';
 
 //Import components from Material UI
-import VpnKeyIcon from '@material-ui/icons/VpnKey';
+import { VpnKeyIcon } from '../../config/materialConfig';
 
 //Import shared components
 import Notificate from '../Shared/Notificate';
