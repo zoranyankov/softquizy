@@ -3,6 +3,7 @@ import { useEffect, useState, useContext } from 'react';
 //Import global AppContext and services
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
+import { shuffleArray } from '../../../config/config';
 
 //Import components
 import Questions from '../Questions';
@@ -24,6 +25,8 @@ const Quiz = (props) => {
         if (inLocal) {
             apiQuestionServices.getCategory(category)
                 .then(apiQuestions => {
+                    apiQuestions = shuffleArray(apiQuestions);
+                    apiQuestions = apiQuestions.slice(0, 5);
                     setQuestions(apiQuestions);
                 })
                 .catch(err => {
