@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { Redirect, Switch, Route, useRouteMatch } from 'react-router-dom';
+import { Switch, Route, useRouteMatch } from 'react-router-dom';
 import { Image, Transformation } from 'cloudinary-react';
 
 //Import global context and services
@@ -47,10 +47,11 @@ const Profile = ({ history }) => {
     let isAuth = appContext.isAuthName;
 
 
-    //Execute guard - redirect if is not authenticated
-    if (!isAuth) {
-        return <Redirect to="/auth/login" />;
-    }
+    //Execute guard - redirect if is not authenticated - variant without HOC isAuthenticated
+        // if (!isAuth) {
+        //     return <Redirect to="/auth/login" />;
+        // }
+
     return (
         <div className="quiz-content">
             <div className="profile-header">

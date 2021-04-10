@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 //Import global context and services
 import AppContext from '../../AppContext';
@@ -39,10 +39,10 @@ const ProfileResults = (props) => {
             })
     }, [userId, isAuth])
 
-    //Execute guard - redirect if is not authenticated
-    if (!isAuth) {
-        return <Redirect to="/auth/login" />;
-    }
+    //Execute guard - redirect if is not authenticated - variant without HOC isAuthenticated
+        // if (!isAuth) {
+        //     return <Redirect to="/auth/login" />;
+        // }
 
     // Notify when there is stil no results for this user
     if (noData) {

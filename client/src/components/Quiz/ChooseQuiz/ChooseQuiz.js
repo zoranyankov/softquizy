@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 
 //import global AppContext
@@ -28,15 +28,15 @@ const ChooseQuiz = ({ history }) => {
 
     //Get the state of Token from global Context
     const appContext = useContext(AppContext);
-    let isAuth = appContext.isAuthName;
+    // let isAuth = appContext.isAuthName;
 
     //Controll the fields for real-time validation
     let [fields, setFields] = useState({ trivia_category: 'any', trivia_difficulty: 'any', errors: '' });
 
-    //Execute guard - redirect if is not authenticated
-    if (!isAuth) {
-        return <Redirect to="/auth/login" />;
-    }
+    //Execute guard - redirect if is not authenticated - variant without HOC isAuthenticated
+        // if (!isAuth) {
+        //     return <Redirect to="/auth/login" />;
+        // }
 
     const handleInputChange = (event, oldState) => {
         

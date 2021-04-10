@@ -7,6 +7,7 @@ import './App.css';
 //Import Services
 import AppContext from './components/AppContext';
 import authService from './sevices/auth/authServices';
+import isAuthenticated from './hocs/isAuthenticated';
 
 //Import Components
 import Header from './components/Header';
@@ -78,8 +79,8 @@ function App() {
                             <Switch>
                                 <Route exact path="/" component={Home} />
                                 <Route path="/auth" component={Auth} />
-                                <Route path="/profile" component={Profile} />
-                                <Route path="/quizes" component={Quizes} />
+                                <Route path="/profile" component={isAuthenticated(Profile)} />
+                                <Route path="/quizes" component={isAuthenticated(Quizes)} />
                             </Switch>
                         </div>
                         {notifyList && <Toast

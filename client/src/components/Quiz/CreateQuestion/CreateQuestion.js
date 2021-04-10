@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Redirect, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 
 //Import components from Material UI
@@ -47,15 +47,15 @@ const CreateQuestion = ({ history, ...props }) => {
         }
     }, [questionId, action, appContext])
 
-    let isAuth = appContext.isAuthName;
+    // let isAuth = appContext.isAuthName;
 
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: {} });
     let [buttonName, setButtonName] = useState('Create Question');
 
-    //Execute guard - redirect if is not authenticated
-    if (!isAuth) {
-        return <Redirect to="/auth/login" />;
-    }
+    //Execute guard - redirect if is not authenticated - variant without HOC isAuthenticated
+        // if (!isAuth) {
+        //     return <Redirect to="/auth/login" />;
+        // }
 
     //Event callback for remove/add incorrect_answer
     const removeClick = (event, fields, i) => {

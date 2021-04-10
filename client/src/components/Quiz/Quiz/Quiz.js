@@ -4,6 +4,7 @@ import { useEffect, useState, useContext, Fragment } from 'react';
 import AppContext from '../../AppContext';
 import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 import { shuffleArray } from '../../../config/config';
+import isAuthenticated from '../../../hocs/isAuthenticated';
 
 //Import components
 import Questions from '../Questions';
@@ -80,4 +81,4 @@ const Quiz = (props) => {
     );
 }
 
-export default Quiz;
+export default isAuthenticated(Quiz);
