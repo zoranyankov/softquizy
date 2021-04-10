@@ -238,7 +238,7 @@ const CreateQuestion = ({ history, ...props }) => {
                     <option value="7">Geography</option>
                     <option value="8">History</option>
                 </select>
-                <Notificate type="error">{fields.errors.category || < br />}</Notificate><br />
+                <Notificate maxWidth={true} type="error">{fields.errors.category || < br />}</Notificate><br />
 
                 <label htmlFor="difficulty">Select Difficulty: </label><br />
                 <select
@@ -253,7 +253,7 @@ const CreateQuestion = ({ history, ...props }) => {
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
-                <Notificate type="error">{fields.errors.difficulty || < br />}</Notificate><br />
+                <Notificate maxWidth={true} type="error">{fields.errors.difficulty || < br />}</Notificate><br />
                 <label htmlFor="question">Write the question: </label><br />
                 <textarea
                     type="text"
@@ -264,7 +264,7 @@ const CreateQuestion = ({ history, ...props }) => {
                     value={fields.question}
                     onChange={(e) => handleInputChange(e, fields)}
                 />
-                <Notificate type="error">{fields.errors.question || < br />}</Notificate><br />
+                <Notificate maxWidth={true} type="error">{fields.errors.question || < br />}</Notificate><br />
                 <label htmlFor="correct_answer">Write the correct answer: </label><br />
                 <textarea
                     type="text"
@@ -275,7 +275,7 @@ const CreateQuestion = ({ history, ...props }) => {
                     disabled={action === 'delete' && true}
                     onChange={(e) => handleInputChange(e, fields)}
                 />
-                <Notificate type="error">{fields.errors.correct_answer || < br />}</Notificate><br /><br />
+                <Notificate maxWidth={true} type="error">{fields.errors.correct_answer || < br />}</Notificate><br /><br />
                 <label htmlFor="incorrect_answer">Write the wrong answers: </label><br />
                 {fields.incorrect_answers.map((wa, i) =>
                     <div key={i} >
@@ -300,7 +300,7 @@ const CreateQuestion = ({ history, ...props }) => {
                                 <VpnKeyIcon />
                             </button>
                         }
-                        <Notificate type="error">{fields.errors[`incorrect_answer_${i}`] || < br />}</Notificate><br />
+                        <Notificate maxWidth={true} type="error">{fields.errors[`incorrect_answer_${i}`] || < br />}</Notificate><br />
                     </div>
                 )}
                 <button onClick={addMoreAnswers}>

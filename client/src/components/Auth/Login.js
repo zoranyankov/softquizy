@@ -124,7 +124,7 @@ class Login extends Component {
                             name="username"
                             onChange={this.handleChange}
                         />
-                        <Notificate type="error">{this.state.errors.username || < br />}</Notificate>
+                        <Notificate type="error">{this.state.errors.username } < br /></Notificate>
                     </div>
                     <div className="form-group">
                         <label className="form-label" htmlFor="password">Password</label>
@@ -135,7 +135,7 @@ class Login extends Component {
                             name="password"
                             onChange={this.handleChange}
                         />
-                        <Notificate type="error">{this.state.errors.password || < br />}</Notificate>
+                        <Notificate type="error">{this.state.errors.password} < br /></Notificate>
                     </div>
                     <br></br>
                     <ButtonLink component={<VpnKeyIcon />} type="submit">

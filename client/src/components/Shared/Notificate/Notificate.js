@@ -1,7 +1,7 @@
 import './Notificate.css';
 
 
-const Notificate = ({ children, type }) => {
+const Notificate = ({ children, type, maxWidth }) => {
     if (!children) {
         return null;
     }
@@ -10,7 +10,7 @@ const Notificate = ({ children, type }) => {
     switch (type) {
         case 'error':
             result = (
-                <div className="error">
+                <div className={maxWidth ? "max-width" : "error"}>
                     {children}
                 </div>
             );

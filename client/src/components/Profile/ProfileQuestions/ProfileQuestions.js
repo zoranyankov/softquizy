@@ -47,7 +47,7 @@ const ProfileQuestions = (props) => {
     if (noData) {
         return (
             <Toast
-                toastList={[{ id: "You haven't create any Questions yet", title: 'Warning', description: "You haven't create any Questions yet", position: 'middle' }]}
+                toastList={[{ id: "You haven't create any Questions !", title: 'Warning', description: "You haven't create any Questions !", position: 'middle' }]}
                 // position="bottom-right"
                 position="middle"
             />

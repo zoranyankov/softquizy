@@ -116,7 +116,7 @@ class Register extends Component {
                             onChange={this.handleChange}
                         />
                     </div>
-                    <Notificate type="error">{this.state.errors.username}</Notificate>
+                    <Notificate type="error">{this.state.errors.username} <br /></Notificate>
                     <div className="form-group">
                         <label className="form-label" htmlFor="password">Password</label>
                         <input
@@ -127,7 +127,7 @@ class Register extends Component {
                             onChange={this.handleChange}
                         />
                     </div>
-                    <Notificate type="error">{this.state.errors.password}</Notificate>
+                    <Notificate type="error">{this.state.errors.password} <br /></Notificate>
                     <div className="form-group">
                         <label className="form-label" htmlFor="repeatPassword">Repeat Password</label>
                         <input
@@ -138,7 +138,7 @@ class Register extends Component {
                             onChange={this.handleChange}
                         />
                     </div>
-                    <Notificate type="error">{this.state.errors.rePassword}</Notificate>
+                    <Notificate type="error">{this.state.errors.rePassword} <br /></Notificate>
                     <br></br>
                     <ButtonLink component={<CreateIcon />} type="submit">
                         Register
