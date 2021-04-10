@@ -18,6 +18,7 @@ import Quizes from './components/Quiz/Quizes';
 import Footer from './components/Footer';
 import Toast from './components/Shared/Toast';
 import GlobalErrBoundary from './components/GlobalErrBoundary';
+import ErrorPage from './components/ErrorPage';
 
 
 function App() {
@@ -80,7 +81,8 @@ function App() {
                                 <Route exact path="/" component={Home} />
                                 <Route path="/auth" component={Auth} />
                                 <Route path="/profile" component={isAuthenticated(Profile)} />
-                                <Route path="/quizes" component={isAuthenticated(Quizes)} />
+                                <Route path="/quizes" component={Quizes} />
+                                <Route path="*" component={ErrorPage} />
                             </Switch>
                         </div>
                         {notifyList && <Toast

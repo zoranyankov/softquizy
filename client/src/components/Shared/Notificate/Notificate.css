@@ -9,6 +9,12 @@
     max-width: 88%;
 }
 
+.notification .max-width2 {
+    color: rgb(145, 31, 3);
+    font-weight: bold;
+    max-width: 69%;
+}
+
 .notification .message {
     color: green;
     font-weight: bold;

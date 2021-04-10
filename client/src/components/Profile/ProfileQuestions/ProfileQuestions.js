@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-// import { Redirect } from 'react-router-dom';
+import { Route, useRouteMatch } from 'react-router-dom';
 
 //Import global context and services
 import AppContext from '../../AppContext';
@@ -8,6 +8,7 @@ import apiQuestionServices from '../../../sevices/api/apiQuestionServices';
 //Import components
 import Accordion from '../../Accordion';
 import Toast from '../../Shared/Toast';
+import ErrorPage from '../../ErrorPage';
 
 //Import local styles
 import './ProfileQuestions.css';
@@ -24,6 +25,8 @@ const ProfileQuestions = (props) => {
 
     let [userQuestions, setuserQuestions] = useState([]);
     let [noData, setNoData] = useState(false);
+
+    let match = useRouteMatch();
 
     const userId = appContext.userId;
 
@@ -71,6 +74,8 @@ const ProfileQuestions = (props) => {
             <br />
             <br />
             <br />
+            <Route path={`${match.url}/*`} component={ErrorPage} />
+            
         </>
     );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { Redirect, useState, useContext, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import { Image } from 'cloudinary-react';
 
@@ -19,10 +19,14 @@ import './CreateQuestion.css';
 
 let errorTimeout = {};
 
-const CreateQuestion = ({ history, ...props }) => {
-    const questionId = props.match.params.questionId;
-    const action = props.match.params.action;
+const CreateQuestion = ({ history, action, question, buttName, questionId, isCreator, ...props }) => {
 
+    //Set the page title
+    let title = 'Create local Question';
+    if (action) {
+        title = action === 'delete' ? 'Delete local Question' : 'Edit local Question';
+    }
+    const buttonName = buttName ? buttName : 'Create local Question';
     //Get actual state of Token if is authenticated
     // const hasToken = JSON.parse(localStorage.getItem('sid'));
     // let isAuth = !hasToken ? false : appContext.isAuthName;
@@ -31,42 +35,31 @@ const CreateQuestion = ({ history, ...props }) => {
 
     //Load data in case of edit / delete
     useEffect(() => {
-        if (questionId) {
-            apiQuestionServices.getOne(questionId)
-                .then(q => {
-                    setFields(oldState => ({ ...oldState, ...q }));
-                    setButtonName(action === 'edit' ? 'Apply Changes' : 'Confirm Deletion');
-                })
-                .catch(err => {
-                    console.log('Get question fetch Error: ' + err);
-                    const errorsList = err.errors.map((err, i) => {
-                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
-                    });
-                    appContext.setNotifyList(errorsList);
-                })
+        if (action) {
+            window.scrollTo(0, 0);
+            setFields(oldState => ({ ...oldState, ...question }));
         }
-    }, [questionId, action, appContext])
-
-    // let isAuth = appContext.isAuthName;
-
+    }, [action, question])
+    
+    let isAuth = appContext.isAuthName;
+    
     let [fields, setFields] = useState({ category: 'any', difficulty: 'any', question: '', correct_answer: '', incorrect_answers: [''], errors: {} });
-    let [buttonName, setButtonName] = useState('Create Question');
 
     //Execute guard - redirect if is not authenticated - variant without HOC isAuthenticated
-        // if (!isAuth) {
-        //     return <Redirect to="/auth/login" />;
-        // }
+    if (!isAuth) {
+        return <Redirect to="/auth/login" />;
+    }
 
     //Event callback for remove/add incorrect_answer
     const removeClick = (event, fields, i) => {
         event.preventDefault();
-        if (action==='delete') return;
+        if (action === 'delete') return;
         fields.incorrect_answers.splice(i, 1);
         setFields(oldState => ({ ...oldState, incorrect_answers: fields.incorrect_answers }));
     }
     const addMoreAnswers = (event) => {
         event.preventDefault();
-        if (action==='delete') return;
+        if (action === 'delete') return;
         fields.incorrect_answers.push('');
         setFields((oldState) => ({ ...oldState }));
     }
@@ -139,28 +132,32 @@ const CreateQuestion = ({ history, ...props }) => {
         const { category, difficulty, question, correct_answer, incorrect_answers } = fields;
 
         //Delete current question
-        if(action==='delete') {
+        if (action === 'delete') {
             console.log('inDelete');
-            apiQuestionServices.deleteOne(questionId)
-            .then((response) => {
-                console.log(response);
-                appContext.setNotifyList([{ id: 'Question has been deleted', title: 'Success', description: 'Question has been deleted' }]);
-                history.push('/profile/profile-questions');
-                return;
-            })
-            .catch(err => {
-                console.log('Delete question fetch Error: ' + err);
-                const errorsList = err.errors.map((err, i) => {
-                    return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
-                });
-                appContext.setNotifyList(errorsList);
-                return;
-            })
+            if (isCreator) {
+                apiQuestionServices.deleteOne(questionId)
+                    .then((response) => {
+                        appContext.setNotifyList([{ id: 'Question has been deleted', title: 'Success', description: 'Question has been deleted' }]);
+                        return ()=> {
+                            history.push('/profile/profile-info/profile-questoins');
+                        }
+                        // return null;
+                    })
+                    .catch(err => {
+                        console.log('Delete question fetch Error: ' + err);
+                        const errorsList = err.errors.map((err, i) => {
+                            return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                        });
+                        appContext.setNotifyList(errorsList);
+                        return null;
+                    })
+            }
             return;
         }
 
         //Check for missing fields
-        if (category === 'any' || difficulty === 'any' || !question || !correct_answer || !incorrect_answers[0]) {
+        const emptyIncAnswer = incorrect_answers.some(x => !x);
+        if (category === 'any' || difficulty === 'any' || !question || !correct_answer || emptyIncAnswer) {
             const msg = 'Field is required';
             setFields((oldState => ({ ...oldState, errors: { category: msg, difficulty: msg, question: msg, correct_answer: msg, incorrect_answer_0: msg, ...oldState.errors } })));
             const error = [{ id: 'AllFieldsAreRequired', title: 'Error', description: 'All fields are required' }];
@@ -179,22 +176,22 @@ const CreateQuestion = ({ history, ...props }) => {
             return;
         }
 
-         //Edit current question
-         if(action==='edit') {
+        //Edit current question
+        if (action === 'edit') {
             apiQuestionServices.editOne(questionId, fields)
-            .then((response) => {
-                appContext.setNotifyList([{ id: 'Question has been updated', title: 'Success', description: 'Question has been updated' }]);
-                history.push('/profile/profile-questions');
-                return;
-            })
-            .catch(err => {
-                console.log('Edit question fetch Error: ' + err);
-                const errorsList = err.errors.map((err, i) => {
-                    return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
-                });
-                appContext.setNotifyList(errorsList);
-                return;
-            })
+                .then(() => {
+                    appContext.setNotifyList([{ id: 'Question has been updated', title: 'Success', description: 'Question has been updated' }]);
+                        history.push('/profile/profile-info/profile-questions');
+                    return null;
+                })
+                .catch(err => {
+                    console.log('Edit question fetch Error: ' + err);
+                    const errorsList = err.errors.map((err, i) => {
+                        return ({ id: i + err.message, title: 'Error', description: err.message, position: 'middle' });
+                    });
+                    appContext.setNotifyList(errorsList);
+                    return;
+                })
             return;
         }
 
@@ -224,7 +221,7 @@ const CreateQuestion = ({ history, ...props }) => {
                 <Image cloudName="softquizy" className="create-question-logo" publicId='create-question' />
             </div>
             <form onSubmit={handleSubmit} className="create-question-form">
-                <h1 className="create-question-title">Create local Question</h1><br />
+                <h1 className="create-question-title">{title}</h1><br />
                 <label htmlFor="category">Select Category: </label><br />
                 <select
                     name="category"
@@ -238,7 +235,7 @@ const CreateQuestion = ({ history, ...props }) => {
                     <option value="7">Geography</option>
                     <option value="8">History</option>
                 </select>
-                <Notificate maxWidth={true} type="error">{fields.errors.category || < br />}</Notificate><br />
+                <Notificate maxWidth2={true} type="error">{fields.errors.category || < br />}</Notificate><br />
 
                 <label htmlFor="difficulty">Select Difficulty: </label><br />
                 <select
@@ -253,7 +250,7 @@ const CreateQuestion = ({ history, ...props }) => {
                     <option value="medium">Medium</option>
                     <option value="hard">Hard</option>
                 </select>
-                <Notificate maxWidth={true} type="error">{fields.errors.difficulty || < br />}</Notificate><br />
+                <Notificate maxWidth2={true} type="error">{fields.errors.difficulty || < br />}</Notificate><br />
                 <label htmlFor="question">Write the question: </label><br />
                 <textarea
                     type="text"
