@@ -18,6 +18,7 @@ import {CssBaseline,
         TableFooter} from '@material-ui/core';
 
 //Material UI Icons
+import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissatisfied';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ImportContactsIcon from '@material-ui/icons/ImportContacts';
@@ -35,6 +36,7 @@ export {
     withStyles,
     makeStyles,
     Button,
+    SentimentVeryDissatisfiedIcon,
     CreateIcon,
     ImportContactsIcon,
     Accordion,
