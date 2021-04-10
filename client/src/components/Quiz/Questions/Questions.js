@@ -110,7 +110,7 @@ const Questions = ({ props, quizName, questions, inLocal }) => {
                     <ul className="question-list">
                         <Qlist
                             key={q._id}
-                            id={q._id}
+                            qid={q._id}
                             question={q.question}
                             incAnswers={q.incorrect_answers}
                             answer={q.correct_answer}

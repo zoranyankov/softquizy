@@ -10,13 +10,13 @@ const Qlist = ({
     answer,
     incAnswers,
     onClick,
-    id,
+    qid,
 }) => {
     let [answers, setAnswers] = useState([]);
 
     useEffect(() => {
         let answers = [answer, ...incAnswers];
-        answers = answers.map(a => ({ id: _uniqueId(), a }));
+        answers = answers.map(answer => ({ id: _uniqueId(), answer }));
         answers = shuffleArray(answers);
 
         setAnswers(answers);
@@ -26,13 +26,13 @@ const Qlist = ({
         <li className="question">
             <h2 className="question-title">{question}</h2>
             <ul className="question-answers">
-                {answers.map(a => (
+                {answers.map(currAnswer => (
                     <li
-                        key={a.id}
+                        key={currAnswer.id}
                         className="question-answer"
-                        onClick={(event) => onClick(event, question, answer, a.a, id)}
+                        onClick={(event) => onClick(event, question, answer, currAnswer.answer, qid)}
                     >
-                        {a.a}
+                        {currAnswer.answer}
                     </li>
                 ))}
             </ul>

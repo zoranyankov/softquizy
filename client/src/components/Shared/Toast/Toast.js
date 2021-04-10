@@ -29,7 +29,7 @@ const Toast = ({ toastList, position, autoDelete, dismissTime }) => {
     };
 
     //Set default autoDelete timers with default dissmissTimes
-    if (toastList.find(m => (m.title === "Success") || (m.title === "Info"))) {
+    if (toastList.find(m => (m.title === "Success"))) {
         autoDelete = true;
         dismissTime = 1500;
     }
