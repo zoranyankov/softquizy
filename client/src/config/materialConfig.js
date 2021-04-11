@@ -30,7 +30,9 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import PersonIcon from '@material-ui/icons/Person';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import RemoveCircleIcon from '@material-ui/icons/RemoveCircle';
-
+import DoneOutlineIcon from '@material-ui/icons/DoneOutline';
+import CancelIcon from '@material-ui/icons/Cancel';
+import ClearIcon from '@material-ui/icons/Clear';
 
 export {
     withStyles,
@@ -50,6 +52,9 @@ export {
     PersonIcon,
     AddCircleIcon,
     RemoveCircleIcon,
+    DoneOutlineIcon,
+    CancelIcon,
+    ClearIcon,
     Table,
     TableBody,
     TableCell,

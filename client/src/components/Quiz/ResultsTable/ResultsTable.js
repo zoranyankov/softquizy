@@ -1,8 +1,10 @@
 import React from 'react';
 
 //Import components from Material UI
-import { withStyles, makeStyles, Table, TableBody, TableCell, TableContainer, 
-  TableHead, TableRow, Paper, TableFooter } from '../../../config/materialConfig';
+import {
+  withStyles, makeStyles, Table, TableBody, TableCell, TableContainer,
+  TableHead, TableRow, Paper, TableFooter, DoneOutlineIcon, CancelIcon
+} from '../../../config/materialConfig';
 
 
 const useStyles = makeStyles({
@@ -57,7 +59,7 @@ export default function ResultsTable({ rows, score, quizName }) {
               <StyledTableCell component="th" scope="row">{row.question}</StyledTableCell>
               <StyledTableCell align="right">{row.selected}</StyledTableCell>
               <StyledTableCell align="right">{row.correctAnswer}</StyledTableCell>
-              <StyledTableCell align="right">{row.status}</StyledTableCell>
+              <StyledTableCell align="right">{row.status === 'correct' ? <DoneOutlineIcon /> : <CancelIcon />}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

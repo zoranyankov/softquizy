@@ -26,7 +26,6 @@ const Userpage = () => {
     let restCategories = Object.values({ ...CATEGORY_NAMES }).slice(0, 3);
     let qCount = restCategories.length;
 
-
     useEffect(() => {
         if (questions === '') {
             apiQuestionServices.getCategories()
@@ -52,16 +51,22 @@ const Userpage = () => {
         }
     }, [questions, appContext]);
     if (questions) {
+        console.log(questions);
         questions.forEach(question => {
+            console.log(question.categoryName);
             if (restCategories.includes(question.categoryName)) {
-                restCategories = restCategories.splice(restCategories.indexOf([question.category]), 1);
+                restCategories.splice(restCategories.indexOf(question.categoryName), 1);
             }
         });
-        qCount = restCategories.length;
-        restCategories = Object.values(restCategories).join(', ');
     }
-
-
+    
+    qCount = restCategories.length;
+    restCategories = Object.values(restCategories).join(', ');
+    
+    console.log(restCategories);
+    console.log(qCount);
+// console.log(restCategories);
+// console.log(qCount);
     return (
         <div className="home-container">
             <div className="quizes">
@@ -80,9 +85,8 @@ const Userpage = () => {
                         ))}
                         {qCount > 0 && (
                             <>
-                                <h1>{qCount === 1 ? "Category": "Categories"}: {restCategories} {qCount ? "is" : "are"} very sad <SentimentVeryDissatisfiedIcon />, ...</h1>
-                                <h1>because {qCount === 1 ? "it has": "they have"} no questions yet...</h1>
-                                <h2>Can you help?</h2>
+                                <h1>{restCategories} {qCount <= 1 ? "is" : "are"} very sad <SentimentVeryDissatisfiedIcon />, because {qCount === 1 ? "it has": "they have"} no questions yet...Can you help?</h1>
+                                
                             </>
                         )}
                         <ButtonLink path="/quizes/create-question" component={<CreateIcon />}>
