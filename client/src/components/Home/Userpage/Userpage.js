@@ -2,7 +2,8 @@ import { Fragment, useEffect, useState, useContext } from 'react';
 import { withRouter } from 'react-router-dom';
 
 //Import components from Material UI
-import { CreateIcon, ImportContactsIcon } from '../../../config/materialConfig';
+import { CreateIcon, ImportContactsIcon, SentimentVeryDissatisfiedIcon } from '../../../config/materialConfig';
+
 
 //Import global AppContext and services
 import AppContext from '../../AppContext';
@@ -22,12 +23,14 @@ const Userpage = () => {
 
     let [questions, setQuestions] = useState('');
     const appContext = useContext(AppContext);
+    let restCategories = Object.values({ ...CATEGORY_NAMES }).slice(0, 3);
+    let qCount = restCategories.length;
+
 
     useEffect(() => {
         if (questions === '') {
             apiQuestionServices.getCategories()
                 .then(qss => {
-
                     //Filter to unique categories with images - to show in Userpage
                     qss = qss.reduce((a, x) => {                            //TODO: find better way
                         if (a.find(y => y.category === x.category)) {
@@ -48,6 +51,16 @@ const Userpage = () => {
                 });
         }
     }, [questions, appContext]);
+    if (questions) {
+        questions.forEach(question => {
+            if (restCategories.includes(question.categoryName)) {
+                restCategories = restCategories.splice(restCategories.indexOf([question.category]), 1);
+            }
+        });
+        qCount = restCategories.length;
+        restCategories = Object.values(restCategories).join(', ');
+    }
+
 
     return (
         <div className="home-container">
@@ -65,6 +78,16 @@ const Userpage = () => {
                                 key={_id}
                             />
                         ))}
+                        {qCount > 0 && (
+                            <>
+                                <h1>{qCount === 1 ? "Category": "Categories"}: {restCategories} {qCount ? "is" : "are"} very sad <SentimentVeryDissatisfiedIcon />, ...</h1>
+                                <h1>because {qCount === 1 ? "it has": "they have"} no questions yet...</h1>
+                                <h2>Can you help?</h2>
+                            </>
+                        )}
+                        <ButtonLink path="/quizes/create-question" component={<CreateIcon />}>
+                            Help the sadly Categories now
+                        </ButtonLink>
                     </Fragment>
                     : <Fragment>
                         <h1>No Questions Yet</h1>
