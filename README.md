@@ -43,6 +43,8 @@ QuizApp
      |   └── Choose external Quiz
      ├── Profile
      |   ├── Questions
+     |   |   ├── Edit question
+     |   |   └── Delete question
      |   └── Results
      └── Logout
 ```
