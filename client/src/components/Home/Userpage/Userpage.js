@@ -59,14 +59,14 @@ const Userpage = () => {
             }
         });
     }
-    
+
     qCount = restCategories.length;
     restCategories = Object.values(restCategories).join(', ');
-    
+
     console.log(restCategories);
     console.log(qCount);
-// console.log(restCategories);
-// console.log(qCount);
+    // console.log(restCategories);
+    // console.log(qCount);
     return (
         <div className="home-container">
             <div className="quizes">
@@ -85,13 +85,12 @@ const Userpage = () => {
                         ))}
                         {qCount > 0 && (
                             <>
-                                <h1>{restCategories} {qCount <= 1 ? "is" : "are"} very sad <SentimentVeryDissatisfiedIcon />, because {qCount === 1 ? "it has": "they have"} no questions yet...Can you help?</h1>
-                                
+                                <h1>{restCategories} {qCount <= 1 ? "is" : "are"} very sad <SentimentVeryDissatisfiedIcon />, because {qCount === 1 ? "it has" : "they have"} no questions yet...Can you help?</h1>
+                                <ButtonLink path="/quizes/create-question" component={<CreateIcon />}>
+                                    Help the sadly Categories now
+                                </ButtonLink>
                             </>
                         )}
-                        <ButtonLink path="/quizes/create-question" component={<CreateIcon />}>
-                            Help the sadly Categories now
-                        </ButtonLink>
                     </Fragment>
                     : <Fragment>
                         <h1>No Questions Yet</h1>
