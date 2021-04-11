@@ -42,10 +42,10 @@ QuizApp
      |   ├── Create question
      |   └── Choose external Quiz
      ├── Profile
-     |   ├── Questions
+     |   ├── Created Questions
      |   |   ├── Edit question
      |   |   └── Delete question
-     |   └── Results
+     |   └── Test Results
      └── Logout
 ```
 
