@@ -6,7 +6,7 @@ Own quiz questions are stored in Node.js Back-end with Mongo DB – Express and 
 
 [Go to Trivia](https://opentdb.com/)
 
-[Try Softquizy (live demo)](http://davidra.co/react-quiz/)
+[Try Softquizy (live demo)](https://softquizy.netlify.app/)
 
 Getting Started
 ---------------
