@@ -12,7 +12,7 @@ Getting Started
 ---------------
 
 ```shell
-$ git clone https://github.com/davidrayoussef/react-quiz.git
+$ git clone https://github.com/zoranyankov/softquizy
 
 For client side
 $ cd client
